@@ -18,7 +18,7 @@ namespace FotorealistycznaGK
         }
         public override string ToString()
         {
-            return "Promien ma poczatek w punkcie (" + this.origin.X.ToString() + "," + this.origin.Y.ToString() + "," + this.origin.Z.ToString() + ")";
+            return "Jestem promieniem o początku w punkcie (" + this.origin.X.ToString() + "," + this.origin.Y.ToString() + "," + this.origin.Z.ToString() + ") i kierunku"+this.direction.ToString();
         }
 
         

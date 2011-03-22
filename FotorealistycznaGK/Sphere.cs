@@ -40,7 +40,7 @@ namespace FotorealistycznaGK
 
         public override string ToString()
         {
-            return ("Srodek sfery to: x = " + this.SphereCenter.X.ToString() + ", y = " + this.SphereCenter.Y.ToString() + ", z = " + this.SphereCenter.Z.ToString()+"\n");
+            return ("Jestem sferą o środku w (x = " + this.SphereCenter.X.ToString() + ", y = " + this.SphereCenter.Y.ToString() + ", z = " + this.SphereCenter.Z.ToString()+") i promieniu"+this.sphereRadius+"\n");
         }
 
         // Funkcja znajdujaca punkt przeciecia promienia ze sfera
