@@ -70,6 +70,7 @@ namespace FotorealistycznaGK
                 
                 System.Console.WriteLine("Promien przecina sfere w dwoch punktach: (" + p1.X + ", " + p1.Y + ", " + p1.Z + ") i (" + p2.X + ", " + p2.Y + ", " + p2.Z + ").");
 
+                //if (t1 < t2) { }
             }
 
             else if (delta == 0)
