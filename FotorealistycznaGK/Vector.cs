@@ -67,7 +67,7 @@ namespace FotorealistycznaGK
         }
         public override string ToString()
         {
-            return "Vector(" + x.ToString() + ", " + y.ToString() + ", " +
+            return "(" + x.ToString() + ", " + y.ToString() + ", " +
                 z.ToString() + ")";
         }
         /**

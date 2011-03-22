@@ -64,11 +64,12 @@ namespace FotorealistycznaGK
 
                 float t1 = ((-B - (float)sqrtDelta) / (2 * A));
                 float t2 = ((-B + (float)sqrtDelta) / (2 * A));
-
+            
                 Vector p1 = new Vector((r.origin.X + t1 * r.direction.X), (r.origin.Y + t1 * r.direction.Y), (r.origin.Z + t1 * r.direction.Z));
                 Vector p2 = new Vector((r.origin.X + t2 * r.direction.X), (r.origin.Y + t2 * r.direction.Y), (r.origin.Z + t2 * r.direction.Z));
                 
                 System.Console.WriteLine("Promien przecina sfere w dwoch punktach: (" + p1.X + ", " + p1.Y + ", " + p1.Z + ") i (" + p2.X + ", " + p2.Y + ", " + p2.Z + ").");
+
             }
 
             else if (delta == 0)
