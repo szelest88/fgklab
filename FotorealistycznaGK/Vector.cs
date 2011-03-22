@@ -70,12 +70,22 @@ namespace FotorealistycznaGK
             return "Vector(" + x.ToString() + ", " + y.ToString() + ", " +
                 z.ToString() + ")";
         }
+        /**
+         * <summary>
+         * normalizuje wektor (nie zwraca)
+         * </summary>
+         */
         public void normalize()
         {
             float n = this.length();
             if (n != 0)
                 this.div(n);
         }
+        /**
+         * <summary>
+         * zwraca znormalizowany wektor
+         * </summary>
+         */
         public Vector normalizeProduct()
         {
             Vector newV = new Vector(this.x, this.y, this.z);
