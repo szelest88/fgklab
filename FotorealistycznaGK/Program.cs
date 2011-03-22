@@ -18,7 +18,7 @@ namespace FotorealistycznaGK
 
             System.Console.WriteLine("Obliczanie punktu przeciecia promienia ze sfera\n");
             
-            System.Console.WriteLine(S.ToString()); //można też ""+S
+            System.Console.WriteLine(S.ToString()); //można też WriteLine(""+S);
             
             System.Console.WriteLine("PROMIEN 1: ");
             S.findIntersection(ray1);
