@@ -1,0 +1,10 @@
+C:\Users\Ania\Desktop\FotorealistycznaGK\FotorealistycznaGK\bin\Debug\FotorealistycznaGK.exe
+C:\Users\Ania\Desktop\FotorealistycznaGK\FotorealistycznaGK\bin\Debug\FotorealistycznaGK.pdb
+C:\Users\Ania\Desktop\FotorealistycznaGK\FotorealistycznaGK\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Ania\Desktop\FotorealistycznaGK\FotorealistycznaGK\obj\x86\Debug\FotorealistycznaGK.exe
+C:\Users\Ania\Desktop\FotorealistycznaGK\FotorealistycznaGK\obj\x86\Debug\FotorealistycznaGK.pdb
+C:\Documents and Settings\Konto2\Moje dokumenty\Dropbox\Szelest_Ań\FotorealistycznaGK\FotorealistycznaGK\obj\x86\Debug\FotorealistycznaGK.exe
+C:\Documents and Settings\Konto2\Moje dokumenty\Dropbox\Szelest_Ań\FotorealistycznaGK\FotorealistycznaGK\obj\x86\Debug\FotorealistycznaGK.pdb
+C:\Documents and Settings\Konto2\Moje dokumenty\Dropbox\Szelest_Ań\FotorealistycznaGK\FotorealistycznaGK\bin\Debug\FotorealistycznaGK.exe
+C:\Documents and Settings\Konto2\Moje dokumenty\Dropbox\Szelest_Ań\FotorealistycznaGK\FotorealistycznaGK\bin\Debug\FotorealistycznaGK.pdb
+C:\Documents and Settings\Konto2\Moje dokumenty\Dropbox\Szelest_Ań\FotorealistycznaGK\FotorealistycznaGK\obj\x86\Debug\ResolveAssemblyReference.cache
