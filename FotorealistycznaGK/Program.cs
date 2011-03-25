@@ -9,8 +9,8 @@ namespace FotorealistycznaGK
     {
         static void Main(string[] args)
         {
-            Vector origin = new Vector(0, 0, -20);
-            Vector dir1 = new Vector(0, 0, 1);
+            Vector origin = new Vector(0, 0, 10);
+            Vector dir1 = new Vector(0, 0, -1);
             Vector dir2 = new Vector(0, 1, 0);
             Sphere S = new Sphere(new Vector(0,0,0), 10);
             Ray ray1 = new Ray(origin, dir1);
