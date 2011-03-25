@@ -84,6 +84,7 @@ namespace FotorealistycznaGK
                 */
                 //dziwnie prosto to wyszło, aczkolwiek sprawdzam, czy przecięcie nie jest "za plecami" obserwatora
                 //chyba wystarczy do tego parametr t
+                //chyba brakuje opcji t1>0,t2<0 -> t2<t1, zaraz jakoś to zasymuluję.
                 if ((t1 < t2)) //czy p1 bliższe
                 {
                     /*
