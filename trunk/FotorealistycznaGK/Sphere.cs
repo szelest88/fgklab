@@ -76,23 +76,29 @@ namespace FotorealistycznaGK
                 Vector p1 = new Vector((r.origin.X + t1 * r.direction.X), (r.origin.Y + t1 * r.direction.Y), (r.origin.Z + t1 * r.direction.Z));
                 Vector p2 = new Vector((r.origin.X + t2 * r.direction.X), (r.origin.Y + t2 * r.direction.Y), (r.origin.Z + t2 * r.direction.Z));
                 
-                System.Console.WriteLine("Promien przecina sfere w dwoch punktach: (" + p1.X + ", " + p1.Y + ", " + p1.Z + ") i (" + p2.X + ", " + p2.Y + ", " + p2.Z + ").");
-
+                //System.Console.WriteLine("Promien przecina sfere w dwoch punktach: (" + p1.X + ", " + p1.Y + ", " + p1.Z + ") i (" + p2.X + ", " + p2.Y + ", " + p2.Z + ").");
+                System.Console.WriteLine("Przeciecia z przodu:");
                 //znajdowanie bliższego punktu
                 /*
                  * Tu musi być jakis dodatkowy warunek, kurcze no trza sprawdzic czy aby nie mamy pkt za plecami - najlepiej jest to sprawdzac na podstawie promienia w pocz gdzies w kuli np. (0,0,8) czy cos
                 */
-                if ((t1 < t2))
+                //dziwnie prosto to wyszło, aczkolwiek sprawdzam, czy przecięcie nie jest "za plecami" obserwatora
+                //chyba wystarczy do tego parametr t
+                if ((t1 < t2)) //czy p1 bliższe
                 {
                     /*
                      * Tu chyba bedziemy an zyca obliczac wczesniej zadeklarowany p i go returniemy.
                     */
-                    System.Console.WriteLine(p1.ToString());
+                    if (t1 > 0)//czy nie za plecami
+                        System.Console.WriteLine(p1.ToString());
                 }
-                else {
+                else if (t2 > 0) //jeśli drugie bliższe, to czy nie za plecami
+                {
 
-                    System.Console.WriteLine(p2.ToString());                
+                    System.Console.WriteLine(p2.ToString());
                 }
+                else //oba są za plecami
+                    System.Console.WriteLine("plecy");
 
             }
 
@@ -101,8 +107,12 @@ namespace FotorealistycznaGK
 
                 float t3 = (-B / (2 * A));
                 Vector p3 = new Vector((r.origin.X + t3 * r.direction.X), (r.origin.Y + t3 * r.direction.Y), (r.origin.Z + t3 * r.direction.Z));
-
-                System.Console.WriteLine("Promien jest styczny do sfery w punkcie: (" + p3.X + ", " + p3.Y + ", " + p3.Z + ")");
+                if (t3 > 0)
+                {
+                    System.Console.WriteLine("Promien jest styczny do sfery w punkcie: (" + p3.X + ", " + p3.Y + ", " + p3.Z + ")");
+                }
+                else
+                    System.Console.WriteLine("plecy");
             }
 
             else
