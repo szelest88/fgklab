@@ -45,6 +45,10 @@ namespace FotorealistycznaGK
 
         // Funkcja znajdujaca punkt przeciecia promienia ze sfera
 
+        /*
+         * Funkcja docelowo powinna zwracać Vector, ale poki eksperymentujemy to niech zostanie void
+        */
+
         public override void findIntersection(Ray r)
         {
 
@@ -53,24 +57,43 @@ namespace FotorealistycznaGK
             Vector c = this.SphereCenter;
             float delta, A, B;
             double sqrtDelta;
-
+                       
             A = d.dot(d);
             B = 2 * (d.dot(o - c));
             delta = B * B - 4 * (A * ((o - c).dot(o - c) - this.SphereRadius * this.SphereRadius));
             sqrtDelta = Math.Sqrt(delta);
+             
 
             if (delta > 0)
             {
 
                 float t1 = ((-B - (float)sqrtDelta) / (2 * A));
                 float t2 = ((-B + (float)sqrtDelta) / (2 * A));
-            
+                
+                /*
+                 * Tak mysle, czy zostawic te dwa punkty, czy po prostu machnac jeden jakis p (poza petla) i pozniej go w petli obliczac i zwracac returnem
+                */
                 Vector p1 = new Vector((r.origin.X + t1 * r.direction.X), (r.origin.Y + t1 * r.direction.Y), (r.origin.Z + t1 * r.direction.Z));
                 Vector p2 = new Vector((r.origin.X + t2 * r.direction.X), (r.origin.Y + t2 * r.direction.Y), (r.origin.Z + t2 * r.direction.Z));
                 
                 System.Console.WriteLine("Promien przecina sfere w dwoch punktach: (" + p1.X + ", " + p1.Y + ", " + p1.Z + ") i (" + p2.X + ", " + p2.Y + ", " + p2.Z + ").");
 
-                //if (t1 < t2) { }
+                //znajdowanie bliższego punktu
+                /*
+                 * Tu musi być jakis dodatkowy warunek, kurcze no trza sprawdzic czy aby nie mamy pkt za plecami - najlepiej jest to sprawdzac na podstawie promienia w pocz gdzies w kuli np. (0,0,8) czy cos
+                */
+                if ((t1 < t2))
+                {
+                    /*
+                     * Tu chyba bedziemy an zyca obliczac wczesniej zadeklarowany p i go returniemy.
+                    */
+                    System.Console.WriteLine(p1.ToString());
+                }
+                else {
+
+                    System.Console.WriteLine(p2.ToString());                
+                }
+
             }
 
             else if (delta == 0)
