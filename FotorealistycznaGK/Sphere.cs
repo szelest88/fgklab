@@ -77,7 +77,6 @@ namespace FotorealistycznaGK
                 Vector p2 = new Vector((r.origin.X + t2 * r.direction.X), (r.origin.Y + t2 * r.direction.Y), (r.origin.Z + t2 * r.direction.Z));
                 
                 //System.Console.WriteLine("Promien przecina sfere w dwoch punktach: (" + p1.X + ", " + p1.Y + ", " + p1.Z + ") i (" + p2.X + ", " + p2.Y + ", " + p2.Z + ").");
-                System.Console.WriteLine("Przeciecia z przodu:");
                 //znajdowanie bliższego punktu
                 /*
                  * Tu musi być jakis dodatkowy warunek, kurcze no trza sprawdzic czy aby nie mamy pkt za plecami - najlepiej jest to sprawdzac na podstawie promienia w pocz gdzies w kuli np. (0,0,8) czy cos
@@ -85,11 +84,12 @@ namespace FotorealistycznaGK
                 //dziwnie prosto to wyszło, aczkolwiek sprawdzam, czy przecięcie nie jest "za plecami" obserwatora
                 //chyba wystarczy do tego parametr t
                 //chyba brakuje opcji t1>0,t2<0 -> t2<t1, zaraz jakoś to zasymuluję.
+                /* mały eksperyment z eliminacją błędnych punktów
                 if ((t1 < t2)) //czy p1 bliższe
                 {
-                    /*
-                     * Tu chyba bedziemy an zyca obliczac wczesniej zadeklarowany p i go returniemy.
-                    */
+                    
+                    //  Tu chyba bedziemy an zyca obliczac wczesniej zadeklarowany p i go returniemy.
+                    
                     if (t1 > 0)//czy nie za plecami
                         System.Console.WriteLine(p1.ToString());
                 }
@@ -100,8 +100,32 @@ namespace FotorealistycznaGK
                 }
                 else //oba są za plecami
                     System.Console.WriteLine("plecy");
-
+                */
+                //AM nie podoba mi się ten kod, taka ilość ifów to nie jest to, co
+                //tygryski lubią najbardziej, w kontekście programu, który wymaga
+                //bądź co bądź dużej wydajności. Ale tak jest skutecznie.
+                //Jeśli masz jakieś pomysły na optymalizację, byłoby fajnie ;)
+                //Jeśli nie - w tej chwili po prostu działa ;)
+                if (t1 > 0)
+                {
+                    if (t2 > 0)
+                    {
+                        if (t1 < t2)
+                            System.Console.WriteLine(p1.ToString());
+                        else
+                            System.Console.WriteLine(p2.ToString());
+                    }
+                    else
+                        System.Console.WriteLine(p1.ToString());
+                }
+                else if (t2 > 0)
+                {
+                    System.Console.WriteLine(p2.ToString());
+                }
+                else
+                    System.Console.WriteLine("nie wykryto");
             }
+            
 
             else if (delta == 0)
             {
