@@ -47,9 +47,10 @@ namespace FotorealistycznaGK
 
         /*
          * Funkcja docelowo powinna zwracać Vector, ale poki eksperymentujemy to niech zostanie void
+         * AM zmieniłem na Vector
         */
 
-        public override void findIntersection(Ray r)
+        public override Vector findIntersection(Ray r)
         {
 
             Vector d = new Vector(r.direction);
@@ -80,11 +81,12 @@ namespace FotorealistycznaGK
                 //znajdowanie bliższego punktu
                 /*
                  * Tu musi być jakis dodatkowy warunek, kurcze no trza sprawdzic czy aby nie mamy pkt za plecami - najlepiej jest to sprawdzac na podstawie promienia w pocz gdzies w kuli np. (0,0,8) czy cos
+                 * AM przepisałem to na nowo, z tym warunkiem.
                 */
-                //dziwnie prosto to wyszło, aczkolwiek sprawdzam, czy przecięcie nie jest "za plecami" obserwatora
-                //chyba wystarczy do tego parametr t
-                //chyba brakuje opcji t1>0,t2<0 -> t2<t1, zaraz jakoś to zasymuluję.
-                /* mały eksperyment z eliminacją błędnych punktów
+                //AM dziwnie prosto to wyszło, aczkolwiek sprawdzam, czy przecięcie nie jest "za plecami" obserwatora
+                //AM chyba wystarczy do tego parametr t
+
+                /* AM mały eksperyment z eliminacją błędnych punktów
                 if ((t1 < t2)) //czy p1 bliższe
                 {
                     
@@ -101,29 +103,34 @@ namespace FotorealistycznaGK
                 else //oba są za plecami
                     System.Console.WriteLine("plecy");
                 */
-                //AM nie podoba mi się ten kod, taka ilość ifów to nie jest to, co
-                //tygryski lubią najbardziej, w kontekście programu, który wymaga
+
+                //AM no dobra, to lecimy.
+                //Post factum nie podoba mi się ten kod, taka ilość ifów to nie jest to, co
+                //tygryski lubią najbardziej - w kontekście programu, wymagającego
                 //bądź co bądź dużej wydajności. Ale tak jest skutecznie.
                 //Jeśli masz jakieś pomysły na optymalizację, byłoby fajnie ;)
-                //Jeśli nie - w tej chwili po prostu działa ;)
-                if (t1 > 0)
+                //Jeśli nie - w tej chwili po prostu działa, a przynajmniej tak mi się wydaje ;)
+                if (t1 > 0) //jeśli kolizja nr. 1 jest z przodu...
                 {
-                    if (t2 > 0)
+                    if (t2 > 0) // ...i kolizja nr. 2 też...
                     {
-                        if (t1 < t2)
-                            System.Console.WriteLine(p1.ToString());
+                        if (t1 < t2) //...to sprawdzamy, która jest bliżej...
+                            return p1;//i ją...
                         else
-                            System.Console.WriteLine(p2.ToString());
+                            return p2;//...zwracamy.
                     }
-                    else
-                        System.Console.WriteLine(p1.ToString());
+                    else//jeśli zaś tylko kolizja nr. 1 jest z przodu...
+                        return p1;//...to ją zwracamy.
                 }
-                else if (t2 > 0)
+                else if (t2 > 0) //natomiast jeśli tylko kolizja 2 jest z przodu, zwracamy
                 {
-                    System.Console.WriteLine(p2.ToString());
+                    return p2; //ją.
                 }
                 else
-                    System.Console.WriteLine("nie wykryto");
+                    return new Vector(
+                        float.PositiveInfinity,
+                        float.PositiveInfinity,
+                        float.PositiveInfinity); //obie kolizje z tyłu.
             }
             
 
@@ -132,18 +139,23 @@ namespace FotorealistycznaGK
 
                 float t3 = (-B / (2 * A));
                 Vector p3 = new Vector((r.origin.X + t3 * r.direction.X), (r.origin.Y + t3 * r.direction.Y), (r.origin.Z + t3 * r.direction.Z));
-                if (t3 > 0)
+                if (t3 > 0) //wykryta kolizja jest z przodu obserwatora
                 {
-                    System.Console.WriteLine("Promien jest styczny do sfery w punkcie: (" + p3.X + ", " + p3.Y + ", " + p3.Z + ")");
+                    return p3; //jedyna kolizja z przodu
                 }
                 else
-                    System.Console.WriteLine("plecy");
+                    return new Vector(
+                        float.PositiveInfinity,
+                        float.PositiveInfinity,
+                        float.PositiveInfinity); //jedyna kolizja z tyłu
             }
-
-            else
+            else //ponieważ używamy returnów, ten else jest zbędny, chwilowo zostawię dla czytelności.
             {
-
-                System.Console.WriteLine("Promien nie ma punktow wspolnych ze sfera.");
+            //    System.Console.WriteLine("Promien nie ma punktow wspolnych ze sfera.");
+                return new Vector(
+                        float.PositiveInfinity,
+                        float.PositiveInfinity,
+                        float.PositiveInfinity); //jak wyżej
             }
 
         }

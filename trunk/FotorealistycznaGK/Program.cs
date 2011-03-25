@@ -22,7 +22,15 @@ namespace FotorealistycznaGK
             
             System.Console.WriteLine("PROMIEN 1 ("+ray1.ToString()+": ");
             System.Console.WriteLine("Najbliższa kolizja w kierunku patrzenia:");
-            S.findIntersection(ray1);
+            Vector res=S.findIntersection(ray1);
+            if (!float.IsPositiveInfinity(res.X))//jest takie gdy brak kolizji
+            {
+                res = S.findIntersection(ray1);
+                System.Console.WriteLine(res);
+            }
+            else
+                System.Console.WriteLine("Brak kolizji :(");
+
            // System.Console.WriteLine("\n");
            // System.Console.WriteLine("PROMIEN 2( "+ray2.ToString()+": ");
            // S.findIntersection(ray2);          
