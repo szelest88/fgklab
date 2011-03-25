@@ -7,6 +7,6 @@ namespace FotorealistycznaGK
 {
     abstract class Primitive
     {
-        abstract public void findIntersection(Ray r);
+        abstract public Vector findIntersection(Ray r);
     }
 }
