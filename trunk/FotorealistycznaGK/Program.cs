@@ -12,14 +12,14 @@ namespace FotorealistycznaGK
             Vector origin = new Vector(0, 0, 0);
             Vector dir1 = new Vector(0, 0, 1);
             Vector dir2 = new Vector(0, 1, 0);
-            Sphere S = new Sphere(new Vector(0,0,10), 1);
+            Sphere S = new Sphere(new Vector(0,0,0), 10);
             Ray ray1 = new Ray(origin, dir1);
             Ray ray2 = new Ray(origin, dir2);
 
             // Zadanie 2
             Image img = new Image(100, 100);
-            float heightPixel = 2.0f; // ROZDZIELCZOSCPIONOWAOBRAZU;
-            float widthPixel = 2.0f;  // ROZDZIELCZOSCPOZIOMAOBRAZU;
+            float heightPixel = 2.0f;// / 100.0f;//ROZDZIELCZOSCPOZIOMAOBRAZU i ta druga to 100, 100
+            float widthPixel = 2.0f;/// 100.0f;
             //double srodekX = -1.0f + (x + 0.5f) * widthPixel;
             //double srodekY = 1.0f - (y + 0.5f) * heightPixel;
             Intensity color = new Intensity(1, 0, 0);// na czerwono, żeby było coś widać
