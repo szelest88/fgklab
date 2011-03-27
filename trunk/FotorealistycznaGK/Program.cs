@@ -53,7 +53,9 @@ namespace FotorealistycznaGK
                         Ray ray = new Ray(new Vector(srodekX, srodekY, 0), new Vector(srodekX, srodekY, -1));
                         Vector intersetion = S.findIntersection(ray);
 
-                        if (intersetion != null)
+                        if (intersetion.X!=float.PositiveInfinity)//sprawdzało, czy intersection nie jest nullem,
+                            //ale to było źle, bo przyczepiało się do przeciążonego operatora !=. Na jedno wychodzi
+                            //(patrz: ostatni else w metodzie findIntersection() klasy Sphere)
                         {
                             img.setPixel(i, j, color);
                         }
@@ -61,7 +63,7 @@ namespace FotorealistycznaGK
                     }
             }
             
-            img.obraz.Save("obrazkoncowy.jpg"); //obraz, nie Bitmap
+            img.obraz.Save(@"C:\obrazkoncowy.jpg"); //obraz, nie Bitmap
 
            // System.Console.WriteLine("\n");
            // System.Console.WriteLine("PROMIEN 2( "+ray2.ToString()+": ");
