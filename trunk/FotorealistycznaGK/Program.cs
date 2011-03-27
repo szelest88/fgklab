@@ -9,6 +9,7 @@ namespace FotorealistycznaGK
     {
         static void Main(string[] args)
         {
+            Image img = new Image(100, 100);
             Vector origin = new Vector(0, 0, 0);
             Vector dir1 = new Vector(0, 0, 1);
             Vector dir2 = new Vector(0, 1, 0);
