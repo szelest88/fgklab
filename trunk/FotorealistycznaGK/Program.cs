@@ -22,7 +22,7 @@ namespace FotorealistycznaGK
             float widthPixel = 2.0f;  // ROZDZIELCZOSCPOZIOMAOBRAZU;
             //double srodekX = -1.0f + (x + 0.5f) * widthPixel;
             //double srodekY = 1.0f - (y + 0.5f) * heightPixel;
-            Intensity color = new Intensity ();
+            Intensity color = new Intensity(1, 0, 0);// na czerwono, żeby było coś widać
             Intensity backgroundColor = new Intensity();
 
             System.Console.WriteLine("Obliczanie punktu przeciecia promienia ze sfera\n");
