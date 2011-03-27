@@ -177,10 +177,12 @@ namespace FotorealistycznaGK
         {
             return (left.x == right.x && left.y == right.y && left.z == right.z);
         }
+         //coś się pitoli
         public static bool operator !=(Vector left, Vector right)
         {
             return (left.x != right.x || left.y != right.y || left.z != right.z);
         }
+         
         public static Vector operator /(Vector left, float scalar)
         {
             Vector v = new Vector();
