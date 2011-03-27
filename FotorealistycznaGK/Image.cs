@@ -32,6 +32,11 @@ namespace FotorealistycznaGK
             this.obraz = new Bitmap(this.XSize, this.YSize, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
         }
 
-        
-    }
+        public void setPixel(int x, int y, Intensity pixel)
+	    {
+	        Color color = Color.FromArgb((int)(pixel.R*255), (int)(pixel.G*255), (int)(pixel.B*255));
+	        obraz.SetPixel(x,y,color);
+	    }
+    }       
 }
+
