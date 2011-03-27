@@ -9,7 +9,7 @@ namespace FotorealistycznaGK
     class Image
     {
         int xsize, ysize;
-        Bitmap obraz;
+        public Bitmap obraz; //public!
 
         public int XSize
         {

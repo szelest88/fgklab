@@ -61,7 +61,7 @@ namespace FotorealistycznaGK
                     }
             }
             
-            img.Bitmap.Save("obrazkoncowy.jpg"); 
+            img.obraz.Save("obrazkoncowy.jpg"); //obraz, nie Bitmap
 
            // System.Console.WriteLine("\n");
            // System.Console.WriteLine("PROMIEN 2( "+ray2.ToString()+": ");

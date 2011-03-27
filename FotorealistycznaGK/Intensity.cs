@@ -36,7 +36,7 @@ namespace FotorealistycznaGK
             this.G = 0;
             this.B = 0;
         }
-
+        /* //wywaliłem, bo... no ;)
         public Intensity(double r) 
         {
             this.R = r;
@@ -57,7 +57,7 @@ namespace FotorealistycznaGK
             this.G = 0;
             this.B = b;
         }
-
+        */
         public Intensity(double r, double g, double b)
         {
             this.R = r;
