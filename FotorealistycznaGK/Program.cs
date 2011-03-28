@@ -42,7 +42,7 @@ namespace FotorealistycznaGK
                 System.Console.WriteLine("Brak kolizji :(");
 
             // Zadanie 2 - rednerowanie
- 
+            //ten shit trzeba będzie chyba przenieść do klas kamer (metoda Render() czy coś)
             for (int i = 0; i < img.XSize; i++) 
             { 
                 for (int j = 0; j < img.YSize; j++) 
