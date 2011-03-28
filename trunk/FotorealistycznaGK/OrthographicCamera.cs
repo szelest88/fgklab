@@ -10,6 +10,10 @@ namespace FotorealistycznaGK
     //po kamerze przez kamerę Orto? Można to chyba jednak wywalić z Camera
     //i umieszczać tylko w kamerach, które tego potrzebują (naczy się
     //w kamerze perspektywicznej...?)
+
+    //tak. Teraz doczytałem, że Camera powinna być ogólniejsza - trzeba by przenieść jej
+    //treść (tzn. te rzeczy, które nie pasują do kamery Orto do klasy 
+    //PerspectiveCamera (czy jakoś tak), i ewentualnie tutaj coś dodać 
     class OrthographicCamera: Camera
     {
     }
