@@ -22,6 +22,24 @@ namespace FotorealistycznaGK
     //Myślę, że ma to ręce i nogi, acz trzeba by jeszcze pomyśleć.
     class OrthographicCamera: Camera
     {
+        private float width; //kamera orto powinna mieć wymiary płaszczyzny rzutowania...
+        //(prostokątnej)
+        //position, up i target dziedziczymy po Camera
+
+        public float Width
+        {
+            get { return width; }
+            set { width = value; }
+        }
+        private float height;
+
+        public float Height
+        {
+            get { return height; }
+            set { height = value; }
+        }
+
+        //do tej metody spróbuję wrzucić rendering i zapis wynikowego obrazu do pliku
         public override void renderScene()
         {
         }

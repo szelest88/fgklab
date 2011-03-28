@@ -12,7 +12,8 @@ namespace FotorealistycznaGK
             Vector origin = new Vector(0, 0, 0);
             Vector des1 = new Vector(0, 0, 1);
             Vector des2 = new Vector(0, 1, 0);
-            Sphere S = new Sphere(new Vector(0,0,0), 1);
+            Sphere S = new Sphere(new Vector(0,0,0), 0.3f);
+            Sphere S2 = new Sphere(new Vector(0, 0.6f, 0.0f), 0.3f);//druga kulka, tak, żeby sprawdzić czy działa.
             Ray ray1 = new Ray(origin, des1);
             Ray ray2 = new Ray(origin, des2);
 
@@ -23,6 +24,7 @@ namespace FotorealistycznaGK
             //double srodekX = -1.0f + (x + 0.5f) * widthPixel;
             //double srodekY = 1.0f - (y + 0.5f) * heightPixel;
             Intensity color = new Intensity(1, 0, 0);// na czerwono, żeby było coś widać
+            Intensity color2 = new Intensity(0, 0, 1);
             Intensity backgroundColor = new Intensity();
 
             System.Console.WriteLine("Obliczanie punktu przeciecia promienia ze sfera\n");
@@ -51,15 +53,22 @@ namespace FotorealistycznaGK
                         float srodekY = 1.0f - (j + 0.5f) * heightPixel;
                         
                         Ray ray = new Ray(new Vector(srodekX, srodekY, 0), new Vector(srodekX, srodekY, -1));
-                        Vector intersetion = S.findIntersection(ray);
+                        Vector intersection = S.findIntersection(ray);
+                        Vector intersection2 = S2.findIntersection(ray);
 
-                        if (intersetion.X!=float.PositiveInfinity)//sprawdzało, czy intersection nie jest nullem,
+                        if (intersection.X!=float.PositiveInfinity)//sprawdzało, czy intersection nie jest nullem,
                             //ale to było źle, bo przyczepiało się do przeciążonego operatora !=. Na jedno wychodzi
                             //(patrz: ostatni else w metodzie findIntersection() klasy Sphere)
                         {
-                            img.setPixel(i, j, color);
+                            img.setPixel(i, j, color); //kolor czerwony, jeśli I kulka
                         }
-                        else img.setPixel(i, j, backgroundColor);
+                        else if (intersection2.X != float.PositiveInfinity)//sprawdzało, czy intersection nie jest nullem,
+                        //ale to było źle, bo przyczepiało się do przeciążonego operatora !=. Na jedno wychodzi
+                        //(patrz: ostatni else w metodzie findIntersection() klasy Sphere)
+                        {
+                            img.setPixel(i, j, color2); //niebieski, jeśli II kulka
+                        }
+                        else img.setPixel(i, j, backgroundColor); //czarny, jeśli shit
                     }
             }
             
