@@ -10,11 +10,11 @@ namespace FotorealistycznaGK
         static void Main(string[] args)
         {
             Vector origin = new Vector(0, 0, 0);
-            Vector dir1 = new Vector(0, 0, 1);
-            Vector dir2 = new Vector(0, 1, 0);
+            Vector des1 = new Vector(0, 0, 1);
+            Vector des2 = new Vector(0, 1, 0);
             Sphere S = new Sphere(new Vector(0,0,0), 10);
-            Ray ray1 = new Ray(origin, dir1);
-            Ray ray2 = new Ray(origin, dir2);
+            Ray ray1 = new Ray(origin, des1);
+            Ray ray2 = new Ray(origin, des2);
 
             // Zadanie 2
             Image img = new Image(100, 100);
