@@ -14,6 +14,12 @@ namespace FotorealistycznaGK
     //tak. Teraz doczytałem, że Camera powinna być ogólniejsza - trzeba by przenieść jej
     //treść (tzn. te rzeczy, które nie pasują do kamery Orto do klasy 
     //PerspectiveCamera (czy jakoś tak), i ewentualnie tutaj coś dodać 
+    //ogólnie, chyba każda kamera będzie miała swoją pozycję, wektor Up i punkt,na który
+    //patrzy (albo wektor kierunku). Orto powinna mieć chyba do tego wymiary prostokąta,
+    //na który "rzutowany jest obraz", natomiast perspektywiczna parametry bryły widznia
+    //  fov i płaszczyzny obcinania (czyli tak jak jest teraz w klasie Camera).
+
+    //Myślę, że ma to ręce i nogi, acz trzeba by jeszcze pomyśleć.
     class OrthographicCamera: Camera
     {
     }
