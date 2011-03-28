@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FotorealistycznaGK
 {
-    class Vector
+    public class Vector
     {
         float x;
         float y;
