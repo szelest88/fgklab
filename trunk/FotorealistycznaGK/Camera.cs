@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FotorealistycznaGK
 {
-    public class Camera
+    abstract public class Camera
     {
         private Vector position;
 
@@ -73,8 +73,7 @@ namespace FotorealistycznaGK
         }
 
 
-
-
+        abstract public void renderScene();
 
     }
 }

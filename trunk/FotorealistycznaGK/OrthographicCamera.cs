@@ -22,5 +22,8 @@ namespace FotorealistycznaGK
     //Myślę, że ma to ręce i nogi, acz trzeba by jeszcze pomyśleć.
     class OrthographicCamera: Camera
     {
+        public override void renderScene()
+        {
+        }
     }
 }
