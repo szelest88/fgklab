@@ -7,13 +7,16 @@ namespace FotorealistycznaGK
 {
     class Ray
     {
-        public Vector origin;
-        public Vector direction;
+        //tu pozamieniałem
+        public Vector origin; //origin+direction=destination
+        public Vector direction;//direction = destination - origin
+        public Vector destination;//destination = origin+direction
   
-        public Ray(Vector origin, Vector direction) {
+        public Ray(Vector origin, Vector destination) {
 
             this.origin = new Vector (origin);
-            this.direction = direction;
+            this.destination = new Vector(destination);
+            this.direction = destination - origin;
   
         }
         public override string ToString()
