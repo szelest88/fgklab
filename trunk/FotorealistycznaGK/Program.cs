@@ -12,8 +12,8 @@ namespace FotorealistycznaGK
             Vector origin = new Vector(0, 0, 0);
             Vector des1 = new Vector(0, 0, 1);
             Vector des2 = new Vector(0, 1, 0);
-            Sphere S = new Sphere(new Vector(0,0,0), 0.3f);
-            Sphere S2 = new Sphere(new Vector(0, 0.6f, 0.0f), 0.3f);//druga kulka, tak, żeby sprawdzić czy działa.
+            Sphere S = new Sphere(new Vector(0,0,0), 0.55f, new Intensity(1,1,0));
+            Sphere S2 = new Sphere(new Vector(0, 0.6f, 0.0f), 0.3f, new Intensity(1,0,1));//druga kulka, tak, żeby sprawdzić czy działa.
             List<Primitive> list = new List<Primitive>();
             list.Add(S);
             list.Add(S2);
@@ -27,7 +27,8 @@ namespace FotorealistycznaGK
             float widthPixel = 0.01f;/// 100.0f;
             //double srodekX = -1.0f + (x + 0.5f) * widthPixel;
             //double srodekY = 1.0f - (y + 0.5f) * heightPixel;
-            Intensity color = new Intensity(1, 0, 0);// na czerwono, żeby było coś widać
+            Intensity color1 = new Intensity(1, 0, 0);// na czerwono, żeby było coś widać
+            Intensity color;
             Intensity color2 = new Intensity(0, 0, 1);
             Intensity backgroundColor = new Intensity();
 
@@ -53,8 +54,8 @@ namespace FotorealistycznaGK
             { 
                 for (int j = 0; j < img.YSize; j++) 
                     { 
-                        float srodekX = -1.0f + (i + 0.5f) * widthPixel; 
-                        float srodekY = 1.0f - (j + 0.5f) * heightPixel;
+                        float srodekX = -1.0f + ((float)i + 0.5f) * widthPixel; 
+                        float srodekY = 1.0f - ((float)j + 0.5f) * heightPixel;
                         
                         Ray ray = new Ray(new Vector(srodekX, srodekY, 0), new Vector(srodekX, srodekY, -1));
 
@@ -63,18 +64,20 @@ namespace FotorealistycznaGK
                         
                     foreach (Primitive p in list)
                         {
-                            intersect = p.findIntersection(ray);
-                            if (intersect.X != float.PositiveInfinity)
-                            {
-                                img.setPixel(i, j, color);
-                            }
-                            
-                        }
+                                intersect = p.findIntersection(ray);
+                                if (intersect.X != float.PositiveInfinity)
+                                {
+                                    img.setPixel(i, j, p.color);
+                                }
+                            }   
+                        //}
                     }
             }
             
             img.obraz.Save(@"C:\obrazkoncowy.jpg"); //obraz, nie Bitmap
-         
+        // OrthographicCamera oc = new OrthographicCamera(list,new Vector(0,1,0),new Vector(0,0,-1), new Vector(0,0,100));
+            //0/1
+        // oc.renderScene();
             System.Console.ReadLine();  
         }
     }
