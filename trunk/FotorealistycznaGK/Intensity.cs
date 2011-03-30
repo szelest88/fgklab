@@ -36,28 +36,7 @@ namespace FotorealistycznaGK
             this.G = 0;
             this.B = 0;
         }
-        /* //wywaliłem, bo... no ;)
-        public Intensity(double r) 
-        {
-            this.R = r;
-            this.G = 0;
-            this.B = 0;
-        }
 
-        public Intensity(double g)
-        {
-            this.R = 0;
-            this.G = g;
-            this.B = 0;
-        }
-
-        public Intensity(double b)
-        {
-            this.R = 0;
-            this.G = 0;
-            this.B = b;
-        }
-        */
         public Intensity(double r, double g, double b)
         {
             this.R = r;
