@@ -12,8 +12,8 @@ namespace FotorealistycznaGK
             Vector origin = new Vector(0, 0, 0);
             Vector des1 = new Vector(0, 0, 1);
             Vector des2 = new Vector(0, 1, 0);
-            Sphere S = new Sphere(new Vector(0,0,0), 0.55f, new Intensity(1,1,0));
-            Sphere S2 = new Sphere(new Vector(0, 0.6f, 0.0f), 0.3f, new Intensity(1,0,1));//druga kulka, tak, żeby sprawdzić czy działa.
+            Sphere S = new Sphere(new Vector(0,0,0), 0.15f, new Intensity(1,1,0));
+            Sphere S2 = new Sphere(new Vector(0, 0.25f, 0.0f), 0.05f, new Intensity(1,0,1));//druga kulka, tak, żeby sprawdzić czy działa.
             List<Primitive> list = new List<Primitive>();
             list.Add(S);
             list.Add(S2);
@@ -49,6 +49,7 @@ namespace FotorealistycznaGK
                 System.Console.WriteLine("Brak kolizji :(");
 
             // Zadanie 2 - rednerowanie
+            /*
             //ten shit trzeba będzie chyba przenieść do klas kamer (metoda Render() czy coś)
             for (int i = 0; i < img.XSize; i++) 
             { 
@@ -75,9 +76,16 @@ namespace FotorealistycznaGK
             }
             
             img.obraz.Save(@"C:\obrazkoncowy.jpg"); //obraz, nie Bitmap
-        // OrthographicCamera oc = new OrthographicCamera(list,new Vector(0,1,0),new Vector(0,0,-1), new Vector(0,0,100));
-            //0/1
-        // oc.renderScene();
+ */
+            Vector target = new Vector(0.0f, 0, 0);
+            Vector up = new Vector(-0.5f, 1, 0);
+            Vector v2 = new Vector(0f, 0, -1);
+            Vector v3 = up.cross(v2);
+            System.Console.WriteLine(v3);
+            System.Console.WriteLine("...");
+            OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, up, list, new Uri(@"C:\rendermasakra.jpg"));
+            oc.renderScene();
+            System.Console.ReadLine();  
             System.Console.ReadLine();  
         }
     }
