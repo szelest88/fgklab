@@ -29,7 +29,8 @@ namespace FotorealistycznaGK
         float widthOfPix, heightOfPix;
         /**
          <summary>
-         kąt widzenia, w pionie i w poziomie (fov)
+         kąt widzenia, w pionie i w poziomie (fov) (jest jeden, bo chwilowo będziemy rzutować - dla
+         uproszczenia - na kwadrat
          </summary>
          **/ 
         float alpha;
