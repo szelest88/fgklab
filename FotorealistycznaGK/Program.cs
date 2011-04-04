@@ -78,15 +78,16 @@ namespace FotorealistycznaGK
             img.obraz.Save(@"C:\obrazkoncowy.jpg"); //obraz, nie Bitmap
  */
             Vector target = new Vector(0.0f, 0, 0);
-            Vector up = new Vector(-0.5f, 1, 0);
-            Vector v2 = new Vector(0f, 0, -1);
-            Vector v3 = up.cross(v2);
+            Vector up = new Vector(0f, 1, 0);//jak nie, to 01-1
+            Vector v2 = new Vector(0f, 1, -1);
+            Vector v3 = -up.cross(v2-target);
             System.Console.WriteLine(v3);
             System.Console.WriteLine("...");
-            OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, up, list, new Uri(@"C:\rendermasakra.jpg"));
+            //dlaczego ten cross zamiast up... bo wychodzi coś typu (-1,0,0)
+            OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, v3, list, new Uri(@"C:\rendermasakra.jpg"));
             oc.renderScene();
-            System.Console.ReadLine();  
-            System.Console.ReadLine();  
+          //  System.Console.ReadLine();  
+            System.Console.ReadKey();  
         }
     }
 }
