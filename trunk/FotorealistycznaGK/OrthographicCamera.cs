@@ -54,7 +54,7 @@ namespace FotorealistycznaGK
             Ray napierdalacz;
             Vector prostopadlyPrzes =
                 ((this.Target - this.Position).cross(this.Position - this.Up)).normalizeProduct();
-            Vector pionPrzes = (this.Up - this.Position).normalizeProduct() * 1.5f;
+            Vector pionPrzes = (this.Up - this.Position).normalizeProduct();//; *1.5f;
             //tylko kurde to *1.5 jest empiryczne :| Prawdopodobnie będzie trzeba to zmienić.
             //prostopadlyPrzes.normalize();
             //pionPrzes.normalize();
