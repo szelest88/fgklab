@@ -27,6 +27,19 @@ namespace FotorealistycznaGK
          </summary>
          **/
         float widthOfPix, heightOfPix;
+        /**
+         <summary>
+         kąt widzenia, w pionie i w poziomie (fov)
+         </summary>
+         **/ 
+        float alpha;
+        /**
+        <summary>
+        odległość takiej niby rzutni ;) to jest bliższa kamerze) płaszczyzna obcinania chyba
+         * W każdym razie posługuję się nią przy liczeniu kierunku promieni
+        </summary>
+        **/ 
+        float near;
         List<Primitive> scene;
         string renderTarget; //dodałem, string na ścieżkę do pliku wynikowego
         public PerspectiveCamera(float w, float h, int pixelsPerUnit, Vector position, Vector target, Vector up, List<Primitive> scene, Uri renderTarget)
@@ -54,13 +67,24 @@ namespace FotorealistycznaGK
             Vector prostopadlyPrzes =
                 ((this.Target - this.Position).cross(this.Position -this.Up)).normalizeProduct();//cross(this.Positon-this.Up)
             Vector pionPrzes = (this.Up).normalizeProduct();//; *1.5f;//(this.Up-this.Position).nor
-            //tylko kurde to *1.5 jest empiryczne :| Prawdopodobnie będzie trzeba to zmienić.
-            //prostopadlyPrzes.normalize();
-            //pionPrzes.normalize();
-            System.Console.WriteLine(prostopadlyPrzes);
-            Vector srodek = this.Position;
-            Vector poczatek = srodek - prostopadlyPrzes * (w * 0.5f - widthOfPix * 0.5f);
+            
+            Vector observer = this.Position;
+            Vector srodek = this.Position + (this.Target - this.Position).normalizeProduct() * near;
+            float s = near*(float)Math.Tan((double)alpha/2.0);
+            Vector poczatek = srodek - prostopadlyPrzes * s - pionPrzes * s;
+            //powyższe to róg (lewy dolny) rzutni ("tylnej płaszczyzny obcinania").
+            //teraz trzeba się od niego odsuwać w płaszczyźnie pionPrzes x prostopadlyPrzes
+            //co ileśtam (jeszcz nie wiem, ile ;)), i w ten sposób określi się
+            //kolejne punkty, które razem z this.Position będą wyznaczały nasze raye.
+            //zaraz dokończę
+            
+            //poniżej to bullshit
 
+
+            /*
+            System.Console.WriteLine(prostopadlyPrzes);
+          //  Vector srodek = this.Position;
+           
             poczatek -= pionPrzes * (h * 0.5f - heightOfPix * 0.5f);
             System.Console.WriteLine("początek" + poczatek);
             prostopadlyPrzes /= 400.0f;
@@ -84,7 +108,7 @@ namespace FotorealistycznaGK
                 }
             img.obraz.Save(renderTarget);
             System.Console.WriteLine(poczatek);
-
+            */
         }
 
     }
