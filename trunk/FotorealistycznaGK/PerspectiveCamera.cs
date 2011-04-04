@@ -58,6 +58,7 @@ namespace FotorealistycznaGK
             this.Up = up;
             this.scene = scene;
             this.renderTarget = renderTarget.AbsolutePath;
+            this.near = 0.2f;
         }
 
         public override void renderScene()
@@ -67,13 +68,14 @@ namespace FotorealistycznaGK
             //trzeba znaleźć współrzędne prostokąta
             Ray napierdalacz;
             Vector prostopadlyPrzes =
-                ((this.Target - this.Position).cross(this.Position -this.Up)).normalizeProduct();//cross(this.Positon-this.Up)
+                ((this.Target - this.Position).cross(this.Up-this.Position)).normalizeProduct();//cross(this.Positon-this.Up)
             Vector pionPrzes = (this.Up).normalizeProduct();//; *1.5f;//(this.Up-this.Position).nor
             
             Vector observer = this.Position;
             Vector srodek = this.Position + (this.Target - this.Position).normalizeProduct() * near;
-            float s = near*(float)Math.Tan((double)alpha/2.0);
+            float s = near*(float)Math.Tan((double)(alpha/180.0*Math.PI)/2.0);
             Vector poczatek = srodek - prostopadlyPrzes * s - pionPrzes * s;
+            System.Console.WriteLine(""+poczatek);
             //powyższe to róg (lewy dolny) rzutni ("tylnej płaszczyzny obcinania").
             //teraz trzeba się od niego odsuwać w płaszczyźnie pionPrzes x prostopadlyPrzes
             //co ileśtam (jeszcz nie wiem, ile ;)), i w ten sposób określi się
@@ -88,7 +90,8 @@ namespace FotorealistycznaGK
             for (int i = 0; i < 400; i++)
                 for (int j = 0; j < 400; j++)
                 {
-                    napierdalacz = new Ray(srodek, poczatek + i*krok * pionPrzes + j*krok * prostopadlyPrzes);
+                    napierdalacz = new Ray(observer, poczatek + i*krok * pionPrzes + j*krok * prostopadlyPrzes);
+                    System.Console.WriteLine("" + napierdalacz);
                     foreach (Primitive p in scene)
                     {
                         if (p.findIntersection(napierdalacz).X != float.PositiveInfinity)
