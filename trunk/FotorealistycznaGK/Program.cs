@@ -12,8 +12,8 @@ namespace FotorealistycznaGK
             Vector origin = new Vector(0, 0, 0);
             Vector des1 = new Vector(0, 0, 1);
             Vector des2 = new Vector(0, 1, 0);
-            Sphere S = new Sphere(new Vector(0,0,0), 0.15f, new Intensity(1,1,0));
-            Sphere S2 = new Sphere(new Vector(0, 0.25f, 0.0f), 0.05f, new Intensity(1,0,1));//druga kulka, tak, żeby sprawdzić czy działa.
+            Sphere S = new Sphere(new Vector(0,0,0), 0.35f, new Intensity(1,1,0));
+            Sphere S2 = new Sphere(new Vector(0, 0.45f, 0.0f), 0.05f, new Intensity(1,0,1));//druga kulka, tak, żeby sprawdzić czy działa.
             List<Primitive> list = new List<Primitive>();
             list.Add(S);
             list.Add(S2);
@@ -85,8 +85,11 @@ namespace FotorealistycznaGK
             System.Console.WriteLine(v3);
             System.Console.WriteLine("...");
             //dlaczego ten cross zamiast up... bo wychodzi coś typu (-1,0,0)
+            PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, new Uri(@"C:\renderpers.jpg"));
+            pc.renderScene();
             OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, v3, list, new Uri(@"C:\rendermasakra.jpg"));
             oc.renderScene();
+            
           //  System.Console.ReadLine();  
             System.Console.ReadKey();  
         }
