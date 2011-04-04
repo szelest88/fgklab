@@ -48,6 +48,7 @@
     <Compile Include="Image.cs" />
     <Compile Include="Intensity.cs" />
     <Compile Include="OrthographicCamera.cs" />
+    <Compile Include="PerspectiveCamera.cs" />
     <Compile Include="Primitive.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
