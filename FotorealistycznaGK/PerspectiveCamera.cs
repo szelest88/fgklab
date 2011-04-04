@@ -43,13 +43,14 @@ namespace FotorealistycznaGK
         float near;
         List<Primitive> scene;
         string renderTarget; //dodałem, string na ścieżkę do pliku wynikowego
-        public PerspectiveCamera(float w, float h, int pixelsPerUnit, Vector position, Vector target, Vector up, List<Primitive> scene, Uri renderTarget)
+        public PerspectiveCamera(float w, float h, int pixelsPerUnit, Vector position, Vector target, Vector up, float alpha, List<Primitive> scene, Uri renderTarget)
         {
             this.w = w;
             this.h = h;
             this.wPix = (int)w * pixelsPerUnit; ///POPRAWIIICC!!!!!!!!!!!!!!!!!
             this.hPix = (int)h * pixelsPerUnit;
             widthOfPix = 1.0f / pixelsPerUnit;
+            this.alpha = alpha;
             heightOfPix = 1.0f / pixelsPerUnit;
 
             this.Position = position;
@@ -78,7 +79,23 @@ namespace FotorealistycznaGK
             //co ileśtam (jeszcz nie wiem, ile ;)), i w ten sposób określi się
             //kolejne punkty, które razem z this.Position będą wyznaczały nasze raye.
             //zaraz dokończę
-            
+            float krok = s * 2.0f / 400.0f;//400 to piksele, krok to odległość w pionie lub w poziomie
+            // - chwilowo view kwadratowy - o jaką będziesię przesuwać "cel" promienia po płaszczyźnie
+            //rzutni
+            for (int i = 0; i < 400; i++)
+                for (int j = 0; j < 400; j++)
+                    img.setPixel(i, j, new Intensity(0, 0, 0));
+            for (int i = 0; i < 400; i++)
+                for (int j = 0; j < 400; j++)
+                {
+                    napierdalacz = new Ray(srodek, poczatek + i*krok * pionPrzes + j*krok * prostopadlyPrzes);
+                    foreach (Primitive p in scene)
+                    {
+                        if (p.findIntersection(napierdalacz).X != float.PositiveInfinity)
+                            img.setPixel(i, j, p.color); //w tej chwili dany promień, ale nie na rzutni
+                    }
+                }
+            img.obraz.Save(renderTarget);
             //poniżej to bullshit
 
 
