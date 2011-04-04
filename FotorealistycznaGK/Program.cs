@@ -80,7 +80,7 @@ namespace FotorealistycznaGK
             Vector target = new Vector(0.0f, 0, 0);
             Vector up = new Vector(0, 1, 0);//jak nie, to (010,a od góry 100)
 
-            Vector v2 = new Vector(1, 1, 0); //tak - 1 1 0 pod kątem od góry,0,1,0 to od góry (z centralną)
+            Vector v2 = new Vector(1, 0, 0); //tak - 1 1 0 pod kątem od góry,0,1,0 to od góry (z centralną)
             Vector v3 = -up.cross(v2-target);
             System.Console.WriteLine(v3);
             System.Console.WriteLine("...");
