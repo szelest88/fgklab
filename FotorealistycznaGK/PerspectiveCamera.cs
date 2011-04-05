@@ -91,45 +91,29 @@ namespace FotorealistycznaGK
                 for (int j = 0; j < 400; j++)
                 {
                     napierdalacz = new Ray(observer, poczatek + i*krok * pionPrzes + j*krok * prostopadlyPrzes);
-                    System.Console.WriteLine("" + napierdalacz);
+                    //System.Console.WriteLine("" + napierdalacz);
                     foreach (Primitive p in scene)
                     {
                         if (p.findIntersection(napierdalacz).X != float.PositiveInfinity)
-                            img.setPixel(i, j, p.color); //w tej chwili dany promień, ale nie na rzutni
+                        {
+                            // PHONG
+
+                            double r, g, b, cos;
+                            Vector I = napierdalacz.direction.normalizeProduct();
+                            Vector N = ((Sphere)p).normal(p.findIntersection(napierdalacz));
+                            Vector R = I - N*(N.dot(I)*2.0f);
+                            float ss = napierdalacz.direction.normalizeProduct().dot(R);
+
+                            if (-ss > 0)
+                            {
+                                
+                            }
+
+                            //img.setPixel(i, j, p.color); //w tej chwili dany promień, ale nie na rzutni
                     }
                 }
             img.obraz.Save(renderTarget);
-            //poniżej to bullshit
 
-
-            /*
-            System.Console.WriteLine(prostopadlyPrzes);
-          //  Vector srodek = this.Position;
-           
-            poczatek -= pionPrzes * (h * 0.5f - heightOfPix * 0.5f);
-            System.Console.WriteLine("początek" + poczatek);
-            prostopadlyPrzes /= 400.0f;
-            pionPrzes /= 400.0f;
-            Vector iterator = new Vector(poczatek);
-            for (int i = 0; i < 400; i++)
-                for (int j = 0; j < 400; j++)
-                    img.setPixel(i, j, new Intensity(0, 0, 0));
-            for (int i = 0; i < 400; i++)
-                for (int j = 0; j < 400; j++)
-                {
-                    napierdalacz = new Ray(srodek, poczatek + (Target - Position));
-                    foreach (Primitive p in scene)
-                    {
-                        if (p.findIntersection(napierdalacz).X != float.PositiveInfinity)
-                            img.setPixel(i, j, p.color); //w tej chwili dany promień, ale nie na rzutni
-                    }
-                    poczatek = iterator + new Vector(pionPrzes * i + prostopadlyPrzes * j);
-                    // poczatek.add(prostopadlyPrzes + pionPrzes);
-                    System.Console.WriteLine("pocz:" + poczatek);
-                }
-            img.obraz.Save(renderTarget);
-            System.Console.WriteLine(poczatek);
-            */
         }
 
     }

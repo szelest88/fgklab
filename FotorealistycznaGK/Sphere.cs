@@ -79,37 +79,7 @@ namespace FotorealistycznaGK
                 
                 //System.Console.WriteLine("Promien przecina sfere w dwoch punktach: (" + p1.X + ", " + p1.Y + ", " + p1.Z + ") i (" + p2.X + ", " + p2.Y + ", " + p2.Z + ").");
                 //znajdowanie bliższego punktu
-                /*
-                 * Tu musi być jakis dodatkowy warunek, kurcze no trza sprawdzic czy aby nie mamy pkt za plecami - najlepiej jest to sprawdzac na podstawie promienia w pocz gdzies w kuli np. (0,0,8) czy cos
-                 * AM przepisałem to na nowo, z tym warunkiem.
-                */
-                //AM dziwnie prosto to wyszło, aczkolwiek sprawdzam, czy przecięcie nie jest "za plecami" obserwatora
-                //AM chyba wystarczy do tego parametr t
 
-                /* AM mały eksperyment z eliminacją błędnych punktów
-                if ((t1 < t2)) //czy p1 bliższe
-                {
-                    
-                    //  Tu chyba bedziemy an zyca obliczac wczesniej zadeklarowany p i go returniemy.
-                    
-                    if (t1 > 0)//czy nie za plecami
-                        System.Console.WriteLine(p1.ToString());
-                }
-                else if (t2 > 0) //jeśli drugie bliższe, to czy nie za plecami
-                {
-
-                    System.Console.WriteLine(p2.ToString());
-                }
-                else //oba są za plecami
-                    System.Console.WriteLine("plecy");
-                */
-
-                //AM no dobra, to lecimy.
-                //Post factum nie podoba mi się ten kod, taka ilość ifów to nie jest to, co
-                //tygryski lubią najbardziej - w kontekście programu, wymagającego
-                //bądź co bądź dużej wydajności. Ale tak jest skutecznie.
-                //Jeśli masz jakieś pomysły na optymalizację, byłoby fajnie ;)
-                //Jeśli nie - w tej chwili po prostu działa, a przynajmniej tak mi się wydaje ;)
                 if (t1 > 0) //jeśli kolizja nr. 1 jest z przodu...
                 {
                     if (t2 > 0) // ...i kolizja nr. 2 też...
@@ -157,6 +127,11 @@ namespace FotorealistycznaGK
                         float.PositiveInfinity,
                         float.PositiveInfinity); //jak wyżej
             }
+
+        }
+        public Vector normal(Vector inter)
+        {
+            return ((inter - this.sphereCenter).normalizeProduct());
 
         }
     }
