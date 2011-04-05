@@ -33,6 +33,8 @@ namespace FotorealistycznaGK
         }
 
         // nie wiem czy pozycji nie trza jakos powiazac z kamera - ale tak glosno mysle :>
+        //może dodawać światła do sceny (ewentualnie rozszerzywszy zakres typów kontenera)
+        //a następnie podawać je razem ze sceną do kamery - AM. Też głośno myślę ;)
 
         public Light(Intensity I, Vector v)
         {
