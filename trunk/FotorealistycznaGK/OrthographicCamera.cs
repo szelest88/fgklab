@@ -81,7 +81,7 @@ namespace FotorealistycznaGK
                     }
                     poczatek = iterator + new Vector(pionPrzes * i + prostopadlyPrzes * j);
                     // poczatek.add(prostopadlyPrzes + pionPrzes);
-                    System.Console.WriteLine("pocz:" + poczatek);
+                    //System.Console.WriteLine("pocz:" + poczatek);
                 }
             img.obraz.Save(renderTarget);
             System.Console.WriteLine(poczatek);
