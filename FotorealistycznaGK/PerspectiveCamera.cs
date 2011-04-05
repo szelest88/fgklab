@@ -68,7 +68,7 @@ namespace FotorealistycznaGK
             //trzeba znaleźć współrzędne prostokąta
             Ray napierdalacz;
             Vector prostopadlyPrzes =
-                ((this.Target - this.Position).cross(this.Up-this.Position)).normalizeProduct();//cross(this.Positon-this.Up)
+                ((this.Target - this.Position).cross(this.Position-this.Up)).normalizeProduct();//cross(this.Positon-this.Up)
             Vector pionPrzes = (this.Up).normalizeProduct();//; *1.5f;//(this.Up-this.Position).nor
             
             Vector observer = this.Position;
