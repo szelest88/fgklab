@@ -5,15 +5,15 @@ using System.Text;
 
 namespace FotorealistycznaGK
 {
-    class PerspectiveCamera: Camera
+    class PerspectiveCamera : Camera
     {
         //FUCK!
 
-          /**
-         <summary>
-         szerokość i wysokość viewportu (nearShit) w jednostkach sceny
-         </summary>
-         **/
+        /**
+       <summary>
+       szerokość i wysokość viewportu (nearShit) w jednostkach sceny
+       </summary>
+       **/
         float w, h;
         /**
          <summary>
@@ -32,14 +32,14 @@ namespace FotorealistycznaGK
          kąt widzenia, w pionie i w poziomie (fov) (jest jeden, bo chwilowo będziemy rzutować - dla
          uproszczenia - na kwadrat
          </summary>
-         **/ 
+         **/
         float alpha;
         /**
         <summary>
         odległość takiej niby rzutni ;) to jest bliższa kamerze) płaszczyzna obcinania chyba
          * W każdym razie posługuję się nią przy liczeniu kierunku promieni
         </summary>
-        **/ 
+        **/
         float near;
         List<Primitive> scene;
         string renderTarget; //dodałem, string na ścieżkę do pliku wynikowego
@@ -68,14 +68,14 @@ namespace FotorealistycznaGK
             //trzeba znaleźć współrzędne prostokąta
             Ray napierdalacz;
             Vector prostopadlyPrzes =
-                ((this.Target - this.Position).cross(this.Position-this.Up)).normalizeProduct();//cross(this.Positon-this.Up)
+                ((this.Target - this.Position).cross(this.Position - this.Up)).normalizeProduct();//cross(this.Positon-this.Up)
             Vector pionPrzes = (this.Up).normalizeProduct();//; *1.5f;//(this.Up-this.Position).nor
-            
+
             Vector observer = this.Position;
             Vector srodek = this.Position + (this.Target - this.Position).normalizeProduct() * near;
-            float s = near*(float)Math.Tan((double)(alpha/180.0*Math.PI)/2.0);
+            float s = near * (float)Math.Tan((double)(alpha / 180.0 * Math.PI) / 2.0);
             Vector poczatek = srodek - prostopadlyPrzes * s - pionPrzes * s;
-            System.Console.WriteLine(""+poczatek);
+            System.Console.WriteLine("" + poczatek);
             //powyższe to róg (lewy dolny) rzutni ("tylnej płaszczyzny obcinania").
             //teraz trzeba się od niego odsuwać w płaszczyźnie pionPrzes x prostopadlyPrzes
             //co ileśtam (jeszcz nie wiem, ile ;)), i w ten sposób określi się
@@ -90,7 +90,7 @@ namespace FotorealistycznaGK
             for (int i = 0; i < 400; i++)
                 for (int j = 0; j < 400; j++)
                 {
-                    napierdalacz = new Ray(observer, poczatek + i*krok * pionPrzes + j*krok * prostopadlyPrzes);
+                    napierdalacz = new Ray(observer, poczatek + i * krok * pionPrzes + j * krok * prostopadlyPrzes);
                     //System.Console.WriteLine("" + napierdalacz);
                     foreach (Primitive p in scene)
                     {
@@ -101,20 +101,21 @@ namespace FotorealistycznaGK
                             double r, g, b, cos;
                             Vector I = napierdalacz.direction.normalizeProduct();
                             Vector N = ((Sphere)p).normal(p.findIntersection(napierdalacz));
-                            Vector R = I - N*(N.dot(I)*2.0f);
+                            Vector R = I - N * (N.dot(I) * 2.0f);
                             float ss = napierdalacz.direction.normalizeProduct().dot(R);
 
                             if (-ss > 0)
                             {
-                                
+
                             }
 
                             //img.setPixel(i, j, p.color); //w tej chwili dany promień, ale nie na rzutni
+                        }
                     }
+                    img.obraz.Save(renderTarget);
+
                 }
-            img.obraz.Save(renderTarget);
 
         }
-
     }
 }
