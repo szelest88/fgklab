@@ -88,16 +88,19 @@ namespace FotorealistycznaGK
                 for (int j = 0; j < 400; j++)
                     img.setPixel(i, j, new Intensity(0, 0, 0));
             for (int i = 0; i < 400; i++)
+            {
+
+                System.Console.WriteLine("" + i + @"/400");
                 for (int j = 0; j < 400; j++)
                 {
                     napierdalacz = new Ray(observer, poczatek + i * krok * pionPrzes + j * krok * prostopadlyPrzes);
-                    //System.Console.WriteLine("" + napierdalacz);
+
                     foreach (Primitive p in scene)
                     {
                         if (p.findIntersection(napierdalacz).X != float.PositiveInfinity)
                         {
                             // PHONG
-
+                            /*
                             double r, g, b, cos;
                             Vector I = napierdalacz.direction.normalizeProduct();
                             Vector N = ((Sphere)p).normal(p.findIntersection(napierdalacz));
@@ -108,10 +111,11 @@ namespace FotorealistycznaGK
                             {
 
                             }
-
-                            //img.setPixel(i, j, p.color); //w tej chwili dany promień, ale nie na rzutni
+                            */
+                            img.setPixel(i, j, p.color); //w tej chwili dany promień, ale nie na rzutni
                         }
                     }
+                }
                     img.obraz.Save(renderTarget);
 
                 }
