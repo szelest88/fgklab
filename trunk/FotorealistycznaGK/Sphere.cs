@@ -43,13 +43,6 @@ namespace FotorealistycznaGK
             return ("Jestem sferą o środku w (x = " + this.SphereCenter.X.ToString() + ", y = " + this.SphereCenter.Y.ToString() + ", z = " + this.SphereCenter.Z.ToString()+") i promieniu "+this.sphereRadius+"\n");
         }
 
-        // Funkcja znajdujaca punkt przeciecia promienia ze sfera
-
-        /*
-         * Funkcja docelowo powinna zwracać Vector, ale poki eksperymentujemy to niech zostanie void
-         * AM zmieniłem na Vector
-        */
-
         public override Vector findIntersection(Ray r)
         {
 
@@ -78,7 +71,7 @@ namespace FotorealistycznaGK
                 Vector p2 = new Vector((r.origin.X + t2 * r.direction.X), (r.origin.Y + t2 * r.direction.Y), (r.origin.Z + t2 * r.direction.Z));
                 
                 //System.Console.WriteLine("Promien przecina sfere w dwoch punktach: (" + p1.X + ", " + p1.Y + ", " + p1.Z + ") i (" + p2.X + ", " + p2.Y + ", " + p2.Z + ").");
-                //znajdowanie bliższego punktu
+                //znajdowanie bliższego punktu:
 
                 if (t1 > 0) //jeśli kolizja nr. 1 jest z przodu...
                 {
