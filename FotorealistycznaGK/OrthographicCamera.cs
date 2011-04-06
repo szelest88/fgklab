@@ -34,7 +34,7 @@ namespace FotorealistycznaGK
         {
             this.w = w;
             this.h = h;
-            this.wPix = (int)w * pixelsPerUnit; ///POPRAWIIICC!!!!!!!!!!!!!!!!!
+            this.wPix = (int)w * pixelsPerUnit;
             this.hPix = (int)h * pixelsPerUnit;
             widthOfPix = 1.0f / pixelsPerUnit;
             heightOfPix = 1.0f / pixelsPerUnit;
@@ -49,15 +49,10 @@ namespace FotorealistycznaGK
         public override void renderScene()
         {
             Image img = new Image(400, 400);
-            //kurwaaaa
-            //trzeba znaleźć współrzędne prostokąta
             Ray napierdalacz;
             Vector prostopadlyPrzes =
                 ((this.Target - this.Position).cross(this.Position -this.Up)).normalizeProduct();//cross(this.Positon-this.Up)
-            Vector pionPrzes = (this.Up).normalizeProduct();//; *1.5f;//(this.Up-this.Position).nor
-            //tylko kurde to *1.5 jest empiryczne :| Prawdopodobnie będzie trzeba to zmienić.
-            //prostopadlyPrzes.normalize();
-            //pionPrzes.normalize();
+            Vector pionPrzes = (this.Up).normalizeProduct();
             System.Console.WriteLine(prostopadlyPrzes);
             Vector srodek = this.Position;
             Vector poczatek = srodek - prostopadlyPrzes * (w * 0.5f - widthOfPix * 0.5f);
