@@ -7,7 +7,7 @@ namespace FotorealistycznaGK
 {
     class Ray
     {
-        //tu pozamieniałem
+
         public Vector origin; //origin+direction=destination
         public Vector direction;//direction = destination - origin
         public Vector destination;//destination = origin+direction
