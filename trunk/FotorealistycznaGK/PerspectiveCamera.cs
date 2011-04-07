@@ -85,10 +85,9 @@ namespace FotorealistycznaGK
             Vector poczatek = srodek - prostopadlyPrzes * s - pionPrzes * s;
             System.Console.WriteLine("" + poczatek);
             /**
-             * powyższe to róg (lewy dolny) rzutni ("tylnej płaszczyzny obcinania").
-             * teraz trzeba się od niego odsuwać w płaszczyźnie pionPrzes x prostopadlyPrzes
-             * co ileśtam (jeszcz nie wiem, ile ;)), i w ten sposób określi się
-             * kolejne punkty, które razem z this.Position będą wyznaczały nasze raye.
+             poczatek - lewy dolny róg rzutni (tylnej płaszczyzny obcinania). Trza się od niego odsuwać
+             w płaszczyźnie pionPrzes x prostopadlyPrzes co (szerokosc/rozdzielczosc), i w ten sposób 
+             określi się kolejne punkty, które razem z this.Position będą wyznaczały nasze raye.
              **/
             float krok = s * 2.0f / 400.0f;
             /* 
