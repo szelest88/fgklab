@@ -51,6 +51,7 @@
     <Compile Include="Material.cs" />
     <Compile Include="OrthographicCamera.cs" />
     <Compile Include="PerspectiveCamera.cs" />
+    <Compile Include="PointLight.cs" />
     <Compile Include="Primitive.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
