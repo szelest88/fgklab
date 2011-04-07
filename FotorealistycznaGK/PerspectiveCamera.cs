@@ -92,9 +92,8 @@ namespace FotorealistycznaGK
             float krok = s * 2.0f / 400.0f;
             /* 
             Powyższe:
-             400 to piksele, krok to odległość w pionie lub w poziomie
-            - chwilowo view kwadratowy - o jaką będzie się przesuwać "cel" promienia po płaszczyźnie
-            rzutni
+             400 to piksele, krok to odległość w pionie lub w poziomie - chwilowo view kwadratowy - 
+             o jaką będzie się przesuwać "cel" promienia po płaszczyźnie rzutni
              */
             for (int i = 0; i < 400; i++)
                 for (int j = 0; j < 400; j++)
