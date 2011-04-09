@@ -9,6 +9,7 @@ namespace FotorealistycznaGK
     {
         Vector sphereCenter;
         float sphereRadius;
+      
 
         public float SphereRadius
         {
