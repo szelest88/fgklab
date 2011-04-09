@@ -13,7 +13,8 @@ namespace FotorealistycznaGK
 
         #region Properties
 
-        public double R {
+        public double R
+        {
             get { return r; }
             set { if (r > 1) r = 1; else if (r < 0) r = 0; else r = value; }
         }
@@ -34,7 +35,7 @@ namespace FotorealistycznaGK
 
         #region Constructors
 
-        public Intensity() 
+        public Intensity()
         {
             this.R = 0;
             this.G = 0;
@@ -48,22 +49,53 @@ namespace FotorealistycznaGK
             this.B = b;
         }
 
-        public Intensity(Intensity I) 
+        public Intensity(Intensity I)
         {
             this.R = I.R;
             this.G = I.G;
             this.B = I.B;
         }
-    
+
         #endregion Constructors
 
         #region Methods
 
         public void addValues(double r, double g, double b)
         {
-            this.R += r;
-            this.G += g;
-            this.B += b;
+            //hm...
+            if (R + r <= 1)
+            {
+                if (R + r >= 0)
+                {
+                    this.R += r;
+                }
+                else this.R = 0;
+            }
+            else
+                this.R = 1;
+            //hm...
+            if (G + g <= 1)
+            {
+                if (G + g >= 0)
+                {
+                    this.G += g;
+                }
+                else this.G = 0;
+            }
+            else
+                this.G = 1;
+            //hm...
+            if (B + b <= 1)
+            {
+                if (B + b >= 0)
+                {
+                    this.B += b;
+                }
+                else this.B = 0;
+            }
+            else
+                this.B = 1;
+          //  this.B += b;
         }
 
         public void divide(int p)
