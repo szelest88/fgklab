@@ -117,28 +117,29 @@ namespace FotorealistycznaGK
                         if (intersection.X != float.PositiveInfinity)
                         {
                             float specular;
-                            float specularCoeff = 0.75f;// co to kurwa jest?
+                           // float specularCoeff = 0.75f;// co to kurwa jest?
                             // Ania: tu zmianilam na 15 to a ;)
-                            float a = 15.0f;//współczynnik rozbłysku odbicia lustrzanego
+                         //   float a = 15.0f;//współczynnik rozbłysku odbicia lustrzanego
                             //Vector I = napierdalacz.direction.normalizeProduct();
                             Ray test = new Ray(light.Position, poczatek + i * krok * pionPrzes + j * krok * prostopadlyPrzes);
                             //powyższe: poprawka Łukasza S.
                             Vector I = test.direction.normalizeProduct();
                             Vector N = ((Sphere)p).normal(intersection);
                             Vector R = I - N * (N.dot(I) * 2.0f); //brakuje tu pozycji światła
+                            //Sphere sph = ((Sphere)p;
                             float ss = napierdalacz.direction.normalizeProduct().dot(R);
                             if (ss > 0)
-                                specular = (float)(Math.Pow(ss, a));
+                                specular = (float)(Math.Pow(ss, p.material.Alpha));
                             else
                                 specular = 0;
-                            specular *= specularCoeff;
+                            specular *= p.material.SpecularCoefficient;
                             Vector sIntensity = new Vector((float)light.Color.R, (float)light.Color.G, (float)light.Color.B) * specular;
                             //diffuse
                             float cosinus = napierdalacz.direction.normalizeProduct().dot(
                                 N);
-                            double r = light.Color.R * -0.75 * cosinus; //-1.0 - jakieś k
-                            double g = light.Color.G * -0.75 * cosinus;
-                            double b = light.Color.B * -0.75 * cosinus;
+                            double r = light.Color.R * -p.material.DiffuseCoefficient * cosinus; //-1.0 - jakieś k
+                            double g = light.Color.G * -p.material.DiffuseCoefficient * cosinus;
+                            double b = light.Color.B * -p.material.DiffuseCoefficient * cosinus;
 
                             Intensity diff = new Intensity(r * p.color.R, g * p.color.G, b * p.color.B);//33-moje
                             //diff.addValues(p.color.R*0.33, p.color.G*0.33, p.color.B*0.33);//moje, ale ma sens?

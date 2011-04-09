@@ -9,7 +9,7 @@ namespace FotorealistycznaGK
     abstract class Primitive
     {
         public Intensity color;
-        //public Material material;
+        public Material material;
         abstract public Vector findIntersection(Ray r);
     }
 }

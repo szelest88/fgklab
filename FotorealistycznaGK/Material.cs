@@ -7,17 +7,41 @@ namespace FotorealistycznaGK
 {
     class Material
     {
-        double specularCoefficient; // wsp.swiatla odbijanego zwierciadlanie
-        double ambientCoefficient;  // wsp. odbicia swiatla srodowiska
-        double diffuseCoefficient;  // wsp. odbicia swiatla rozproszonego
-        int n;                      // wsp. gladkosci powierzchni (tzw. shininess)
+        float specularCoefficient; // wsp.swiatla odbijanego zwierciadlanie
+
+        public float SpecularCoefficient
+        {
+            get { return specularCoefficient; }
+            set { specularCoefficient = value; }
+        }
+        float ambientCoefficient;  // wsp. odbicia swiatla srodowiska
+
+        public float AmbientCoefficient
+        {
+            get { return ambientCoefficient; }
+            set { ambientCoefficient = value; }
+        }
+        float diffuseCoefficient;  // wsp. odbicia swiatla rozproszonego
+
+        public float DiffuseCoefficient
+        {
+            get { return diffuseCoefficient; }
+            set { diffuseCoefficient = value; }
+        }
+        float alpha;                      // wsp. gladkosci powierzchni (tzw. shininess)
+
+        public float Alpha
+        {
+            get { return alpha; }
+            set { alpha = value; }
+        }
 
         public Material()
         { 
-            this.specularCoefficient = 0.5;
-            this.ambientCoefficient = 0.0;
-            this.diffuseCoefficient = 0.5;
-            this.n= 20;
+            this.specularCoefficient = 0.75f;
+            this.ambientCoefficient = 0.0f;
+            this.diffuseCoefficient = 0.75f;
+            this.alpha= 15.0f; //15.0f ok
         }
 
 

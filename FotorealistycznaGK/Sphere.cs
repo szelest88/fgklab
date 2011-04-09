@@ -31,12 +31,13 @@ namespace FotorealistycznaGK
             this.sphereRadius = 1;
         }
 
-        public Sphere(Vector v, float radius, Intensity inten)
+        public Sphere(Vector v, float radius, Intensity inten, Material material)
         {
 
             this.sphereCenter = v;
             this.sphereRadius = radius;
             ((Primitive)this).color = inten;
+            this.material = material;
         }
 
         public override string ToString()
