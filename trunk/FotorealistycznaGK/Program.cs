@@ -12,8 +12,9 @@ namespace FotorealistycznaGK
             Vector origin = new Vector(0, 0, 0);
             Vector des1 = new Vector(0, 0, 1);
             Vector des2 = new Vector(0, 1, 0);
-            Sphere S = new Sphere(new Vector(0,0,0), 0.35f, new Intensity(1,1,0));
-            Sphere S2 = new Sphere(new Vector(0, 0.45f, 0.0f), 0.15f, new Intensity(1,0,1));//druga kulka, tak, żeby sprawdzić czy działa.
+            Material material = new Material();
+            Sphere S = new Sphere(new Vector(0,0,0), 0.35f, new Intensity(1,1,0),material);
+            Sphere S2 = new Sphere(new Vector(0, 0.45f, 0.0f), 0.15f, new Intensity(1,0,1),material);//druga kulka, tak, żeby sprawdzić czy działa.
             List<Primitive> list = new List<Primitive>();
             list.Add(S);
             list.Add(S2);
