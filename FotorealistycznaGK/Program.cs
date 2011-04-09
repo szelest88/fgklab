@@ -31,7 +31,6 @@ namespace FotorealistycznaGK
             //double srodekX = -1.0f + (x + 0.5f) * widthPixel;
             //double srodekY = 1.0f - (y + 0.5f) * heightPixel;
             Intensity color1 = new Intensity(1, 0, 0);// na czerwono, żeby było coś widać
-            Intensity color;
             Intensity color2 = new Intensity(0, 0, 1);
             Intensity backgroundColor = new Intensity();
 
