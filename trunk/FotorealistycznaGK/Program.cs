@@ -17,6 +17,9 @@ namespace FotorealistycznaGK
             List<Primitive> list = new List<Primitive>();
             list.Add(S);
             list.Add(S2);
+            PointLight light = new PointLight();
+            light.Color = new Intensity(1.0, 1.0, 1.0);
+            light.Position = new Vector(0, 0, 1);
             Ray ray1 = new Ray(origin, des1);
             Ray ray2 = new Ray(origin, des2);
 
@@ -85,7 +88,7 @@ namespace FotorealistycznaGK
             System.Console.WriteLine(v3);
             System.Console.WriteLine("...");
             //dlaczego ten cross zamiast up... bo wychodzi coś typu (-1,0,0)
-            PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, new Uri(@"C:\renderpers.jpg"));
+            PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpers.jpg"));
             pc.renderScene();
             OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, v3, list, new Uri(@"C:\rendermasakra.jpg"));
             oc.renderScene();
