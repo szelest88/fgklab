@@ -15,9 +15,11 @@ namespace FotorealistycznaGK
             Material material = new Material();
             Sphere S = new Sphere(new Vector(0,0,0), 0.35f, new Intensity(1,1,0),material);
             Sphere S2 = new Sphere(new Vector(0, 0.45f, 0.0f), 0.15f, new Intensity(1,0,1),material);//druga kulka, tak, żeby sprawdzić czy działa.
+            Triangle trn = new Triangle(new Vector(0, 0, 0), new Vector(0, 0.5f, 0), new Vector(0, 0, 0.5f), new Intensity(0, 0, 1), material);
             List<Primitive> list = new List<Primitive>();
             list.Add(S);
             list.Add(S2);
+            list.Add(trn);
             PointLight light = new PointLight();
             light.Color = new Intensity(1.0, 1.0, 1.0);
             light.Position = new Vector(0, 0, 1);

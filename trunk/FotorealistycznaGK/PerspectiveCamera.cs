@@ -124,7 +124,7 @@ namespace FotorealistycznaGK
                             Ray test = new Ray(light.Position, poczatek + i * krok * pionPrzes + j * krok * prostopadlyPrzes);
                             //powyższe: poprawka Łukasza S.
                             Vector I = test.direction.normalizeProduct();
-                            Vector N = ((Sphere)p).normal(intersection);
+                            Vector N = p.normal(intersection);
                             Vector R = I - N * (N.dot(I) * 2.0f); //brakuje tu pozycji światła
                             //Sphere sph = ((Sphere)p;
                             float ss = napierdalacz.direction.normalizeProduct().dot(R);

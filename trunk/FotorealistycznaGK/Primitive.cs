@@ -11,6 +11,7 @@ namespace FotorealistycznaGK
         public Intensity color;
         public Material material;
         abstract public Vector findIntersection(Ray r);
-        abstract public void Texturize();
+        abstract public void Texturize(Vector vec); //AM poprawiłem argument
+        abstract public Vector normal(Vector inter); //AM dodałem
     }
 }
