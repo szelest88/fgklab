@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace FotorealistycznaGK
 {
@@ -22,7 +23,16 @@ namespace FotorealistycznaGK
         float alfa;
         float beta;
         float gamma;
-
+        public float Au, Av, Bu, Bv, Cu, Cv;
+        public void setUvCoords(float Au, float Av, float Bu, float Bv, float Cu, float Cv)
+        {
+            this.Au = Au;
+            this.Av = Av;
+            this.Bu = Bu;
+            this.Bv = Bv;
+            this.Cu = Cu;
+            this.Cv = Cv;
+        }
         public override Vector findIntersection(Ray r)
         {
             Vector o = new Vector(r.origin);
@@ -63,9 +73,12 @@ namespace FotorealistycznaGK
 
         }
 
-        public override void Texturize(Vector vec) //dodałem AM
+        public override Color Texturize(Vector vec) //dodałem AM
         {
             //huhu
+            Color temp = Color.Red;
+            this.material.texture = new Texture(@"C:\tex.bmp");
+            return temp;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace FotorealistycznaGK
     class Material
     {
         float specularCoefficient; // wsp.swiatla odbijanego zwierciadlanie
-        Texture texture;
+        public Texture texture;
         Boolean hasTexture = false;
 
         #region Properties

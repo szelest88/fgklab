@@ -126,7 +126,7 @@ namespace FotorealistycznaGK
                             Vector I = test.direction.normalizeProduct();
                             Vector N = p.normal(intersection);
                             Vector R = I - N * (N.dot(I) * 2.0f); //brakuje tu pozycji światła
-                            //Sphere sph = ((Sphere)p;
+                            Sphere sph = (Sphere)p;
                             float ss = napierdalacz.direction.normalizeProduct().dot(R);
                             if (ss > 0)
                                 specular = (float)(Math.Pow(ss, p.material.Alpha));
@@ -140,8 +140,31 @@ namespace FotorealistycznaGK
                             double r = light.Color.R * -p.material.DiffuseCoefficient * cosinus; //-1.0 - jakieś k
                             double g = light.Color.G * -p.material.DiffuseCoefficient * cosinus;
                             double b = light.Color.B * -p.material.DiffuseCoefficient * cosinus;
+                            p.color.R = (double)(p.Texturize(intersection - ((Sphere)p).SphereCenter).R)/255.0;
+                            p.color.G = (double)(p.Texturize(intersection - ((Sphere)p).SphereCenter).G)/255.0;
+                            p.color.B = (double)(p.Texturize(intersection - ((Sphere)p).SphereCenter).B)/255.0;
+
 
                             Intensity diff = new Intensity(r * p.color.R, g * p.color.G, b * p.color.B);//33-moje
+                           
+                            //wariacje na temat tekstur
+                            //de facto takie mapowanie prostokątne
+                            //zamiast p.color... tekstury
+                           /*
+                            Triangle troj;
+                            troj = (Triangle)p;
+                            float u = -intersection.Y * (troj.c.Z - troj.a.Z) * 2.0f;//szer vportu
+                            float v = -intersection.Z * (troj.b.Y - troj.a.Y) * 2.0f;//szerviewportu
+                            System.Console.WriteLine("u,v:" + u + "," + v);
+                            System.Drawing.Bitmap obraz = troj.material.texture.texture.obraz;
+                            System.Drawing.Color tex = 
+                                obraz.GetPixel((int)(u*obraz.Width), (int)(v*obraz.Height));//uv->inty (szer, wys
+                            diff.addValues(tex.R * 0.33, tex.G * 0.33, tex.B * 0.33);
+                            
+                            */
+                            /*dla kulki*/
+                           // p.Texturize(intersection-((Sphere)p).SphereCenter);
+                            //koniec wariacji, jak coś to można odkomentować poniższe
                             //diff.addValues(p.color.R*0.33, p.color.G*0.33, p.color.B*0.33);//moje, ale ma sens?
                             //ten kolor należałoby raczej mnożyć- teraz to jest ambient zależny od koloru
 

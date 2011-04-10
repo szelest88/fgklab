@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace FotorealistycznaGK
 {
@@ -134,18 +135,25 @@ namespace FotorealistycznaGK
         // i tu lece z instrukcji str. 9
         // wszystko, co jest tu napisane nalezy traktowac jako wielkie CHYBA
 
-        public override void Texturize(Vector vec) //poprawiłem na override
+        public override Color Texturize(Vector vec) //poprawiłem na override,y...Color?
         {
-            double phi = Math.Acos(vec.Y);
-            double theta = Math.Atan2(vec.X, vec.Z);
+            Color res;
+            double theta = Math.Acos(vec.Y);
+            double phi = Math.Atan2(vec.X, vec.Z);
             double pi = Math.PI;
+            if (phi < 0.0)
+                phi += 2 * pi;
 
-            double u = phi / (2*pi);
-            double v = 1.0 - theta / pi;
-
+            double u = phi / (2*pi); //2*pi miast pi?
+            double v = 1.0d - theta / pi;
+            Image tex = this.material.texture.texture;
             //co to xres, yres (rezultat?) i po co to i jaki to ma zwiazek z colorMap z Texture? :>
             //int column = (int)((xres - 1) * u);     // kolumna jest poziomo 
             //int row = (int)((yres - 1) * v);      // wiersz jest pionowo 
+            int column = (int)((tex.XSize - 1) * u);
+            int row = (int)((tex.YSize - 1) * v);
+            res = tex.obraz.GetPixel(column, row);
+            return res;
         }
 
         
