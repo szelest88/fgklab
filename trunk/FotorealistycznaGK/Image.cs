@@ -34,7 +34,8 @@ namespace FotorealistycznaGK
 
         public void setPixel(int x, int y, Intensity pixel)
 	    {
-	        Color color = Color.FromArgb((int)(pixel.R*255), (int)(pixel.G*255), (int)(pixel.B*255));
+	        Color color = Color.FromArgb((byte)(pixel.R*255), (byte)(pixel.G*255), (byte)(pixel.B*255));
+            //nie razy 255?
 	        obraz.SetPixel(x,y,color);
 	    }
     }       

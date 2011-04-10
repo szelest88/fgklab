@@ -13,13 +13,17 @@ namespace FotorealistycznaGK
             Vector des1 = new Vector(0, 0, 1);
             Vector des2 = new Vector(0, 1, 0);
             Material material = new Material();
+            material.texture = new Texture(@"C:\lenatex.jpg");
             Sphere S = new Sphere(new Vector(0,0,0), 0.35f, new Intensity(1,1,0),material);
-            Sphere S2 = new Sphere(new Vector(0, 0.45f, 0.0f), 0.15f, new Intensity(1,0,1),material);//druga kulka, tak, żeby sprawdzić czy działa.
-            Triangle trn = new Triangle(new Vector(0, 0, 0), new Vector(0, 0.5f, 0), new Vector(0, 0, 0.5f), new Intensity(0, 0, 1), material);
+           // Sphere S2 = new Sphere(new Vector(0, 0.45f, 0.0f), 0.15f, new Intensity(1,0,1),material);//druga kulka, tak, żeby sprawdzić czy działa.
+           // Triangle trn = new Triangle(new Vector(0, 0, 0), new Vector(0, 0.5f, 0), new Vector(0, 0, 0.5f), new Intensity(0, 0, 1), material);
+          //  trn.setUvCoords(0, 0, 0, 32, 32, 0);
+            Texture tex = new Texture(@"C:\tex.bmp");
+            //trn.material.texture = tex;
             List<Primitive> list = new List<Primitive>();
             list.Add(S);
-            list.Add(S2);
-            list.Add(trn);
+           // list.Add(S2);
+          //  list.Add(trn);
             PointLight light = new PointLight();
             light.Color = new Intensity(1.0, 1.0, 1.0);
             light.Position = new Vector(0, 0, 1);
@@ -37,21 +41,21 @@ namespace FotorealistycznaGK
             Intensity color2 = new Intensity(0, 0, 1);
             Intensity backgroundColor = new Intensity();
 
-            System.Console.WriteLine("Obliczanie punktu przeciecia promienia ze sfera\n");
+         //   System.Console.WriteLine("Obliczanie punktu przeciecia promienia ze sfera\n");
          
-            System.Console.WriteLine("Sfera: "+S.ToString()); //można też WriteLine(""+S)
+       //     System.Console.WriteLine("Sfera: "+S.ToString()); //można też WriteLine(""+S)
             
             System.Console.WriteLine("PROMIEN 1 ("+ray1.ToString()+": ");
             System.Console.WriteLine("Najbliższa kolizja w kierunku patrzenia:");
-            Vector res=S.findIntersection(ray1);
+         //   Vector res=S.findIntersection(ray1);
 
-            if (!float.IsPositiveInfinity(res.X))//jest takie gdy brak kolizji
-            {
-                res = S.findIntersection(ray1);
-                System.Console.WriteLine(res);
-            }
-            else
-                System.Console.WriteLine("Brak kolizji :(");
+//            if (!float.IsPositiveInfinity(res.X))//jest takie gdy brak kolizji
+  //          {
+    //            res = S.findIntersection(ray1);
+      //          System.Console.WriteLine(res);
+        //    }
+          //  else
+            //    System.Console.WriteLine("Brak kolizji :(");
 
             // Zadanie 2 - rednerowanie
             /*
