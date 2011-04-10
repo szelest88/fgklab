@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 
 namespace FotorealistycznaGK
@@ -23,7 +24,8 @@ namespace FotorealistycznaGK
         // wczytanie tekstury
         public void getTexture(String source)
         {
-            this.texture.obraz = Bitmap.FromFile(@ source); //<-- tu sie cos pieprzy, moze ja juz sie w tym wszystkim zakrecilam, nie wiem...
+            this.texture.obraz = (Bitmap)Bitmap.FromFile(source); //<-- tu sie cos pieprzy, moze ja juz sie w tym wszystkim zakrecilam, nie wiem...
+        
         }
     }
 }
