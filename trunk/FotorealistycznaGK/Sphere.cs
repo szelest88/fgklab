@@ -129,6 +129,24 @@ namespace FotorealistycznaGK
             return ((inter - this.sphereCenter).normalizeProduct());
 
         }
+
+        //funkcja teksturujaca sfere,v- jest to wynik z findIntersection
+        // i tu lece z instrukcji str. 9
+        // wszystko, co jest tu napisane nalezy traktowac jako wielkie CHYBA
+
+        public void Texturize(Vector vec)
+        {
+            double phi = Math.Acos(vec.Y);
+            double theta = Math.Atan2(vec.X, vec.Z);
+            double pi = Math.PI;
+
+            double u = phi / (2*pi);
+            double v = 1.0 - theta / pi;
+
+            //co to xres, yres (rezultat?) i po co to i jaki to ma zwiazek z colorMap z Texture? :>
+            //int column = (int)((xres - 1) * u);     // kolumna jest poziomo 
+            //int row = (int)((yres - 1) * v);      // wiersz jest pionowo 
+        }
     }
 
     
