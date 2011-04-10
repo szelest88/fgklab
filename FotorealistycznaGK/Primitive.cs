@@ -11,5 +11,6 @@ namespace FotorealistycznaGK
         public Intensity color;
         public Material material;
         abstract public Vector findIntersection(Ray r);
+        abstract public void Texturize();
     }
 }
