@@ -103,7 +103,7 @@ namespace FotorealistycznaGK
                     img.setPixel(i, j, new Intensity(0, 0, 0));
             for (int i = 0; i < 400; i++)
             {
-
+                // PHONG
                 System.Console.WriteLine("" + i + @"/400");
                 for (int j = 0; j < 400; j++)
                 {

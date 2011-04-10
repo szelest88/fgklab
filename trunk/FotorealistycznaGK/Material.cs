@@ -8,6 +8,10 @@ namespace FotorealistycznaGK
     class Material
     {
         float specularCoefficient; // wsp.swiatla odbijanego zwierciadlanie
+        Texture texture;
+        Boolean hasTexture = false;
+
+        #region Properties
 
         public float SpecularCoefficient
         {
@@ -35,6 +39,7 @@ namespace FotorealistycznaGK
             get { return alpha; }
             set { alpha = value; }
         }
+        #endregion Properties
 
         public Material()
         { 
@@ -42,6 +47,7 @@ namespace FotorealistycznaGK
             this.ambientCoefficient = 0.0f;
             this.diffuseCoefficient = 0.75f;
             this.alpha= 15.0f; //15.0f ok
+            this.hasTexture = false;
         }
 
 
