@@ -124,17 +124,17 @@ namespace FotorealistycznaGK
             }
 
         }
-        public Vector normal(Vector inter)
+
+        public override Vector normal(Vector inter)
         {
             return ((inter - this.sphereCenter).normalizeProduct());
-
         }
 
         //funkcja teksturujaca sfere,v- jest to wynik z findIntersection
         // i tu lece z instrukcji str. 9
         // wszystko, co jest tu napisane nalezy traktowac jako wielkie CHYBA
 
-        public void Texturize(Vector vec)
+        public override void Texturize(Vector vec) //poprawiłem na override
         {
             double phi = Math.Acos(vec.Y);
             double theta = Math.Atan2(vec.X, vec.Z);
@@ -147,6 +147,8 @@ namespace FotorealistycznaGK
             //int column = (int)((xres - 1) * u);     // kolumna jest poziomo 
             //int row = (int)((yres - 1) * v);      // wiersz jest pionowo 
         }
+
+        
     }
 
     
