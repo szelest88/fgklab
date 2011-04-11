@@ -33,8 +33,8 @@ namespace FotorealistycznaGK
             // Zadanie 2
             Image img = new Image(200, 200); //kamera orto powinna przyjąć rozmiary obrazu jako parametr w konstruktorze
 
-            float heightPixel = 0.01f;// / 100.0f;//ROZDZIELCZOSCPOZIOMAOBRAZU i ta druga to 100, 100
-            float widthPixel = 0.01f;/// 100.0f;
+            //float heightPixel = 0.01f;// / 100.0f;//ROZDZIELCZOSCPOZIOMAOBRAZU i ta druga to 100, 100
+            //float widthPixel = 0.01f;/// 100.0f;
             //double srodekX = -1.0f + (x + 0.5f) * widthPixel;
             //double srodekY = 1.0f - (y + 0.5f) * heightPixel;
             Intensity color1 = new Intensity(1, 0, 0);// na czerwono, żeby było coś widać

@@ -18,8 +18,9 @@ namespace FotorealistycznaGK
         public Texture(String source)
         {
             this.getTexture(source);
-            this.texture.XSize = 512; // Width <-- tu chyba lepiej uzaleznic od pozniejszych i i j (jakos zliczac po prostu)
-            this.texture.YSize = 256; // Height
+            //skasowałem poniższe, bo odczyt tych danych i tak następuje w funkcji getTexture()
+            //this.texture.XSize = 512; // Width <-- tu chyba lepiej uzaleznic od pozniejszych i i j (jakos zliczac po prostu)
+            //this.texture.YSize = 256; // Height
 
             
         }
@@ -27,9 +28,10 @@ namespace FotorealistycznaGK
         // wczytanie tekstury
         public void getTexture(String source)
         {
-            this.texture = new Image(512, 256);//pic
+            Bitmap bmp = (Bitmap)Bitmap.FromFile(source);
+            this.texture = new Image(bmp.Width, bmp.Height);//pic
             
-            this.texture.obraz = (Bitmap)Bitmap.FromFile(source); //<-- tu sie cos pieprzy, moze ja juz sie w tym wszystkim zakrecilam, nie wiem...
+            this.texture.obraz = bmp; //<-- tu sie cos pieprzy, moze ja juz sie w tym wszystkim zakrecilam, nie wiem...
             this.texture.XSize = this.texture.obraz.Width;
             this.texture.YSize = this.texture.obraz.Height;
             colorMap = new Color[this.texture.XSize, this.texture.YSize];
