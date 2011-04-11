@@ -77,7 +77,7 @@ namespace FotorealistycznaGK
         {
             //huhu
             Color temp = Color.Red;
-            this.material.texture = new Texture(@"C:\tex.bmp");
+            //this.material.texture = new Texture(@"C:\lenatex.jpg");
             return temp;
         }
     }

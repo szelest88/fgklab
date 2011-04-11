@@ -126,7 +126,7 @@ namespace FotorealistycznaGK
                             Vector I = test.direction.normalizeProduct();
                             Vector N = p.normal(intersection);
                             Vector R = I - N * (N.dot(I) * 2.0f); //brakuje tu pozycji światła
-                            Sphere sph = (Sphere)p;
+                          //  Sphere sph = (Sphere)p;
                             float ss = napierdalacz.direction.normalizeProduct().dot(R);
                             if (ss > 0)
                                 specular = (float)(Math.Pow(ss, p.material.Alpha));
@@ -140,9 +140,9 @@ namespace FotorealistycznaGK
                             double r = light.Color.R * -p.material.DiffuseCoefficient * cosinus; //-1.0 - jakieś k
                             double g = light.Color.G * -p.material.DiffuseCoefficient * cosinus;
                             double b = light.Color.B * -p.material.DiffuseCoefficient * cosinus;
-                            p.color.R = (double)(p.Texturize(intersection - ((Sphere)p).SphereCenter).R)/255.0;
-                            p.color.G = (double)(p.Texturize(intersection - ((Sphere)p).SphereCenter).G)/255.0;
-                            p.color.B = (double)(p.Texturize(intersection - ((Sphere)p).SphereCenter).B)/255.0;
+                            p.color.R = (double)(p.Texturize(intersection).R)/255.0;
+                            p.color.G = (double)(p.Texturize(intersection).G)/255.0;
+                            p.color.B = (double)(p.Texturize(intersection).B)/255.0;
 
 
                             Intensity diff = new Intensity(r * p.color.R, g * p.color.G, b * p.color.B);//33-moje
