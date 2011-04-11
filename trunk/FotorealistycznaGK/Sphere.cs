@@ -137,6 +137,7 @@ namespace FotorealistycznaGK
 
         public override Color Texturize(Vector vec) //poprawiłem na override,y...Color?
         {
+            vec = vec - this.SphereCenter;
             Color res;
             double theta = Math.Acos(vec.Y);
             double phi = Math.Atan2(vec.X, vec.Z);
