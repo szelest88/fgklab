@@ -80,7 +80,7 @@ namespace FotorealistycznaGK
             //this.material.texture = new Texture(@"C:\lenatex.jpg");
             
             //nadszedł CZAS TEKSTUROWANIA.
-
+                
             return temp;
         }
     }
