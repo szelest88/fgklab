@@ -58,7 +58,7 @@ namespace FotorealistycznaGK
             gamma /= M;
             float t = fM * (aM * kM - jM * bM) + eM * (jM * cM - aM * lM) + dM * (bM * lM - kM * cM);
             t /= M;
-            if (beta + gamma < 1 && beta > 0 && gamma > 0)
+            if (beta + gamma <= 1 && beta > 0 && gamma >= 0)
                 return new Vector( //WPISAC
                     r.origin + t * d);
             return new Vector(
@@ -79,9 +79,10 @@ namespace FotorealistycznaGK
             Color temp = Color.Red;
             //this.material.texture = new Texture(@"C:\lenatex.jpg");
             
-            //nadszedł CZAS TEKSTUROWANIA.
-                
-            return temp;
+            //nadszedł CZAS TEKSTURaOWANIA.
+            Color test = Color.FromArgb(0,(int)(255*this.color.R), (int)(255*this.color.G), (int)(255*this.color.B));
+
+            return test;
         }
     }
 }
