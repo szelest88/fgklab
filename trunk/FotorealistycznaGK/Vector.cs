@@ -60,10 +60,10 @@ namespace FotorealistycznaGK
             Math.Pow(this.z, 2));
         }
 
-        public float countVectorDistance(Vector v1, Vector v2) {
+        public float countVectorDistance(Vector v1) {
 
-            return (float)Math.Sqrt(Math.Pow((v2.x - v1.x), 2) + Math.Pow(v2.y - v1.y, 2) +
-            Math.Pow(v2.z - v1.z, 2));
+            return (float)Math.Sqrt(Math.Pow((this.x - v1.x), 2) + Math.Pow(this.y - v1.y, 2) +
+            Math.Pow(this.z - v1.z, 2));
         }
         public override string ToString()
         {

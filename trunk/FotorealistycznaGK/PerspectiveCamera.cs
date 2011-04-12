@@ -54,6 +54,7 @@ namespace FotorealistycznaGK
         float near;
         Light light;
         List<Primitive> scene;
+        float[,] depthBufer;
         string renderTarget; // string na ścieżkę do pliku wynikowego
         public PerspectiveCamera(float w, float h, int pixelsPerUnit, Vector position, Vector target, Vector up, float alpha, List<Primitive> scene, Light light, Uri renderTarget)
         {
@@ -72,6 +73,11 @@ namespace FotorealistycznaGK
             this.renderTarget = renderTarget.AbsolutePath;
             this.near = 0.2f;
             this.light = light;
+
+            this.depthBufer = new float[400, 400];
+            for (int i = 0; i < 400; i++)
+                for (int j = 0; j < 400; j++)
+                    depthBufer[i, j] = float.PositiveInfinity;
         }
 
         public override void renderScene()
@@ -113,20 +119,25 @@ namespace FotorealistycznaGK
                     {
                         //if (p.findIntersection(napierdalacz).X != float.PositiveInfinity)
                         //{
+                        
                         Vector intersection = p.findIntersection(napierdalacz);
                         if (intersection.X != float.PositiveInfinity)
                         {
                             float specular;
-                           // float specularCoeff = 0.75f;// co to kurwa jest?
+                            float odleglosc = intersection.countVectorDistance(observer);
+                            if (depthBufer[i, j] >= odleglosc)
+                                depthBufer[i, j] = odleglosc;
+
+                            // float specularCoeff = 0.75f;// co to kurwa jest?
                             // Ania: tu zmianilam na 15 to a ;)
-                         //   float a = 15.0f;//współczynnik rozbłysku odbicia lustrzanego
+                            //   float a = 15.0f;//współczynnik rozbłysku odbicia lustrzanego
                             //Vector I = napierdalacz.direction.normalizeProduct();
                             Ray test = new Ray(light.Position, poczatek + i * krok * pionPrzes + j * krok * prostopadlyPrzes);
                             //powyższe: poprawka Łukasza S.
                             Vector I = test.direction.normalizeProduct();
                             Vector N = p.normal(intersection);
                             Vector R = I - N * (N.dot(I) * 2.0f); //brakuje tu pozycji światła
-                          //  Sphere sph = (Sphere)p;
+                            //  Sphere sph = (Sphere)p;
                             float ss = napierdalacz.direction.normalizeProduct().dot(R);
                             if (ss > 0)
                                 specular = (float)(Math.Pow(ss, p.material.Alpha));
@@ -140,53 +151,56 @@ namespace FotorealistycznaGK
                             double r = light.Color.R * -p.material.DiffuseCoefficient * cosinus; //-1.0 - jakieś k
                             double g = light.Color.G * -p.material.DiffuseCoefficient * cosinus;
                             double b = light.Color.B * -p.material.DiffuseCoefficient * cosinus;
-                            p.color.R = (double)(p.Texturize(intersection).R)/255.0;
-                            p.color.G = (double)(p.Texturize(intersection).G)/255.0;
-                            p.color.B = (double)(p.Texturize(intersection).B)/255.0;
-
-
-                            Intensity diff = new Intensity(r * p.color.R, g * p.color.G, b * p.color.B);//33-moje
-                           
-                            //wariacje na temat tekstur
-                            //de facto takie mapowanie prostokątne
-                            //zamiast p.color... tekstury
-                           /*
-                            Triangle troj;
-                            troj = (Triangle)p;
-                            float u = -intersection.Y * (troj.c.Z - troj.a.Z) * 2.0f;//szer vportu
-                            float v = -intersection.Z * (troj.b.Y - troj.a.Y) * 2.0f;//szerviewportu
-                            System.Console.WriteLine("u,v:" + u + "," + v);
-                            System.Drawing.Bitmap obraz = troj.material.texture.texture.obraz;
-                            System.Drawing.Color tex = 
-                                obraz.GetPixel((int)(u*obraz.Width), (int)(v*obraz.Height));//uv->inty (szer, wys
-                            diff.addValues(tex.R * 0.33, tex.G * 0.33, tex.B * 0.33);
-                            
-                            */
-                            /*dla kulki*/
-                           // p.Texturize(intersection-((Sphere)p).SphereCenter);
-                            //koniec wariacji, jak coś to można odkomentować poniższe
-                            //diff.addValues(p.color.R*0.33, p.color.G*0.33, p.color.B*0.33);//moje, ale ma sens?
-                            //ten kolor należałoby raczej mnożyć- teraz to jest ambient zależny od koloru
-
-
-
-
-                            // PHONG
-                            /*
-                            double r, g, b, cos;
-                            Vector I = napierdalacz.direction.normalizeProduct();
-                            Vector N = ((Sphere)p).normal(p.findIntersection(napierdalacz));
-                            Vector R = I - N * (N.dot(I) * 2.0f);
-                            float ss = napierdalacz.direction.normalizeProduct().dot(R);
-
-                            if (-ss > 0)
+                            if (depthBufer[i, j] == odleglosc)
                             {
+                                p.color.R = (double)(p.Texturize(intersection).R) / 255.0;
+                                p.color.G = (double)(p.Texturize(intersection).G) / 255.0;
+                                p.color.B = (double)(p.Texturize(intersection).B) / 255.0;
 
+
+                                Intensity diff = new Intensity(r * p.color.R, g * p.color.G, b * p.color.B);//33-moje
+
+                                //wariacje na temat tekstur
+                                //de facto takie mapowanie prostokątne
+                                //zamiast p.color... tekstury
+                                /*
+                                 Triangle troj;
+                                 troj = (Triangle)p;
+                                 float u = -intersection.Y * (troj.c.Z - troj.a.Z) * 2.0f;//szer vportu
+                                 float v = -intersection.Z * (troj.b.Y - troj.a.Y) * 2.0f;//szerviewportu
+                                 System.Console.WriteLine("u,v:" + u + "," + v);
+                                 System.Drawing.Bitmap obraz = troj.material.texture.texture.obraz;
+                                 System.Drawing.Color tex = 
+                                     obraz.GetPixel((int)(u*obraz.Width), (int)(v*obraz.Height));//uv->inty (szer, wys
+                                 diff.addValues(tex.R * 0.33, tex.G * 0.33, tex.B * 0.33);
+                            
+                                 */
+                                /*dla kulki*/
+                                // p.Texturize(intersection-((Sphere)p).SphereCenter);
+                                //koniec wariacji, jak coś to można odkomentować poniższe
+                                //diff.addValues(p.color.R*0.33, p.color.G*0.33, p.color.B*0.33);//moje, ale ma sens?
+                                //ten kolor należałoby raczej mnożyć- teraz to jest ambient zależny od koloru
+
+
+
+
+                                // PHONG
+                                /*
+                                double r, g, b, cos;
+                                Vector I = napierdalacz.direction.normalizeProduct();
+                                Vector N = ((Sphere)p).normal(p.findIntersection(napierdalacz));
+                                Vector R = I - N * (N.dot(I) * 2.0f);
+                                float ss = napierdalacz.direction.normalizeProduct().dot(R);
+
+                                if (-ss > 0)
+                                {
+
+                                }
+                                */
+                                diff.addValues(sIntensity.X * 0.33, sIntensity.Y * 0.33, sIntensity.Z * 0.33);//33-moje
+                                //  diff.addValues(0.33, 0.33, 0.33); //lol, ambient
+                                img.setPixel(i, j, new Intensity(diff)); //w tej chwili dany promień, ale nie na rzutni
                             }
-                            */
-                            diff.addValues(sIntensity.X * 0.33, sIntensity.Y * 0.33, sIntensity.Z * 0.33);//33-moje
-                            //  diff.addValues(0.33, 0.33, 0.33); //lol, ambient
-                            img.setPixel(i, j, new Intensity(diff)); //w tej chwili dany promień, ale nie na rzutni
                         }
                     }
                 }

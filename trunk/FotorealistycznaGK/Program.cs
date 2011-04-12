@@ -16,7 +16,24 @@ namespace FotorealistycznaGK
             material.texture = new Texture(@"C:\lenatex.jpg");
             Sphere S = new Sphere(new Vector(0,0,0), 0.35f, new Intensity(1,1,0),material);
            // Sphere S2 = new Sphere(new Vector(0, 0.45f, 0.0f), 0.15f, new Intensity(1,0,1),material);//druga kulka, tak, żeby sprawdzić czy działa.
-            Triangle trn = new Triangle(new Vector(0, 0, 0), new Vector(0, 0.5f, 0), new Vector(0, 0, 0.5f), new Intensity(0, 0, 1), material);
+            Triangle trn = new Triangle(new Vector(0.0f, -0.5f, -0.5f), new Vector(0.0f, 0.5f, -0.5f), new Vector(0.0f, -0.5f, 0.5f), new Intensity(0, 0, 1), material);
+           // trn.color = new Intensity(1, 1, 0);
+            Triangle trn2 = new Triangle(new Vector(0.0f, 0.5f, 0.5f), new Vector(0.0f, -0.5f, 0.5f), new Vector(0.0f, .5f, -.5f), new Intensity(0, 0, 1), material);
+                                                                            //ten ok
+            Triangle trn3 = new Triangle(new Vector(1.0f, -1.5f, 0.5f), new Vector(0.0f, -0.5f, 0.5f), new Vector(1.0f, 1.5f, 0.5f), new Intensity(0, 1, 0), material);
+                                                    //ten ok                      j                      //ten ok
+            Triangle trn4 = new Triangle(new Vector(0.0f, -0.5f, 0.5f), new Vector(0.0f, .5f, 0.5f), new Vector(1.0f, 1.5f, .5f), new Intensity(0, 1, 0), material);
+
+            //ten ok
+            Triangle trn5 = new Triangle(new Vector(1.0f, -1.5f, 0.5f), new Vector(0.0f, -0.5f, 0.5f), new Vector(1.0f, 1.5f,0.5f), new Intensity(1,0 , 0), material);
+            //ten ok                                            //ten ok
+            Triangle trn6 = new Triangle(new Vector(0.0f, -0.5f, 0.5f), new Vector(0.0f, 0.5f, 0.5f), new Vector(1.0f, 1.5f, 0.5f), new Intensity(1, 0, 0), material);
+
+
+         
+            //0->f0.5f
+            //0.5 - z przodu
+            //0 - z tyłu
             trn.setUvCoords(0, 0, 0, 32, 32, 0);
             Texture tex = new Texture(@"C:\lenatex.jpg");
             trn.material.texture = tex;
@@ -24,6 +41,9 @@ namespace FotorealistycznaGK
             list.Add(S);
            // list.Add(S2);
             list.Add(trn);
+            list.Add(trn2);
+            list.Add(trn3);
+            list.Add(trn4);
             PointLight light = new PointLight();
             light.Color = new Intensity(1.0, 1.0, 1.0);
             light.Position = new Vector(0, 0, 1);
