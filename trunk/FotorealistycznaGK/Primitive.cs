@@ -13,5 +13,6 @@ namespace FotorealistycznaGK
         abstract public Vector findIntersection(Ray r);
         abstract public Color Texturize(Vector vec); //AM poprawiłem argument
         abstract public Vector normal(Vector inter); //AM dodałem
+        abstract public string getName();
     }
 }
