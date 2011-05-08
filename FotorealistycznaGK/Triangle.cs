@@ -51,14 +51,21 @@ namespace FotorealistycznaGK
             float lM = a.Z - o.Z;
 
             float M = aM * (eM * iM - hM * fM) + bM * (gM * fM - dM * iM) + cM * (dM * hM - eM * gM);
-            if (M > 0) return new Vector(1, 1, 1);
+
+            if (M == 0) return new Vector(
+               float.PositiveInfinity,
+               float.PositiveInfinity,
+               float.PositiveInfinity); //obie kolizje z tyłu. Kurwa mać jebana.
+            //przepraszam, ale przez błąd w tym miejscu
+            //zarwałem dwie noce
+
             float beta = jM * (eM * iM - hM * fM) + kM * (gM * fM - dM * iM) + lM * (dM * hM - eM * gM);
             beta /= M;
             float gamma = iM * (aM * kM - jM * bM) + hM * (jM * cM - aM * lM) + gM * (bM * lM - kM * cM);
             gamma /= M;
             float t = fM * (aM * kM - jM * bM) + eM * (jM * cM - aM * lM) + dM * (bM * lM - kM * cM);
             t /= M;
-            if (beta + gamma <= 1 && beta > 0 && gamma >= 0)
+            if (beta + gamma <= 1 && beta >= 0 && gamma >= 0)
                 return new Vector( //WPISAC
                     r.origin + t * d);
             return new Vector(
@@ -75,14 +82,22 @@ namespace FotorealistycznaGK
 
         public override Color Texturize(Vector vec) //dodałem AM
         {
-            //huhu
-            Color temp = Color.Red;
-            //this.material.texture = new Texture(@"C:\lenatex.jpg");
-            
-            //nadszedł CZAS TEKSTURaOWANIA.
-            Color test = Color.FromArgb(0,(int)(255*this.color.R), (int)(255*this.color.G), (int)(255*this.color.B));
+            if (vec.X != float.PositiveInfinity)
+            {
+                Color temp = Color.FromArgb(0, (int)(this.color.R * 255.0),
+                    (int)(this.color.G * 255.0),
+                    (int)(this.color.B * 255.0));
+                //this.material.texture = new Texture(@"C:\lenatex.jpg");
 
-            return test;
+                //nadszedł CZAS TEKSTUROWANIA.
+
+                return temp;
+            }
+            return Color.Black;
+        }
+        public override string getName()
+        {
+            return "trójkąt";
         }
     }
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
+//WARIACJE - wzór do kombinowania
+
 namespace FotorealistycznaGK
 {
     class PerspectiveCamera : Camera
@@ -54,8 +57,11 @@ namespace FotorealistycznaGK
         float near;
         Light light;
         List<Primitive> scene;
-        float[,] depthBufer;
         string renderTarget; // string na ścieżkę do pliku wynikowego
+        float[,] depthBuffer; //NOWE
+        float[,] depthBufferReflections;
+        float[,] depthBufferRefractions;
+
         public PerspectiveCamera(float w, float h, int pixelsPerUnit, Vector position, Vector target, Vector up, float alpha, List<Primitive> scene, Light light, Uri renderTarget)
         {
             this.w = w;
@@ -73,11 +79,18 @@ namespace FotorealistycznaGK
             this.renderTarget = renderTarget.AbsolutePath;
             this.near = 0.2f;
             this.light = light;
-
-            this.depthBufer = new float[400, 400];
+            this.depthBuffer = new float[400, 400];
             for (int i = 0; i < 400; i++)
                 for (int j = 0; j < 400; j++)
-                    depthBufer[i, j] = float.PositiveInfinity;
+                    depthBuffer[i, j] = float.PositiveInfinity;
+            this.depthBufferReflections = new float[400, 400];
+            this.depthBufferRefractions = new float[400, 400];
+            for (int i = 0; i < 400; i++)
+                for (int j = 0; j < 400; j++)
+                    depthBufferReflections[i, j] = float.PositiveInfinity;
+            for (int i = 0; i < 400; i++)
+                for (int j = 0; j < 400; j++)
+                    depthBufferRefractions[i, j] = float.PositiveInfinity;
         }
 
         public override void renderScene()
@@ -107,6 +120,8 @@ namespace FotorealistycznaGK
             for (int i = 0; i < 400; i++)
                 for (int j = 0; j < 400; j++)
                     img.setPixel(i, j, new Intensity(0, 0, 0));
+
+            //WARIACJE - wzór do kombinowania
             for (int i = 0; i < 400; i++)
             {
                 // PHONG
@@ -114,20 +129,18 @@ namespace FotorealistycznaGK
                 for (int j = 0; j < 400; j++)
                 {
                     napierdalacz = new Ray(observer, poczatek + i * krok * pionPrzes + j * krok * prostopadlyPrzes);
-
+                    //hm, teraz?
                     foreach (Primitive p in scene)
                     {
-                        //if (p.findIntersection(napierdalacz).X != float.PositiveInfinity)
-                        //{
-                        
+
                         Vector intersection = p.findIntersection(napierdalacz);
                         if (intersection.X != float.PositiveInfinity)
                         {
                             float specular;
-                            float odleglosc = intersection.countVectorDistance(observer);
-                            if (depthBufer[i, j] >= odleglosc)
-                                depthBufer[i, j] = odleglosc;
 
+                            float odleglosc = intersection.countVectorDistance(observer);
+                            if (depthBuffer[i, j] >= odleglosc)
+                                depthBuffer[i, j] = odleglosc;
                             // float specularCoeff = 0.75f;// co to kurwa jest?
                             // Ania: tu zmianilam na 15 to a ;)
                             //   float a = 15.0f;//współczynnik rozbłysku odbicia lustrzanego
@@ -151,63 +164,103 @@ namespace FotorealistycznaGK
                             double r = light.Color.R * -p.material.DiffuseCoefficient * cosinus; //-1.0 - jakieś k
                             double g = light.Color.G * -p.material.DiffuseCoefficient * cosinus;
                             double b = light.Color.B * -p.material.DiffuseCoefficient * cosinus;
-                            if (depthBufer[i, j] == odleglosc)
+                            if (intersection.X != float.PositiveInfinity)
                             {
                                 p.color.R = (double)(p.Texturize(intersection).R) / 255.0;
                                 p.color.G = (double)(p.Texturize(intersection).G) / 255.0;
                                 p.color.B = (double)(p.Texturize(intersection).B) / 255.0;
-
-
-                                Intensity diff = new Intensity(r * p.color.R, g * p.color.G, b * p.color.B);//33-moje
-
-                                //wariacje na temat tekstur
-                                //de facto takie mapowanie prostokątne
-                                //zamiast p.color... tekstury
-                                /*
-                                 Triangle troj;
-                                 troj = (Triangle)p;
-                                 float u = -intersection.Y * (troj.c.Z - troj.a.Z) * 2.0f;//szer vportu
-                                 float v = -intersection.Z * (troj.b.Y - troj.a.Y) * 2.0f;//szerviewportu
-                                 System.Console.WriteLine("u,v:" + u + "," + v);
-                                 System.Drawing.Bitmap obraz = troj.material.texture.texture.obraz;
-                                 System.Drawing.Color tex = 
-                                     obraz.GetPixel((int)(u*obraz.Width), (int)(v*obraz.Height));//uv->inty (szer, wys
-                                 diff.addValues(tex.R * 0.33, tex.G * 0.33, tex.B * 0.33);
-                            
-                                 */
-                                /*dla kulki*/
-                                // p.Texturize(intersection-((Sphere)p).SphereCenter);
-                                //koniec wariacji, jak coś to można odkomentować poniższe
-                                //diff.addValues(p.color.R*0.33, p.color.G*0.33, p.color.B*0.33);//moje, ale ma sens?
-                                //ten kolor należałoby raczej mnożyć- teraz to jest ambient zależny od koloru
-
-
-
-
-                                // PHONG
-                                /*
-                                double r, g, b, cos;
-                                Vector I = napierdalacz.direction.normalizeProduct();
-                                Vector N = ((Sphere)p).normal(p.findIntersection(napierdalacz));
-                                Vector R = I - N * (N.dot(I) * 2.0f);
-                                float ss = napierdalacz.direction.normalizeProduct().dot(R);
-
-                                if (-ss > 0)
+                            }
+                            Intensity diff;
+                            diff = new Intensity(0, 0, 0);
+                            if (depthBuffer[i, j] == odleglosc)
+                            {
+                                if (p.material.isMirror == false && p.material.isRefractive == false)
                                 {
-
+                                    diff = new Intensity(r * p.color.R, g * p.color.G, b * p.color.B);//33-moje
                                 }
-                                */
-                                diff.addValues(sIntensity.X * 0.33, sIntensity.Y * 0.33, sIntensity.Z * 0.33);//33-moje
-                                //  diff.addValues(0.33, 0.33, 0.33); //lol, ambient
+                                else if (p.material.isMirror == true)
+                                {
+                                    //Vector R = I - N * (N.dot(I) * 2.0f);
+                                    Vector I2 = test.direction.normalizeProduct();
+                                    Vector N2 = p.normal(intersection);
+                                    Vector R2 = -N2 * (N2.dot(I2) * 2.0f);
+                                    Ray test2 = new Ray(intersection,//przemyśleć to trochę
+                                     intersection + R2);//I- N *
+                                    // (N.dot(I) * 2.0f) );//wygenerować odbity, wykonać tą kupę i zwrócić kolor
+
+                                    foreach (Primitive p2 in scene)
+                                    {
+                                        Vector intersection2 = p2.findIntersection(test2);
+                                        if (intersection2.X != float.PositiveInfinity && p2 != p)
+                                        {
+                                            if (p2.getName() == "trójkąt")
+                                                System.Console.WriteLine("trójkąt!");
+                                            System.Console.WriteLine("trafiło odbite");
+
+                                            double r2 = (double)(p2.Texturize(intersection2).R) / 255.0;
+
+                                            double g2 = (double)(p2.Texturize(intersection2).G) / 255.0;
+                                            //uwzględnić też specular2
+                                            double b2 = (double)(p2.Texturize(intersection2).B) / 255.0;
+                                            float odleglosc2 = intersection.countVectorDistance(intersection2);
+
+                                            diff = new Intensity(0, 0, 0);
+                                            if (depthBufferReflections[i, j] >= odleglosc2)
+                                                depthBufferReflections[i, j] = odleglosc2;
+                                            else
+                                                diff = new Intensity(r2, g2, b2);//33-moje
+                                            System.Console.WriteLine("" + diff);
+                                        }
+                                    }
+                                }
+                                else if (p.material.isRefractive == true)
+                                {
+                                    //Sparta!
+                                    //kopia reflective
+                                    Vector I2 = test.direction.normalizeProduct();
+                                    Vector N2 = p.normal(intersection);
+                                    Vector R2 = -N2 * (N2.dot(I2) * 2.0f);//2->-1
+                                    Ray test2 = new Ray(intersection,//przemyśleć to trochę
+                                     intersection - R2);//I- N *
+                                    // (N.dot(I) * 2.0f) );//wciąż coś nie teges.
+
+                                    foreach (Primitive p2 in scene)
+                                    {
+                                        Vector intersection2 = p2.findIntersection(test2);
+                                        if (intersection2.X != float.PositiveInfinity && p2.GetHashCode() != p.GetHashCode())
+                                        {
+                                            if (p2.getName() == "trójkąt")
+                                                System.Console.WriteLine("trójkąt!");
+
+                                            System.Console.WriteLine("REFRAKCJA!!!");
+
+                                            double r2 = (double)(p2.Texturize(intersection2).R) / 255.0;
+
+                                            double g2 = (double)(p2.Texturize(intersection2).G) / 255.0;
+                                            //uwzględnić też specular2
+                                            double b2 = (double)(p2.Texturize(intersection2).B) / 255.0;
+                                            float odleglosc2 = intersection.countVectorDistance(intersection2);
+                                            if (depthBufferRefractions[i, j] >= odleglosc2)
+                                                depthBufferRefractions[i, j] = odleglosc2;
+                                            if (depthBufferRefractions[i, j] == odleglosc2)
+                                                diff = new Intensity(r2, g2, b2);//33-moje
+                                            System.Console.WriteLine("" + diff);
+                                        }
+                                    }
+                                }
+
+                                diff.addValues(sIntensity.X, sIntensity.Y, sIntensity.Z);//33-moje
+                                //diff.addValues(0.33, 0.33, 0.33); //lol, ambient
                                 img.setPixel(i, j, new Intensity(diff)); //w tej chwili dany promień, ale nie na rzutni
                             }
                         }
                     }
                 }
-                img.obraz.Save(renderTarget);
 
             }
 
+            img.obraz.Save(renderTarget);
         }
+
     }
 }
