@@ -11,7 +11,7 @@ namespace FotorealistycznaGK
         public Vector a;
         public Vector b;
         public Vector c;
-        //  Material material;
+
         public Triangle(Vector a, Vector b, Vector c, Intensity inten, Material material)
         {
             this.a = a;
@@ -20,9 +20,7 @@ namespace FotorealistycznaGK
             ((Primitive)this).color = inten;
             this.material = material;
         }
-        float alfa;
-        float beta;
-        float gamma;
+
         public float Au, Av, Bu, Bv, Cu, Cv;
         public void setUvCoords(float Au, float Av, float Bu, float Bv, float Cu, float Cv)
         {
@@ -49,8 +47,15 @@ namespace FotorealistycznaGK
             float jM = a.X - o.X;
             float kM = a.Y - o.Y;
             float lM = a.Z - o.Z;
+           // float gMfM = gM * fM;
+            float bMlM_kMcM = bM * lM - kM*cM;
+            float eMIm_hMfM = eM * iM - hM*fM;
+            float gMfM_dMiM = gM * fM - dM * iM;
+            float aMkM_jMbM = aM * kM - jM * bM;
+            float jMcM_aMlM = jM * cM - aM * lM;
+            float dMhM_eMgM = dM * hM - eM * gM;
 
-            float M = aM * (eM * iM - hM * fM) + bM * (gM * fM - dM * iM) + cM * (dM * hM - eM * gM);
+            float M = aM * eMIm_hMfM + bM * gMfM_dMiM + cM * dMhM_eMgM;
 
             if (M == 0) return new Vector(
                float.PositiveInfinity,
@@ -59,11 +64,11 @@ namespace FotorealistycznaGK
             //przepraszam, ale przez błąd w tym miejscu
             //zarwałem dwie noce
 
-            float beta = jM * (eM * iM - hM * fM) + kM * (gM * fM - dM * iM) + lM * (dM * hM - eM * gM);
+            float beta = jM * eMIm_hMfM + kM * gMfM_dMiM + lM * dMhM_eMgM;
             beta /= M;
-            float gamma = iM * (aM * kM - jM * bM) + hM * (jM * cM - aM * lM) + gM * (bM * lM - kM * cM);
+            float gamma = iM * aMkM_jMbM + hM * jMcM_aMlM + gM * bMlM_kMcM;
             gamma /= M;
-            float t = fM * (aM * kM - jM * bM) + eM * (jM * cM - aM * lM) + dM * (bM * lM - kM * cM);
+            float t = fM * aMkM_jMbM + eM * jMcM_aMlM + dM * bMlM_kMcM;
             t /= M;
             if (beta + gamma <= 1 && beta >= 0 && gamma >= 0)
                 return new Vector( //WPISAC

@@ -103,7 +103,7 @@ namespace FotorealistycznaGK
 
             Vector observer = this.Position;
             Vector srodek = this.Position + (this.Target - this.Position).normalizeProduct() * near;
-            float s = near * (float)Math.Tan((double)(alpha / 180.0 * Math.PI) / 2.0);
+            float s = near * (float)Math.Tan((alpha / 180.0 * Math.PI) / 2.0);
             Vector poczatek = srodek - prostopadlyPrzes * s - pionPrzes * s;
             System.Console.WriteLine("" + poczatek);
             /**
@@ -128,6 +128,7 @@ namespace FotorealistycznaGK
                 System.Console.WriteLine("" + i + @"/400");
                 for (int j = 0; j < 400; j++)
                 {
+                    
                     napierdalacz = new Ray(observer, poczatek + i * krok * pionPrzes + j * krok * prostopadlyPrzes);
                     //hm, teraz?
                     foreach (Primitive p in scene)
@@ -141,12 +142,7 @@ namespace FotorealistycznaGK
                             float odleglosc = intersection.countVectorDistance(observer);
                             if (depthBuffer[i, j] >= odleglosc)
                                 depthBuffer[i, j] = odleglosc;
-                            // float specularCoeff = 0.75f;// co to kurwa jest?
-                            // Ania: tu zmianilam na 15 to a ;)
-                            //   float a = 15.0f;//współczynnik rozbłysku odbicia lustrzanego
-                            //Vector I = napierdalacz.direction.normalizeProduct();
                             Ray test = new Ray(light.Position, poczatek + i * krok * pionPrzes + j * krok * prostopadlyPrzes);
-                            //powyższe: poprawka Łukasza S.
                             Vector I = test.direction.normalizeProduct();
                             Vector N = p.normal(intersection);
                             Vector R = I - N * (N.dot(I) * 2.0f); //brakuje tu pozycji światła
@@ -161,9 +157,10 @@ namespace FotorealistycznaGK
                             //diffuse
                             float cosinus = napierdalacz.direction.normalizeProduct().dot(
                                 N);
-                            double r = light.Color.R * -p.material.DiffuseCoefficient * cosinus; //-1.0 - jakieś k
-                            double g = light.Color.G * -p.material.DiffuseCoefficient * cosinus;
-                            double b = light.Color.B * -p.material.DiffuseCoefficient * cosinus;
+                            float mnoznik = -p.material.DiffuseCoefficient * cosinus;
+                            double r = light.Color.R * mnoznik; //-1.0 - jakieś k
+                            double g = light.Color.G * mnoznik;
+                            double b = light.Color.B * mnoznik;
                             if (intersection.X != float.PositiveInfinity)
                             {
                                 p.color.R = (double)(p.Texturize(intersection).R) / 255.0;
@@ -180,28 +177,25 @@ namespace FotorealistycznaGK
                                 }
                                 else if (p.material.isMirror == true)
                                 {
-                                    //Vector R = I - N * (N.dot(I) * 2.0f);
                                     Vector I2 = test.direction.normalizeProduct();
                                     Vector N2 = p.normal(intersection);
                                     Vector R2 = -N2 * (N2.dot(I2) * 2.0f);
-                                    Ray test2 = new Ray(intersection,//przemyśleć to trochę
-                                     intersection + R2);//I- N *
-                                    // (N.dot(I) * 2.0f) );//wygenerować odbity, wykonać tą kupę i zwrócić kolor
-
+                                    Ray test2 = new Ray(intersection,
+                                     intersection + R2);
                                     foreach (Primitive p2 in scene)
                                     {
                                         Vector intersection2 = p2.findIntersection(test2);
                                         if (intersection2.X != float.PositiveInfinity && p2 != p)
                                         {
-                                            if (p2.getName() == "trójkąt")
-                                                System.Console.WriteLine("trójkąt!");
+                                           // if (p2.getName() == "trójkąt")
+                                           //     System.Console.WriteLine("trójkąt!");
                                             System.Console.WriteLine("trafiło odbite");
 
-                                            double r2 = (double)(p2.Texturize(intersection2).R) / 255.0;
+                                            double r2 = (p2.Texturize(intersection2).R) / 255.0;
 
-                                            double g2 = (double)(p2.Texturize(intersection2).G) / 255.0;
-                                            //uwzględnić też specular2
-                                            double b2 = (double)(p2.Texturize(intersection2).B) / 255.0;
+                                            double g2 = (p2.Texturize(intersection2).G) / 255.0;
+                                            
+                                            double b2 = (p2.Texturize(intersection2).B) / 255.0;
                                             float odleglosc2 = intersection.countVectorDistance(intersection2);
 
                                             diff = new Intensity(0, 0, 0);
@@ -209,7 +203,7 @@ namespace FotorealistycznaGK
                                                 depthBufferReflections[i, j] = odleglosc2;
                                             else
                                                 diff = new Intensity(r2, g2, b2);//33-moje
-                                            System.Console.WriteLine("" + diff);
+                                       //     System.Console.WriteLine("" + diff);
                                         }
                                     }
                                 }
@@ -220,7 +214,7 @@ namespace FotorealistycznaGK
                                     Vector I2 = test.direction.normalizeProduct();
                                     Vector N2 = p.normal(intersection);
                                     Vector R2 = -N2 * (N2.dot(I2) * 2.0f);//2->-1
-                                    Ray test2 = new Ray(intersection,//przemyśleć to trochę
+                                    Ray test2 = new Ray(intersection,
                                      intersection - R2);//I- N *
                                     // (N.dot(I) * 2.0f) );//wciąż coś nie teges.
 
@@ -229,22 +223,21 @@ namespace FotorealistycznaGK
                                         Vector intersection2 = p2.findIntersection(test2);
                                         if (intersection2.X != float.PositiveInfinity && p2.GetHashCode() != p.GetHashCode())
                                         {
-                                            if (p2.getName() == "trójkąt")
-                                                System.Console.WriteLine("trójkąt!");
-
                                             System.Console.WriteLine("REFRAKCJA!!!");
-
-                                            double r2 = (double)(p2.Texturize(intersection2).R) / 255.0;
-
-                                            double g2 = (double)(p2.Texturize(intersection2).G) / 255.0;
-                                            //uwzględnić też specular2
-                                            double b2 = (double)(p2.Texturize(intersection2).B) / 255.0;
+                                            
                                             float odleglosc2 = intersection.countVectorDistance(intersection2);
-                                            if (depthBufferRefractions[i, j] >= odleglosc2)
+                                            if (depthBufferRefractions[i, j] > odleglosc2)
                                                 depthBufferRefractions[i, j] = odleglosc2;
                                             if (depthBufferRefractions[i, j] == odleglosc2)
+                                            {
+                                                System.Drawing.Color col = p2.Texturize(intersection2);
+                                                double r2 = (col.R) / 255.0;
+                                                double g2 = (col.G) / 255.0;
+                                                //uwzględnić też specular2
+                                                double b2 = (col.B) / 255.0;
                                                 diff = new Intensity(r2, g2, b2);//33-moje
-                                            System.Console.WriteLine("" + diff);
+                                            }
+                                       //     System.Console.WriteLine("" + diff);
                                         }
                                     }
                                 }
