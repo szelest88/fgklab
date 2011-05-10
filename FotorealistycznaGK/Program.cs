@@ -166,6 +166,7 @@ namespace FotorealistycznaGK
             //  System.Console.ReadLine();  
             //System.Console.ReadKey();
             Process p = new Process();
+            p.StartInfo.CreateNoWindow = true;
             p.StartInfo.FileName=@"C:\renderpers.png";
             p.Start();
         }
