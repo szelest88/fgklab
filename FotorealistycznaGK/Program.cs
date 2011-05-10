@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace FotorealistycznaGK
 {
@@ -26,10 +27,17 @@ namespace FotorealistycznaGK
             Material glass = new Material();
             glass.isRefractive = true;
 
+            /*
+             * Przesuwanki
+             (x,y,z): x- blizej/dalej, y - gora/dol, z - prawo/lewo
+             */
+
             //my: 1,0,0 -> S jest przed kuleną2
             Sphere S = new Sphere(new Vector(-0.01f, 0.1f, -0.25f), 0.125f, new Intensity(0, 0, 0), mirr);
-            Sphere S2 = new Sphere(new Vector(0.0f, 0.1f, 0.25f), 0.125f, new Intensity(0, 0, 0), glass);
+            Sphere S2 = new Sphere(new Vector(0.175f, -0.275f, 0.15f), 0.20f, new Intensity(0, 0, 0), glass);
             //3: 0->1? chemy do tyłu
+            S2.material.SpecularCoefficient = 0.35f;
+            S2.material.Alpha = 0.1f;
             Sphere kulena1 = new Sphere(new Vector(0.0f, 0.25f, 0.0f), 0.125f, new Intensity(0, 0, 0), material);//druga kulka, tak, żeby sprawdzić czy działa.
             Sphere zolta = new Sphere(new Vector(0.0f, 0.0f, -0.0f), 0.125f, new Intensity(0, 0, 0), zolty);//druga kulka, tak, żeby sprawdzić czy działa.
             //EX: COMMENT!
@@ -79,7 +87,7 @@ namespace FotorealistycznaGK
 
             PointLight light = new PointLight();
             light.Color = new Intensity(1.0, 1.0, 1.0);
-            light.Position = new Vector(1, 1, 0);
+            light.Position = new Vector(1, -1, 1);
             Ray ray1 = new Ray(origin, des1);
             Ray ray2 = new Ray(origin, des2);
 
@@ -150,13 +158,16 @@ namespace FotorealistycznaGK
             System.Console.WriteLine(v3);
             System.Console.WriteLine("...");
             //dlaczego ten cross zamiast up... bo wychodzi coś typu (-1,0,0)
-            PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpers.jpg"));
+            PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpers.png"));
             pc.renderScene();
             //  OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, v3, list, new Uri(@"C:\rendermasakra.jpg"));
             //  oc.renderScene();
 
             //  System.Console.ReadLine();  
-            System.Console.ReadKey();
+            //System.Console.ReadKey();
+            Process p = new Process();
+            p.StartInfo.FileName=@"C:\renderpers.png";
+            p.Start();
         }
     }
 }
