@@ -45,7 +45,7 @@ namespace FotorealistycznaGK
             //  Triangle trn2 = new Triangle(new Vector(-1, -1.1f, -0.1f), new Vector(-1, -1.0f, 0f), new Vector(-1, -1.0f, 0f), new Intensity(1, 0.1f, 1), material);
             //END OF EX
             //EX:
-            #region jebaneŚciany
+            #region cornelBox Ściany
             //niebieska:
             Triangle trn = new Triangle(new Vector(0.0f, -0.5f, -0.5f), new Vector(0.0f, 0.5f, -0.5f), new Vector(0.0f, -0.5f, 0.5f), new Intensity(0, 0, 1), material);
             Triangle trn2 = new Triangle(new Vector(0.0f, 0.5f, 0.5f), new Vector(0.0f, -0.5f, 0.5f), new Vector(0.0f, .5f, -.5f), new Intensity(0, 0, 1), material);
@@ -63,7 +63,7 @@ namespace FotorealistycznaGK
             Triangle floorDalszy = new Triangle(new Vector(0, -0.5f, -0.5f), new Vector(0, -0.5f, 0.5f), new Vector(0.5f, -0.5f, 0.5f), new Intensity(1, 1, 1), material);
 
             Triangle floorBlizszy = new Triangle(new Vector(0, -0.5f, -0.5f), new Vector(0.5f, -0.5f, 0.5f), new Vector(0.5f, -0.5f, -0.5f), new Intensity(1, 1, 1), material);
-            #endregion jebaneŚciany
+            #endregion conrelBoxŚciany
             trn.setUvCoords(0, 0, 0, 32, 32, 0);
             Texture tex = new Texture(@"C:\lenatex.jpg");
             trn.material.texture = tex;
