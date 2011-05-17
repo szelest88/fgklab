@@ -11,6 +11,13 @@ namespace FotorealistycznaGK
         //tototo! ściany się tworzą!
         static void Main(string[] args)
         {
+            //fotony i inne shity
+            /**/
+            Photon[] photonMap;
+            int numberOfPhotons = 100; // nei wiem jaka ilość jest odpowiednia
+            photonMap = new Photon[numberOfPhotons];
+            /**/
+
             Vector origin = new Vector(0, 0, 0);
             Vector des1 = new Vector(0, 0, 1);
             Vector des2 = new Vector(0, 1, 0);
