@@ -46,7 +46,7 @@ namespace FotorealistycznaGK
          uproszczenia - na kwadrat
          </summary>
          **/
-        float alpha;
+        protected float alpha;
         /**
         <summary>
         odległość takiej niby rzutni ;) to jest bliższa kamerze) płaszczyzna obcinania chyba
@@ -54,7 +54,7 @@ namespace FotorealistycznaGK
         </summary>
         **/
         //
-        float near;
+        protected float near;
         Light light;
         List<Primitive> scene;
         string renderTarget; // string na ścieżkę do pliku wynikowego
