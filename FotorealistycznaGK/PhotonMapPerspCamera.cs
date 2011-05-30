@@ -12,7 +12,7 @@ namespace FotorealistycznaGK
     {
         int photonCount; // ilość tegesów
 
-        public void createMap(Photon[])
+        public void createMap(Photon[] map)
         {
         }
         public PhotonMapPerspCamera(int photonCount)
