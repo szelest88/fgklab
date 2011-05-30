@@ -11,18 +11,25 @@ namespace FotorealistycznaGK
     public class PhotonMapPerspCamera: PerspectiveCamera
     {
         int photonCount; // ilość tegesów
+        int radius; //promień wyszukiwania
+        //każdy foton ma od 0 do 1 i średnia?
 
-        public void createMap(Photon[] map)
+        public void createMap(ref Photon[] map) //po utworzeniu obiektu, wywoła się
+                                                //to - funkcja zapełni tablicę
+                                                //fotonami
         {
+
         }
-        public PhotonMapPerspCamera(int photonCount)
+        public PhotonMapPerspCamera(int photonCount, int radius)
         {
             this.photonCount = photonCount;
+            this.radius = radius;
 
         }
         public override void renderScene()
         {
-            //napierdalamy
+            //napierdalamy promieniami
+            
         }
     }
 }
