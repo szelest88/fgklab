@@ -18,7 +18,7 @@ namespace FotorealistycznaGK
                                                 //to - funkcja zapełni tablicę
                                                 //fotonami
         {
-
+            //raytracing
         }
         public PhotonMapPerspCamera(int photonCount, int radius)
         {
