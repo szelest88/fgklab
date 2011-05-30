@@ -68,14 +68,44 @@ namespace FotorealistycznaGK
             Vector prostopadlyPrzes =
                ((this.Target - this.Position).cross(this.Position - this.Up)).normalizeProduct();//cross(this.Positon-this.Up)
             Vector pionPrzes = (this.Up).normalizeProduct();//; *1.5f;//(this.Up-this.Position).nor
-
+             float krok = s * 2.0f / 400.0f;
             Vector poczatek = srodek - prostopadlyPrzes * s - pionPrzes * s;
            
             for(int i=0;i<400;i++)
                 for (int j = 0; j < 400; j++)
                 {
-                    Ray napierdalacz = new Ray(this.Position, this.Target);//przepisać z perspective
+                    Ray napierdalacz = new Ray(this.Position,
+                        poczatek +
+                        i * krok * pionPrzes +
+                        j * krok * prostopadlyPrzes);
+                    foreach (Primitive p in scene)
+                    {
+                        //dodać kontrolę depthbuffera
+                        Vector intersection = p.findIntersection(napierdalacz);
+                        if (intersection.X != float.PositiveInfinity)
+                        {
+                            //teraz trzeba rozejrzeć się po okolicy (sfera), zliczyć
+                            //fotony w określonym promieniu i obliczyć ich średnią czy coś takiego
+                            //po czym ją zwrócić. W sumie nie wygląda na jakiś mega hardkor,
+                            //chociaż mój Atom się na mnie obrazi - O(N^4) będzie boleć.
+                            double averageR=0,averageG=0,aevrageB=0;
+                            int count = 0;
+                            double sumR=0,sumG=0,sumB=0;
+                            foreach (Photon ph in map)
+                            {
+                                if (ph.Position.countVectorDistance(intersection) < radius)
+                                {
+                                    count++;
+                                    sumR += ph.Intensity.R;
+                                    sumG += ph.Intensity.G;
+                                    sumB += ph.Intensity.B;
 
+                                }
+                            }
+                            //wrzucić do tablicy z rezultatem sumę podzieloną przez pi R kwadrat
+
+                        }
+                    }
                 }
         }
     }

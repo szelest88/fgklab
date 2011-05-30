@@ -56,7 +56,7 @@ namespace FotorealistycznaGK
         //
         protected float near;
         Light light;
-        List<Primitive> scene;
+        protected List<Primitive> scene;
         string renderTarget; // string na ścieżkę do pliku wynikowego
         float[,] depthBuffer; //NOWE
         float[,] depthBufferReflections;
