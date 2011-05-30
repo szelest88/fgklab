@@ -61,6 +61,7 @@ namespace FotorealistycznaGK
             //przepisuję właśnie kod z Persp. Camera, nie jest to jakieś ekonomiczne,
             //(bo kod będzie się powtarzał), ale detale będą inne, a nie chce mi się
             //dzielić tamtego renderScene'a na funkcje
+            //zaraz zrobię z tego jakiś region // !!!!!!!!!!!!!!!!!
             Vector observer = this.Position;
             Vector srodek = this.Position + (this.Target - this.Position).normalizeProduct() * near;
             float s = near * (float)Math.Tan((alpha / 180.0 * Math.PI) / 2.0);
