@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Math;
+//using System;
 
 namespace FotorealistycznaGK
 {
-    struct Photon
+    class Photon //zmieniłem na class, kompilator mówi, że
+        //"Struct cannot contain explicit parameterless constructors"
     {
         Vector position; //pozycja fotonu
         Intensity intensity; // energia fotonow

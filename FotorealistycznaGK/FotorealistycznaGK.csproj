@@ -52,6 +52,7 @@
     <Compile Include="OrthographicCamera.cs" />
     <Compile Include="PerspectiveCamera.cs" />
     <Compile Include="Photon.cs" />
+    <Compile Include="PhotonMapPerspCamera.cs" />
     <Compile Include="PointLight.cs" />
     <Compile Include="Primitive.cs" />
     <Compile Include="Program.cs" />
