@@ -62,6 +62,10 @@ namespace FotorealistycznaGK
         float[,] depthBufferReflections;
         float[,] depthBufferRefractions;
 
+        public PerspectiveCamera() //dodałem, żeby można było dziedziczyć
+        {
+        }
+
         public PerspectiveCamera(float w, float h, int pixelsPerUnit, Vector position, Vector target, Vector up, float alpha, List<Primitive> scene, Light light, Uri renderTarget)
         {
             this.w = w;
