@@ -8,10 +8,10 @@ namespace FotorealistycznaGK
     // stworzyłem nową klasę, bo w ten rendering gdzieś się musi odbyć, a w sumie
     // tak będzie chyba czytelniej to będzie. Rozumiem, że 
     // sama mapa fotonów = tablica fotonów
-    public class PhotonMapPerspCamera: PerspectiveCamera
+    class PhotonMapPerspCamera: PerspectiveCamera
     {
         int photonCount; // ilość tegesów
-        int radius; //promień wyszukiwania
+        float radius; //promień wyszukiwania
         //każdy foton ma od 0 do 1 i średnia?
         Photon[] map;
         public void createMap(int photonCount, Light light, List<Primitive> scene, int bounces) 
@@ -23,9 +23,11 @@ namespace FotorealistycznaGK
             // i zapamiętujemy miejsca trafień, odbijając fotony max bounces razy
             // gdzie wywołać tą funkcję? chyba niżej
             Random random = new Random();
+            map = new Photon[photonCount];
             int indexer = 0;
-            for (int i = 0; i < photonCount; i++)
+            for (int i = 0; i < photonCount; i++) // coś tu powaliłem
             {
+                System.Console.WriteLine("foton" + i + "/" + photonCount);
                 Ray photonDir = new Ray(light.Position,new Vector((float)random.NextDouble(),(float)random.NextDouble(),(float)random.NextDouble()));
                 //tworzymy promień związany z fotonem
                 foreach (Primitive pr in scene) //i sprawdzamy, w co trafia. Punkt trafienia zapisujemy w mapie (chwilowo olewamy rekursję)
@@ -33,11 +35,17 @@ namespace FotorealistycznaGK
                     if (pr.findIntersection(photonDir).X != float.PositiveInfinity)
                     {
                         map[indexer] = new Photon(pr.findIntersection(photonDir), light.Color, photonDir.direction);
+                        indexer++; break;
+                    }else
+                    {
+                        map[indexer] = new Photon(pr.findIntersection(photonDir), new Intensity(0,0,0), photonDir.direction);
+                        indexer++; break;
                     }
+
                 }
             }
         }
-        public PhotonMapPerspCamera(int photonCount, int radius, int bounces,
+        public PhotonMapPerspCamera(int photonCount, float radius, int bounces,
              
             //i parametry dla konstruktora klasy bazowej:
             float w, float h, int pixelsPerUnit, Vector position, Vector target, Vector up, float alpha, List<Primitive> scene, Light light, Uri renderTarget
@@ -46,7 +54,7 @@ namespace FotorealistycznaGK
             
             this.photonCount = photonCount;
             this.radius = radius;
-
+            map = new Photon[photonCount];
             //tu wywołamy funkcję powyższą na rzecz parametru map
             createMap(photonCount, light, scene, bounces); //tzn. od razu w konstruktorze generujemy mapę
 
@@ -62,6 +70,8 @@ namespace FotorealistycznaGK
             //(bo kod będzie się powtarzał), ale detale będą inne, a nie chce mi się
             //dzielić tamtego renderScene'a na funkcje
             //zaraz zrobię z tego jakiś region // !!!!!!!!!!!!!!!!!
+            Image img = new Image(400, 400);
+            
             Vector observer = this.Position;
             Vector srodek = this.Position + (this.Target - this.Position).normalizeProduct() * near;
             float s = near * (float)Math.Tan((alpha / 180.0 * Math.PI) / 2.0);
@@ -75,7 +85,9 @@ namespace FotorealistycznaGK
                 for (int j = 0; j < 400; j++)
                     res[i, j] = new Intensity();
 
-            for(int i=0;i<400;i++)
+            for (int i = 0; i < 400; i++)
+            {
+                System.Console.WriteLine("Rendering:" + i + "/400");
                 for (int j = 0; j < 400; j++)
                 {
                     Ray napierdalacz = new Ray(this.Position,
@@ -92,9 +104,9 @@ namespace FotorealistycznaGK
                             //fotony w określonym promieniu i obliczyć ich średnią czy coś takiego
                             //po czym ją zwrócić. W sumie nie wygląda na jakiś mega hardkor,
                             //chociaż mój Atom się na mnie obrazi - O(N^4) będzie boleć.
-                            double averageR=0,averageG=0,aevrageB=0;
+                            double averageR = 0, averageG = 0, aevrageB = 0;
                             int count = 0;
-                            double sumR=0,sumG=0,sumB=0;
+                            double sumR = 0, sumG = 0, sumB = 0;
                             foreach (Photon ph in map)
                             {
                                 if (ph.Position.countVectorDistance(intersection) < radius)
@@ -105,18 +117,22 @@ namespace FotorealistycznaGK
                                     sumB += ph.Intensity.B;
 
                                 }
-                                
+
                             }
-                            sumR/=((float)(Math.PI*radius*radius));
-                            sumG/=((float)(Math.PI*radius*radius));
-                            sumB/=((float)(Math.PI*radius*radius));
+                            sumR /= ((float)(Math.PI * radius * radius));
+                            sumG /= ((float)(Math.PI * radius * radius));
+                            sumB /= ((float)(Math.PI * radius * radius));
                             res[i, j] = new Intensity(sumR, sumG, sumB);
                             //wrzucić do tablicy z rezultatem sumę podzieloną przez pi R kwadrat
-
+                            img.setPixel(i, j, new Intensity(sumR, sumG, sumB)); //dla każdego prymitywu, wziąć pod uwagę depthBuffer!
                         }
+
                     }
+
                 }
+            }
             //jebnąć res do pliku. Gott mit uns!
+            img.obraz.Save(renderTarget);
         }
     }
 }
