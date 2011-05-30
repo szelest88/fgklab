@@ -70,7 +70,11 @@ namespace FotorealistycznaGK
             Vector pionPrzes = (this.Up).normalizeProduct();//; *1.5f;//(this.Up-this.Position).nor
              float krok = s * 2.0f / 400.0f;
             Vector poczatek = srodek - prostopadlyPrzes * s - pionPrzes * s;
-           
+            Intensity[,] res = new Intensity[400, 400];
+            for (int i = 0; i < 400; i++)
+                for (int j = 0; j < 400; j++)
+                    res[i, j] = new Intensity();
+
             for(int i=0;i<400;i++)
                 for (int j = 0; j < 400; j++)
                 {
@@ -101,12 +105,18 @@ namespace FotorealistycznaGK
                                     sumB += ph.Intensity.B;
 
                                 }
+                                
                             }
+                            sumR/=((float)(Math.PI*radius*radius));
+                            sumG/=((float)(Math.PI*radius*radius));
+                            sumB/=((float)(Math.PI*radius*radius));
+                            res[i, j] = new Intensity(sumR, sumG, sumB);
                             //wrzucić do tablicy z rezultatem sumę podzieloną przez pi R kwadrat
 
                         }
                     }
                 }
+            //jebnąć res do pliku. Gott mit uns!
         }
     }
 }
