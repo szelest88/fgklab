@@ -18,6 +18,7 @@ namespace FotorealistycznaGK
             photonMap = new Photon[numberOfPhotons];
             /**/
 
+            int index = 0;
             Vector origin = new Vector(0, 0, 0);
             Vector des1 = new Vector(0, 0, 1);
             Vector des2 = new Vector(0, 1, 0);
