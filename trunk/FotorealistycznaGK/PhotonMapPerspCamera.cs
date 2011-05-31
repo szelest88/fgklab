@@ -14,6 +14,7 @@ namespace FotorealistycznaGK
         float radius; //promień wyszukiwania
         //każdy foton ma od 0 do 1 i średnia?
         Photon[] map;
+        int effectivePhotonCount = 0;
         public void createMap(int photonCount, Light light, List<Primitive> scene, int bounces) 
                                                 //po utworzeniu obiektu, wywoła się
                                                 //to - funkcja zapełni tablicę
@@ -28,18 +29,21 @@ namespace FotorealistycznaGK
             for (int i = 0; i < photonCount; i++) // coś tu powaliłem
             {
                 System.Console.WriteLine("foton" + i + "/" + photonCount);
-                Ray photonDir = new Ray(light.Position,new Vector((float)random.NextDouble(),(float)random.NextDouble(),(float)random.NextDouble()));
+                Ray photonDir = new Ray(light.Position, new Vector((float)(random.NextDouble() * 2 - 1), (float)(random.NextDouble() * 2 - 1), (float)(random.NextDouble() * 2 - 1)));
                 //tworzymy promień związany z fotonem
                 foreach (Primitive pr in scene) //i sprawdzamy, w co trafia. Punkt trafienia zapisujemy w mapie (chwilowo olewamy rekursję)
                 {
                     if (pr.findIntersection(photonDir).X != float.PositiveInfinity)
                     {
                         map[indexer] = new Photon(pr.findIntersection(photonDir), pr.color, photonDir.direction);
-                        indexer++; break;
+                        indexer++;
+                        effectivePhotonCount++;
+                        System.Console.WriteLine("Jebnął foton"+pr.findIntersection(photonDir));
+                        break;
                     }else
                     {
-                        map[indexer] = new Photon(pr.findIntersection(photonDir), new Intensity(0,0,0), photonDir.direction);
-                        indexer++; break;
+                        map[indexer] = new Photon(pr.findIntersection(photonDir), new Intensity(1,1,1), photonDir.direction);
+                      //  indexer++; break;
                     }
 
                 }
@@ -106,21 +110,25 @@ namespace FotorealistycznaGK
                             //chociaż mój Atom się na mnie obrazi - O(N^4) będzie boleć.
                             int count = 0;
                             double sumR = 0, sumG = 0, sumB = 0;
-                            foreach (Photon ph in map)
+                       //     foreach (Photon ph in map)
+                       //     {
+                            for (int ą = 0; ą < effectivePhotonCount; ą++)
                             {
-                                if (ph.Position.countVectorDistance(intersection) < radius)
+                              //  System.Console.WriteLine("jeb2");
+                                if (map[ą].Position.countVectorDistance(intersection) < radius)
                                 {
-                                    count++;
-                                    sumR += ph.Intensity.R;
-                                    sumG += ph.Intensity.G;
-                                    sumB += ph.Intensity.B;
 
+                                    sumR += map[ą].Intensity.R;
+                                    sumG += map[ą].Intensity.G;
+                                    sumB += map[ą].Intensity.B;
+                                    System.Console.WriteLine("JEB");
                                 }
-
                             }
-                            sumR /= (float)count;// ((float)(Math.PI * radius * radius));
-                            sumG /= (float)count; //((float)(Math.PI * radius * radius));
-                            sumB /= (float)count; //((float)(Math.PI * radius * radius));
+
+                         //   }
+                                sumR /= (float)effectivePhotonCount;// ((float)(Math.PI * radius * radius));
+                                sumG /= (float)effectivePhotonCount; //((float)(Math.PI * radius * radius));
+                                sumB /= (float)effectivePhotonCount; //((float)(Math.PI * radius * radius));
                             res[i, j] = new Intensity(sumR, sumG, sumB);
                             //wrzucić do tablicy z rezultatem sumę podzieloną przez pi R kwadrat
                             img.setPixel(i, j, new Intensity(sumR, sumG, sumB)); //dla każdego prymitywu, wziąć pod uwagę depthBuffer!
