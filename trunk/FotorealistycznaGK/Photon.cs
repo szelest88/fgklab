@@ -80,6 +80,16 @@ namespace FotorealistycznaGK
                 {
                     map[index] = this;
                     index++;
+
+                    // tutaj trza zobaczyc material
+                    if (!pr.material.isMirror && !pr.material.isRefractive)
+                    {
+                        if (rand.NextDouble() < (double)pr.material.probability)
+                        { 
+                            // odbij foton
+                        }
+                            // absorbuj foton
+                    }
                 }
 
             }
