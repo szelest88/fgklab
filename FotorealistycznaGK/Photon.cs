@@ -11,7 +11,7 @@ namespace FotorealistycznaGK
     {
         Vector position; //pozycja fotonu
         Intensity intensity; // energia fotonow
-        public float[] direction; // kierunek nadejscia fotonu; mozna ew da. Vector direction
+        Vector direction; // kierunek nadejscia fotonu; mozna ew da. Vector direction
         
         #region Properties
 
@@ -26,6 +26,7 @@ namespace FotorealistycznaGK
             get { return intensity; }
             set { intensity = value; }
         }
+
 
         #endregion Properties
 
@@ -42,10 +43,8 @@ namespace FotorealistycznaGK
 
             this.position = position;
             this.intensity = intensity;
-            this.direction = new float[3];
-            this.direction[0] = direction.X;
-            this.direction[1] = direction.Y;
-            this.direction[2] = direction.Z;
+            this.direction = direction;
+            this.scene = scene;
         }
 
         #endregion Constructors
@@ -64,25 +63,42 @@ namespace FotorealistycznaGK
         }
 
         // funkcja sledzaca foton
-        void tracePhoton(Vector direction, Photon[] map, Light light)
+        void tracePhoton(Vector direction, Photon[] map, Light light, int index, List<Primitive> scene)
         {
 
             Vector start = light.Position;
             Random rand = new Random(); // przyda sie do prawdopodobienstwa
 
+            this.direction = direction;
+            this.position = start;
+
+            Ray r = new Ray(start, direction);
+
+            foreach (Primitive pr in scene)
+            {
+                if (pr.findIntersection(r).X != float.PositiveInfinity)
+                {
+                    map[index] = this;
+                    index++;
+                }
+
+            }
+
             // tu musi być jakiś odpowiednik findIntersection()
             // i teraz w zaleznosci od materialu dajemy
-            // zapisujemy do mapy map[0] = new Photon(pkt przeciecia, intensity i to nasze direcion (SKAD))
+            // zapisujemy do mapy map[x] = new Photon(pkt przeciecia, intensity i to nasze direcion (SKAD))
             // paczamy ktory ksztalt i jakie ma wlasciwosci i teraz w zaleznosci od materialu i wsp. prawdopodobienstwa
             // losujemy wsp. prawdopodobienstwa --> tylko do dyfuzyjnego
         }
 
         // funkcja emitujaca fotony ze zrodla punktowego
-        void sendPhoton(int numberOfPhotons, Light light, Photon[] map) {
+        // czyli dla każdego 
+        void sendPhoton(int numberOfPhotons, Light light, Photon[] map, int index, List<Primitive> scene)
+        {
 
             // numberOfPhotons mozna tez pobrac wielkosc mapy fotonowej :> Ale poki co niech tak zostanie jak jest.
             int ne = 0; //liczba wyemitowanych fotonow
-            Vector d = new Vector(); // wektor kierunkowy wmisji fotonua
+            Vector d = new Vector(); // wektor kierunkowy emisji fotona
 
             while (numberOfPhotons != ne) {
 
@@ -90,7 +106,7 @@ namespace FotorealistycznaGK
                 while (Math.Pow(d.X, 2) + Math.Pow(d.Y, 2) + Math.Pow(d.Z, 2) > 1);
             }
 
-            tracePhoton(d, map, light); // nie wiem dokładnie co tu ze swiatlem czy nie powinno byc w tej funkcji ale sie zobaczy :>
+            tracePhoton(d, map, light, index, scene); // nie wiem dokładnie co tu ze swiatlem czy nie powinno byc w tej funkcji ale sie zobaczy :>
             ne = ne + 1;
         }
 
