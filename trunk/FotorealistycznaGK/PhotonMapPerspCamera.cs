@@ -8,8 +8,10 @@ namespace FotorealistycznaGK
     // stworzyłem nową klasę, bo w ten rendering gdzieś się musi odbyć, a w sumie
     // tak będzie chyba czytelniej to będzie. Rozumiem, że 
     // sama mapa fotonów = tablica fotonów
+    
     class PhotonMapPerspCamera: PerspectiveCamera
     {
+        int ilosc = 0;
         int photonCount; // ilość tegesów
         float radius; //promień wyszukiwania
         //każdy foton ma od 0 do 1 i średnia?
@@ -24,25 +26,40 @@ namespace FotorealistycznaGK
             // i zapamiętujemy miejsca trafień, odbijając fotony max bounces razy
             // gdzie wywołać tą funkcję? chyba niżej
             Random random = new Random();
-            map = new Photon[photonCount];
-            int indexer = 0;
+           // map = new Photon[photonCount];
+            int indexer = -1;
+            ilosc = 0;
             for (int i = 0; i < photonCount; i++) // coś tu powaliłem
             {
                 System.Console.WriteLine("foton" + i + "/" + photonCount);
                 Ray photonDir = new Ray(light.Position, new Vector((float)(random.NextDouble() * 2 - 1), (float)(random.NextDouble() * 2 - 1), (float)(random.NextDouble() * 2 - 1)));
                 //tworzymy promień związany z fotonem
+                foreach (Primitive pr in scene)
+                {
+                    if (pr.findIntersection(photonDir).X != float.PositiveInfinity)
+                        ilosc++;
+                 
+                }
+                
+            }
+            map = new Photon[ilosc];
+            for (int i = 0; i < ilosc; i++) // coś tu powaliłem
+            {
+
+                Ray photonDir = new Ray(light.Position, new Vector((float)(random.NextDouble() * 2 - 1), (float)(random.NextDouble() * 2 - 1), (float)(random.NextDouble() * 2 - 1)));
+                indexer++;
                 foreach (Primitive pr in scene) //i sprawdzamy, w co trafia. Punkt trafienia zapisujemy w mapie (chwilowo olewamy rekursję)
                 {
                     if (pr.findIntersection(photonDir).X != float.PositiveInfinity)
                     {
                         map[indexer] = new Photon(pr.findIntersection(photonDir), pr.color, photonDir.direction);
-                        indexer++;
+                        
                         effectivePhotonCount++;
                         System.Console.WriteLine("Jebnął foton"+pr.findIntersection(photonDir));
-                        break;
+                    //    break;
                     }else
                     {
-                        map[indexer] = new Photon(pr.findIntersection(photonDir), new Intensity(1,1,1), photonDir.direction);
+               //         map[indexer] = new Photon(pr.findIntersection(photonDir), new Intensity(1,1,1), photonDir.direction);
                       //  indexer++; break;
                     }
 
@@ -112,23 +129,32 @@ namespace FotorealistycznaGK
                             double sumR = 0, sumG = 0, sumB = 0;
                        //     foreach (Photon ph in map)
                        //     {
-                            for (int ą = 0; ą < effectivePhotonCount; ą++)
-                            {
-                              //  System.Console.WriteLine("jeb2");
-                                if (map[ą].Position.countVectorDistance(intersection) < radius)
-                                {
+                          //  for (int ą = 0; ą < map.; ą++)
+                          //  {
+                                int ju=0;
+                                foreach(Photon pp in map){
+                                    if (pp != null)
+                                        //  System.Console.WriteLine("jeb2");
+                                        if (pp.Position.countVectorDistance(intersection) < 10 * radius)
+                                        {
 
-                                    sumR += map[ą].Intensity.R;
-                                    sumG += map[ą].Intensity.G;
-                                    sumB += map[ą].Intensity.B;
-                                    System.Console.WriteLine("JEB");
+                                            sumR += pp.Intensity.R;
+                                            sumG += pp.Intensity.G;
+                                            sumB += pp.Intensity.B;
+                                            //    ju++;
+                                            System.Console.WriteLine("Trafiło w promieniu!!!!!!!!!!!!!!!");
+                                        }
+                                        else
+                                            System.Console.WriteLine("nie trafiło ;(");
+                                ju++;
+                                System.Console.WriteLine("" + ju);
                                 }
-                            }
+                           // }
 
                          //   }
-                                sumR /= (float)effectivePhotonCount;// ((float)(Math.PI * radius * radius));
-                                sumG /= (float)effectivePhotonCount; //((float)(Math.PI * radius * radius));
-                                sumB /= (float)effectivePhotonCount; //((float)(Math.PI * radius * radius));
+                                sumR /= (float)count;// ((float)(Math.PI * radius * radius));
+                                sumG /= (float)count; //((float)(Math.PI * radius * radius));
+                                sumB /= (float)count; //((float)(Math.PI * radius * radius));
                             res[i, j] = new Intensity(sumR, sumG, sumB);
                             //wrzucić do tablicy z rezultatem sumę podzieloną przez pi R kwadrat
                             img.setPixel(i, j, new Intensity(sumR, sumG, sumB)); //dla każdego prymitywu, wziąć pod uwagę depthBuffer!
