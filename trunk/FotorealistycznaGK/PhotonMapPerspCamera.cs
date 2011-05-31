@@ -58,7 +58,7 @@ namespace FotorealistycznaGK
             
             this.photonCount = photonCount;
             this.radius = radius;
-            map = new Photon[photonCount];
+          //  map = new Photon[photonCount];
             //tu wywołamy funkcję powyższą na rzecz parametru map
             createMap(photonCount, light, scene, bounces); //tzn. od razu w konstruktorze generujemy mapę
 
