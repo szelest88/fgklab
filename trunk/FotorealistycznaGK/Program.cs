@@ -165,8 +165,8 @@ namespace FotorealistycznaGK
             System.Console.WriteLine(v3);
             System.Console.WriteLine("...");
             //dlaczego ten cross zamiast up... bo wychodzi coś typu (-1,0,0)
-         //   PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpers.png"));
-         //   pc.renderScene();
+           // PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpers.png"));
+           // pc.renderScene();
             PhotonMapPerspCamera pmpc = new PhotonMapPerspCamera(3000, 0.1f, 2, 1, 1, 400, v2, target, up, 90, list, light, new Uri(@"C:\photmap.png"));
             pmpc.renderScene();
             //  OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, v3, list, new Uri(@"C:\rendermasakra.jpg"));
