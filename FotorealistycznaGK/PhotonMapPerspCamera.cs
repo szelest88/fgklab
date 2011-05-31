@@ -34,7 +34,7 @@ namespace FotorealistycznaGK
                 {
                     if (pr.findIntersection(photonDir).X != float.PositiveInfinity)
                     {
-                        map[indexer] = new Photon(pr.findIntersection(photonDir), light.Color, photonDir.direction);
+                        map[indexer] = new Photon(pr.findIntersection(photonDir), pr.color, photonDir.direction);
                         indexer++; break;
                     }else
                     {
