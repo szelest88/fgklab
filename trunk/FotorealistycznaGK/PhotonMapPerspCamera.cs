@@ -104,7 +104,6 @@ namespace FotorealistycznaGK
                             //fotony w określonym promieniu i obliczyć ich średnią czy coś takiego
                             //po czym ją zwrócić. W sumie nie wygląda na jakiś mega hardkor,
                             //chociaż mój Atom się na mnie obrazi - O(N^4) będzie boleć.
-                            double averageR = 0, averageG = 0, aevrageB = 0;
                             int count = 0;
                             double sumR = 0, sumG = 0, sumB = 0;
                             foreach (Photon ph in map)
@@ -119,9 +118,9 @@ namespace FotorealistycznaGK
                                 }
 
                             }
-                            sumR /= ((float)(Math.PI * radius * radius));
-                            sumG /= ((float)(Math.PI * radius * radius));
-                            sumB /= ((float)(Math.PI * radius * radius));
+                            sumR /= (float)count;// ((float)(Math.PI * radius * radius));
+                            sumG /= (float)count; //((float)(Math.PI * radius * radius));
+                            sumB /= (float)count; //((float)(Math.PI * radius * radius));
                             res[i, j] = new Intensity(sumR, sumG, sumB);
                             //wrzucić do tablicy z rezultatem sumę podzieloną przez pi R kwadrat
                             img.setPixel(i, j, new Intensity(sumR, sumG, sumB)); //dla każdego prymitywu, wziąć pod uwagę depthBuffer!
