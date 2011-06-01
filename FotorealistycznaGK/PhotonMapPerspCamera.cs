@@ -66,20 +66,17 @@ namespace FotorealistycznaGK
                 }
             }
         }
-        public PhotonMapPerspCamera(int photonCount, float radius, int bounces,
+        public PhotonMapPerspCamera(float radius,
              
             //i parametry dla konstruktora klasy bazowej:
-            float w, float h, int pixelsPerUnit, Vector position, Vector target, Vector up, float alpha, List<Primitive> scene, Light light, Uri renderTarget
+            float w, float h, int pixelsPerUnit, Vector position, Vector target, Vector up, float alpha, List<Primitive> scene, Light light,Photon[] map, Uri renderTarget
             ):base(w,h,pixelsPerUnit,position,target,up,alpha,scene,light,renderTarget) //wywołanie konstruktora klasy bazowej
         {
             
-            this.photonCount = photonCount;
+         //   this.photonCount = photonCount;
             this.radius = radius;
-          //  map = new Photon[photonCount];
-            //tu wywołamy funkcję powyższą na rzecz parametru map
-            createMap(photonCount, light, scene, bounces); //tzn. od razu w konstruktorze generujemy mapę
-
-        }
+            this.map = map;
+         }
         public override void renderScene()
         {
             //po utworzeniu kamery (w konstruktorze renderujemy mapę),
@@ -108,7 +105,8 @@ namespace FotorealistycznaGK
 
             for (int i = 0; i < 400; i++)
             {
-                System.Console.WriteLine("Rendering:" + i + "/400");
+       //         System.Console.WriteLine("dla nex fotonu");
+             //   System.Console.WriteLine("Rendering:" + i + "/400");
                 for (int j = 0; j < 400; j++)
                 {
                     Ray napierdalacz = new Ray(this.Position,
@@ -119,6 +117,8 @@ namespace FotorealistycznaGK
                     {
                         //dodać kontrolę depthbuffera
                         Vector intersection = p.findIntersection(napierdalacz);
+
+         
                         if (intersection.X != float.PositiveInfinity)
                         {
                             //teraz trzeba rozejrzeć się po okolicy (sfera), zliczyć
@@ -132,10 +132,11 @@ namespace FotorealistycznaGK
                           //  for (int ą = 0; ą < map.; ą++)
                           //  {
                                 int ju=0;
+
                                 foreach(Photon pp in map){
                                     if (pp != null)
                                         //  System.Console.WriteLine("jeb2");
-                                        if (pp.Position.countVectorDistance(intersection) < 10 * radius)
+                                        if (pp.Position.countVectorDistance(intersection) < 100 * radius)
                                         {
 
                                             sumR += pp.Intensity.R;
