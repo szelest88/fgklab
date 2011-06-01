@@ -13,12 +13,19 @@ namespace FotorealistycznaGK
         {
             //fotony i inne shity
             /**/
-            Photon[] photonMap;
-            int numberOfPhotons = 100; // nei wiem jaka ilość jest odpowiednia
-            photonMap = new Photon[numberOfPhotons];
+            int depth = 3; // ilosc odbic
+            int numberOfPhotons = 10000; // nei wiem jaka ilość jest odpowiednia
+            Photon[] photonMap; // mapa fotonow
+            Photon[] photTab = new Photon[numberOfPhotons]; // tablica z fotonami
+            photonMap = new Photon[numberOfPhotons*depth];
+            int index = 0;//ile miejsc z PhotonMap
+            int ne = 0;
+
+
+            #region zasłania
             /**/
 
-            int index = 0;
+            
             Vector origin = new Vector(0, 0, 0);
             Vector des1 = new Vector(0, 0, 1);
             Vector des2 = new Vector(0, 1, 0);
@@ -95,9 +102,12 @@ namespace FotorealistycznaGK
 
             PointLight light = new PointLight();
             light.Color = new Intensity(1.0, 1.0, 1.0);
-            light.Position = new Vector(1, -1, 1);
+            light.Position = new Vector(0.6f, -0.6f, 0.6f);
             Ray ray1 = new Ray(origin, des1);
             Ray ray2 = new Ray(origin, des2);
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //dlaczego się zapisuje kilkaset razy w punkcie ze światłem?
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             Image img = new Image(200, 200); //kamera orto powinna przyjąć rozmiary obrazu jako parametr w konstruktorze
 
@@ -168,10 +178,43 @@ namespace FotorealistycznaGK
             //dlaczego ten cross zamiast up... bo wychodzi coś typu (-1,0,0)
            // PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpers.png"));
            // pc.renderScene();
-            PhotonMapPerspCamera pmpc = new PhotonMapPerspCamera(3000, 0.1f, 2, 1, 1, 400, v2, target, up, 90, list, light, new Uri(@"C:\photmap.png"));
-            pmpc.renderScene();
+           // PhotonMapPerspCamera pmpc = new PhotonMapPerspCamera(3000, 0.1f, 2, 1, 1, 400, v2, target, up, 90, list, light, new Uri(@"C:\photmap.png"));
+          //  pmpc.renderScene();
             //  OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, v3, list, new Uri(@"C:\rendermasakra.jpg"));
             //  oc.renderScene();
+            #endregion zasłania
+
+            #region majtanieFotonami
+
+            //wypelniamy tablice
+            for (int i = 0; i < numberOfPhotons; i++)
+            {
+                photTab[i] = new Photon();
+            }
+
+            //i jedziemy
+            for (int ł = 0; ł < numberOfPhotons; ł++)
+            {
+                //if(ł%10==0)
+                    System.Console.WriteLine(""+ł+"/"+numberOfPhotons);
+                photTab[ł].sendPhoton(numberOfPhotons, light.Position, ref photonMap, ref index, list, ref depth,ne);
+                System.Console.WriteLine("Nr indeksu" + index);
+            }
+             target = new Vector(0.0f, 0, 0);
+             up = new Vector(0, 1, 0);//jak nie, to (010,a od góry 100)
+
+             v2 = new Vector(1, 0, 0); //tak - 1 1 0 pod kątem od góry,0,1,0 to od góry (z centralną)
+             v3 = -up.cross(v2 - target);
+
+         //    foreach (Photon ph in photonMap)
+                 for(int a = 0;a<index;a++)
+                 System.Console.WriteLine("DUPA: " + photonMap[a].Position);
+
+             PhotonMapPerspCamera pmpc = new PhotonMapPerspCamera(
+                 1.0f, 100f, 100f, 100, v2, target, v3, 45f,
+                 list, light, photonMap, new Uri(@"C:\fotony.jpg"));
+
+            #endregion majtanieFotonami
 
             //  System.Console.ReadLine();  
             //System.Console.ReadKey();
@@ -179,6 +222,9 @@ namespace FotorealistycznaGK
             p.StartInfo.CreateNoWindow = true;
             p.StartInfo.FileName=@"C:\photmap.png";
             p.Start();
+            System.Console.ReadKey();
+            
+
         }
     }
 }

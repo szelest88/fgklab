@@ -12,6 +12,7 @@ namespace FotorealistycznaGK
         float specularCoefficient; // wsp.swiatla odbijanego zwierciadlanie
         public Texture texture;
         public Boolean hasTexture = false;
+        public float bounceProbability = 0.9f;
 
         #region Properties
 

@@ -35,8 +35,8 @@ namespace FotorealistycznaGK
         public Photon() {
 
             this.position = new Vector(0, 0, 0);
-            this.intensity = new Intensity(0,0,0);
-            this.direction = new float[3];
+            this.intensity = new Intensity(1,0,0);
+            this.direction = new Vector();
         }
 
         public Photon(Vector position, Intensity intensity, Vector direction) {
@@ -44,7 +44,6 @@ namespace FotorealistycznaGK
             this.position = position;
             this.intensity = intensity;
             this.direction = direction;
-            this.scene = scene;
         }
 
         #endregion Constructors
@@ -63,36 +62,53 @@ namespace FotorealistycznaGK
         }
 
         // funkcja sledzaca foton
-        void tracePhoton(Vector direction, Photon[] map, Light light, int index, List<Primitive> scene)
+        void tracePhoton(Vector direction, Photon[] map, Vector start,ref int index, List<Primitive> scene, int depth)
         {
-
-            Vector start = light.Position;
-            Random rand = new Random(); // przyda sie do prawdopodobienstwa
-
-            this.direction = direction;
-            this.position = start;
-
-            Ray r = new Ray(start, direction);
-
-            foreach (Primitive pr in scene)
+            
+            if (depth != 0)
             {
-                if (pr.findIntersection(r).X != float.PositiveInfinity)
-                {
-                    map[index] = this;
-                    index++;
+       //         System.Console.WriteLine("tracephoton wywołuje się dla depth!=0");
+                //Vector start = light.Position;
+                Random rand = new Random(); // przyda sie do prawdopodobienstwa
 
-                    // tutaj trza zobaczyc material
-                    if (!pr.material.isMirror && !pr.material.isRefractive)
+                this.direction = direction;
+                this.position = start;
+
+                Ray r = new Ray(start, direction);
+
+                foreach (Primitive pr in scene)
+                {
+                    Vector where = pr.findIntersection(r);
+                //    System.Console.WriteLine("NIE JEBŁO");
+                    if (where.X != float.PositiveInfinity)
                     {
-                        if (rand.NextDouble() < (double)pr.material.probability)
-                        { 
-                            // odbij foton
+                        System.Console.WriteLine("JEBŁO");
+                        if (!(index >= map.Length))
+                        {
+                            map[index] = new Photon(this.position, pr.color, this.direction);
+                            index++;
                         }
-                            // absorbuj foton
+                        // tutaj trza zobaczyc material
+                        if (!pr.material.isMirror && !pr.material.isRefractive)
+                        {
+                            if (rand.NextDouble() < (double)pr.material.bounceProbability)
+                            {
+                                System.Console.WriteLine("odbicie dla diffuse");
+
+                                this.position = where;
+                                this.direction = findRandomDirection();
+
+                                depth = depth-1;
+                                tracePhoton(this.direction, map, this.position, ref index, scene, depth);
+
+                            }
+                        }
+                        else depth = 0;  break;
                     }
                 }
 
             }
+
 
             // tu musi być jakiś odpowiednik findIntersection()
             // i teraz w zaleznosci od materialu dajemy
@@ -103,21 +119,18 @@ namespace FotorealistycznaGK
 
         // funkcja emitujaca fotony ze zrodla punktowego
         // czyli dla każdego 
-        void sendPhoton(int numberOfPhotons, Light light, Photon[] map, int index, List<Primitive> scene)
+       public  void sendPhoton(int numberOfPhotons, Vector start, ref Photon[] map, ref int index, List<Primitive> scene, ref int depth, int ne)
         {
 
             // numberOfPhotons mozna tez pobrac wielkosc mapy fotonowej :> Ale poki co niech tak zostanie jak jest.
-            int ne = 0; //liczba wyemitowanych fotonow
+            // int ne = 0; //liczba wyemitowanych fotonow
             Vector d = new Vector(); // wektor kierunkowy emisji fotona
-
-            while (numberOfPhotons != ne) {
 
                 do { d = findRandomDirection(); }
                 while (Math.Pow(d.X, 2) + Math.Pow(d.Y, 2) + Math.Pow(d.Z, 2) > 1);
-            }
 
-            tracePhoton(d, map, light, index, scene); // nie wiem dokładnie co tu ze swiatlem czy nie powinno byc w tej funkcji ale sie zobaczy :>
-            ne = ne + 1;
+            tracePhoton(d, map, start,ref index, scene, depth); // nie wiem dokładnie co tu ze swiatlem czy nie powinno byc w tej funkcji ale sie zobaczy :>
+            ne = ne + 1; // czy to sa wyemitowane?
         }
 
         /*
