@@ -99,6 +99,10 @@ namespace FotorealistycznaGK
             list.Add(sufitBlizszy);
             list.Add(floorBlizszy);
             list.Add(floorDalszy);
+            Loader loader = new Loader();
+            loader.read(0.1f, 50, 0, 50); //trzeba to jakoś ustawić, nie wiem, jak ;)
+            foreach (Primitive p in loader.listaZajebista)
+                list.Add(p);
 
             PointLight light = new PointLight();
             light.Color = new Intensity(1.0, 1.0, 1.0);
@@ -176,8 +180,8 @@ namespace FotorealistycznaGK
             System.Console.WriteLine(v3);
             System.Console.WriteLine("...");
             //dlaczego ten cross zamiast up... bo wychodzi coś typu (-1,0,0)
-           // PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpers.png"));
-           // pc.renderScene();
+            PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpers.png"));
+            pc.renderScene();
            // PhotonMapPerspCamera pmpc = new PhotonMapPerspCamera(3000, 0.1f, 2, 1, 1, 400, v2, target, up, 90, list, light, new Uri(@"C:\photmap.png"));
           //  pmpc.renderScene();
             //  OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, v3, list, new Uri(@"C:\rendermasakra.jpg"));
@@ -218,10 +222,10 @@ namespace FotorealistycznaGK
 
             //  System.Console.ReadLine();  
             //System.Console.ReadKey();
-            Process p = new Process();
-            p.StartInfo.CreateNoWindow = true;
-            p.StartInfo.FileName=@"C:\photmap.png";
-            p.Start();
+            Process pr = new Process();
+            pr.StartInfo.CreateNoWindow = true;
+            pr.StartInfo.FileName=@"C:\photmap.png";
+            pr.Start();
             System.Console.ReadKey();
             
 
