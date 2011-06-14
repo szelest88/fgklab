@@ -104,8 +104,9 @@ f 6 7 3
                 System.Console.WriteLine(verticesNums[index3]);
                 listaZajebista.Add(
                     new Triangle(
-                    new Vector(x + scale * (float)verticesNums[index1].x, y + scale * (float)verticesNums[index1].y, z + scale * (float)verticesNums[index1].z),
+                    
                     new Vector(x + scale * (float)verticesNums[index2].x, y + scale * (float)verticesNums[index2].y, z + scale * (float)verticesNums[index2].z),
+                    new Vector(x + scale * (float)verticesNums[index1].x, y + scale * (float)verticesNums[index1].y, z + scale * (float)verticesNums[index1].z),
                     new Vector(x + scale * (float)verticesNums[index3].x, y + scale * (float)verticesNums[index3].y, z + scale * (float)verticesNums[index3].z),
                     new Intensity(1, 0, 0),
                     new Material())
