@@ -100,7 +100,8 @@ namespace FotorealistycznaGK
             list.Add(floorBlizszy);
             list.Add(floorDalszy);
             Loader loader = new Loader();
-            loader.read(0.1f, 50, 0, 50); //trzeba to jakoś ustawić, nie wiem, jak ;)
+            loader.read(0.003f, 0.175f, -0.3f, -0.20f);
+            //loader.read(0.005f, 0, 0, 0); //trzeba to jakoś ustawić, nie wiem, jak ;)
             foreach (Primitive p in loader.listaZajebista)
                 list.Add(p);
 
@@ -187,8 +188,9 @@ namespace FotorealistycznaGK
             //  OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, v3, list, new Uri(@"C:\rendermasakra.jpg"));
             //  oc.renderScene();
             #endregion zasłania
-
+            /*
             #region majtanieFotonami
+            
 
             //wypelniamy tablice
             for (int i = 0; i < numberOfPhotons; i++)
@@ -219,12 +221,13 @@ namespace FotorealistycznaGK
                  list, light, photonMap, new Uri(@"C:\fotony.jpg"));
 
             #endregion majtanieFotonami
+            */
 
             //  System.Console.ReadLine();  
             //System.Console.ReadKey();
             Process pr = new Process();
             pr.StartInfo.CreateNoWindow = true;
-            pr.StartInfo.FileName=@"C:\photmap.png";
+            pr.StartInfo.FileName=@"C:\renderpers.png";
             pr.Start();
             System.Console.ReadKey();
             
