@@ -9,12 +9,11 @@ using System.Globalization;
 namespace FotorealistycznaGK
 {
     class Loader{
-
         public List<Primitive> listaZajebista;
 
-        public void read(float scale, float x, float y, float z)
+         public void read(float scale, float x, float y, float z)
         {
-
+             
             /*przyjąłem format pliku:
 v 0.000000 2.000000 2.000000
 v 0.000000 0.000000 2.000000
@@ -66,8 +65,8 @@ f 6 7 3
             List<ObjVertex> verticesNums = new List<ObjVertex>();
             foreach (string s2 in verticesStrings)
             {
-                char[] splitter = { ' ' };
-                string[] temp = s2.Split(splitter, StringSplitOptions.RemoveEmptyEntries);//spearatorem jest x spacji - i co kurwa?
+                char[] splitter = {' '};
+                string[] temp = s2.Split(splitter,StringSplitOptions.RemoveEmptyEntries);//spearatorem jest x spacji - i co kurwa?
 
 
                 ObjVertex ov = new ObjVertex(
@@ -93,9 +92,9 @@ f 6 7 3
             foreach (string s2 in facesStrings)
             {
                 System.Console.WriteLine("FACE:");
-                string[] podzielony = Regex.Split(s2, " +");
-                //  string[] podzielony = s2.Split({' '},StringSplitOptions.RemoveEmptyEntries);
-
+               string[] podzielony =  Regex.Split(s2," +");
+              //  string[] podzielony = s2.Split({' '},StringSplitOptions.RemoveEmptyEntries);
+                
                 int index1 = int.Parse(podzielony[1]) - 1;
                 int index2 = int.Parse(podzielony[2]) - 1;
                 int index3 = int.Parse(podzielony[3]) - 1;
@@ -104,11 +103,10 @@ f 6 7 3
                 System.Console.WriteLine(verticesNums[index3]);
                 listaZajebista.Add(
                     new Triangle(
-                    
-                    new Vector(x + scale * (float)verticesNums[index2].x, y + scale * (float)verticesNums[index2].y, z + scale * (float)verticesNums[index2].z),
-                    new Vector(x + scale * (float)verticesNums[index1].x, y + scale * (float)verticesNums[index1].y, z + scale * (float)verticesNums[index1].z),
-                    new Vector(x + scale * (float)verticesNums[index3].x, y + scale * (float)verticesNums[index3].y, z + scale * (float)verticesNums[index3].z),
-                    new Intensity(1, 0, 0),
+                    new Vector(x+scale*(float)verticesNums[index1].x,y+scale*(float)verticesNums[index1].y,z+scale*(float)verticesNums[index1].z),
+                    new Vector(x+scale*(float)verticesNums[index2].x, y+scale*(float)verticesNums[index2].y, z+scale*(float)verticesNums[index2].z),
+                    new Vector(x+scale*(float)verticesNums[index3].x, y+scale*(float)verticesNums[index3].y, z+scale*(float)verticesNums[index3].z),
+                    new Intensity(1,0,0),
                     new Material())
                     );
             }

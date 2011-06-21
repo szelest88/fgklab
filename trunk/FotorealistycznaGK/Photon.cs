@@ -1,11 +1,11 @@
-﻿//SVN - poprawiono
+﻿//LOKALNE
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 //using System;
 
-namespace FotorealistycznaGK
+namespace FotorealistycznaGK 
 {
     class Photon //zmieniłem na class, kompilator mówi, że
         //"Struct cannot contain explicit parameterless constructors"
@@ -83,7 +83,7 @@ namespace FotorealistycznaGK
                 //    System.Console.WriteLine("NIE JEBŁO");
                     if (where.X != float.PositiveInfinity)
                     {
-                        System.Console.WriteLine("JEBŁO");
+                        System.Console.WriteLine("TRAFIŁO");
                         if (!(index >= map.Length))
                         {
                             map[index] = new Photon(this.position, pr.color, this.direction);
