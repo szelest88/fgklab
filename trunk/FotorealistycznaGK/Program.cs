@@ -1,4 +1,4 @@
-﻿//SVN - poprawiono
+﻿//SVN - poprawiono lala
 using System;
 using System.Collections.Generic;
 using System.Linq;
