@@ -1,4 +1,4 @@
-﻿//SVN - poprawiono
+﻿//LOKALNE nana
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,14 +6,14 @@ using System.Text;
 
 namespace FotorealistycznaGK
 {
-    class PointLight : Light
+    class PointLight:Light
     {
 
         // strony 16-18
 
         public PointLight()
         {
-
+            
         }
         public PointLight(Vector position, int energy)
         {
@@ -32,17 +32,17 @@ namespace FotorealistycznaGK
                 dir.Y = (float)(rand.NextDouble() * 2 - 1);
                 dir.Z = (float)(rand.NextDouble() * 2 - 1);
                 Ray R = new Ray(this.Position, this.Position + dir);
-                float odlOdTrafienia = float.PositiveInfinity;
-                Vector traf = null;
-                Intensity kolorObiektu = null;
+                float odlOdTrafienia=float.PositiveInfinity;
+                Vector traf=null;
+                Intensity kolorObiektu=null;
                 foreach (Primitive p in scene)
                 {
-                    if (p.findIntersection(R).X != float.PositiveInfinity &&
-                        p.findIntersection(R).countVectorDistance(this.Position) < odlOdTrafienia)
+                    if (p.findIntersection(R).X != float.PositiveInfinity && 
+                        p.findIntersection(R).countVectorDistance(this.Position)<odlOdTrafienia)
                     {
                         odlOdTrafienia = p.findIntersection(R).countVectorDistance(this.Position);
                         traf = p.findIntersection(R);
-                        kolorObiektu = p.color;
+                        kolorObiektu=p.color;
                     }
                 }
                 //w traf jest najbliższa intersekcja promienia z obiektem

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -191,14 +192,12 @@ namespace FotorealistycznaGK
                 else
                     return true;
         }
-        //coś się pitoli
+         //coś się pitoli
         public static bool operator !=(Vector left, Vector right)
         {
             return !(left == right);
         }
 
-     
-         
         public static Vector operator /(Vector left, float scalar)
         {
             Vector v = new Vector();
