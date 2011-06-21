@@ -1,4 +1,5 @@
-﻿using System;
+﻿//SVN - poprawiono
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace FotorealistycznaGK
             int numberOfPhotons = 10000; // nei wiem jaka ilość jest odpowiednia
             Photon[] photonMap; // mapa fotonow
             Photon[] photTab = new Photon[numberOfPhotons]; // tablica z fotonami
-            photonMap = new Photon[numberOfPhotons*depth];
+            photonMap = new Photon[numberOfPhotons * depth];
             int index = 0;//ile miejsc z PhotonMap
             int ne = 0;
 
@@ -25,7 +26,7 @@ namespace FotorealistycznaGK
             #region zasłania
             /**/
 
-            
+
             Vector origin = new Vector(0, 0, 0);
             Vector des1 = new Vector(0, 0, 1);
             Vector des2 = new Vector(0, 1, 0);
@@ -86,8 +87,8 @@ namespace FotorealistycznaGK
 
             list.Add(S);
             list.Add(S2);
-            list.Add(kulena1);
-            list.Add(zolta);
+            // list.Add(kulena1);
+            // list.Add(zolta);
             list.Add(trn);
             //EX!:
             list.Add(trn2);
@@ -100,14 +101,12 @@ namespace FotorealistycznaGK
             list.Add(floorBlizszy);
             list.Add(floorDalszy);
             Loader loader = new Loader();
-            loader.read(0.003f, 0.175f, -0.3f, -0.20f);
-            //loader.read(0.005f, 0, 0, 0); //trzeba to jakoś ustawić, nie wiem, jak ;)
+            loader.read(0.1f, 50, 0, 50); //145->245
             foreach (Primitive p in loader.listaZajebista)
                 list.Add(p);
-
             PointLight light = new PointLight();
             light.Color = new Intensity(1.0, 1.0, 1.0);
-            light.Position = new Vector(0.6f, -0.6f, 0.6f);
+            light.Position = new Vector(0.0f, 0.0f, 0.0f); //COFNĄ
             Ray ray1 = new Ray(origin, des1);
             Ray ray2 = new Ray(origin, des2);
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -181,56 +180,35 @@ namespace FotorealistycznaGK
             System.Console.WriteLine(v3);
             System.Console.WriteLine("...");
             //dlaczego ten cross zamiast up... bo wychodzi coś typu (-1,0,0)
-            PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpers.png"));
-            pc.renderScene();
-           // PhotonMapPerspCamera pmpc = new PhotonMapPerspCamera(3000, 0.1f, 2, 1, 1, 400, v2, target, up, 90, list, light, new Uri(@"C:\photmap.png"));
-          //  pmpc.renderScene();
+            //  PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpersplus250050.png"));
+            //  pc.renderScene();
+
             //  OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, v3, list, new Uri(@"C:\rendermasakra.jpg"));
             //  oc.renderScene();
             #endregion zasłania
-            /*
+
             #region majtanieFotonami
-            
-
-            //wypelniamy tablice
-            for (int i = 0; i < numberOfPhotons; i++)
-            {
-                photTab[i] = new Photon();
-            }
-
-            //i jedziemy
-            for (int ł = 0; ł < numberOfPhotons; ł++)
-            {
-                //if(ł%10==0)
-                    System.Console.WriteLine(""+ł+"/"+numberOfPhotons);
-                photTab[ł].sendPhoton(numberOfPhotons, light.Position, ref photonMap, ref index, list, ref depth,ne);
-                System.Console.WriteLine("Nr indeksu" + index);
-            }
-             target = new Vector(0.0f, 0, 0);
-             up = new Vector(0, 1, 0);//jak nie, to (010,a od góry 100)
-
-             v2 = new Vector(1, 0, 0); //tak - 1 1 0 pod kątem od góry,0,1,0 to od góry (z centralną)
-             v3 = -up.cross(v2 - target);
-
-         //    foreach (Photon ph in photonMap)
-                 for(int a = 0;a<index;a++)
-                 System.Console.WriteLine("DUPA: " + photonMap[a].Position);
-
-             PhotonMapPerspCamera pmpc = new PhotonMapPerspCamera(
-                 1.0f, 100f, 100f, 100, v2, target, v3, 45f,
-                 list, light, photonMap, new Uri(@"C:\fotony.jpg"));
+            //nasz pointlight to light
+            int trafienia = 0;
+            Photon[] mapa = new Photon[10000];//30.000
+            light.generujFotony(10000, ref trafienia, ref mapa, list);//30.000
+            PhotonMapPerspCamera pmpc = new PhotonMapPerspCamera(
+                0.001f, 100f, 100f, 100, v2, target, v3, 45f, //0.001
+                list, light, mapa, new Uri(@"C:\fotony.png")); //photonMap -> mapa
+            pmpc.renderScene();
 
             #endregion majtanieFotonami
-            */
 
             //  System.Console.ReadLine();  
             //System.Console.ReadKey();
-            Process pr = new Process();
-            pr.StartInfo.CreateNoWindow = true;
-            pr.StartInfo.FileName=@"C:\renderpers.png";
-            pr.Start();
-            System.Console.ReadKey();
-            
+            /*
+              Process p = new Process();
+              p.StartInfo.CreateNoWindow = true;
+              p.StartInfo.FileName=@"C:\fotony.png";
+              p.Start();
+              System.Console.ReadKey();
+             */
+
 
         }
     }
