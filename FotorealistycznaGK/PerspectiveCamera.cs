@@ -27,19 +27,19 @@ namespace FotorealistycznaGK
        szerokość i wysokość viewportu (nearShit) w jednostkach sceny
        </summary>
        **/
-        float w, h;
+        public float w, h;
         /**
          <summary>
          szerokość i wysokość viewportu (nearShit) w pikselach
          </summary>
          **/
-        int wPix, hPix;
+        public int wPix, hPix;
         /**
          <summary>
          szerokość i wysokość piksela w jednostkach sceny
          </summary>
          **/
-        float widthOfPix, heightOfPix;
+        public float widthOfPix, heightOfPix;
         /**
          <summary>
          kąt widzenia, w pionie i w poziomie (fov) (jest jeden, bo chwilowo będziemy rzutować - dla

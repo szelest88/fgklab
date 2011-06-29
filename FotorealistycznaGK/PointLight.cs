@@ -42,7 +42,10 @@ namespace FotorealistycznaGK
                     {
                         odlOdTrafienia = p.findIntersection(R).countVectorDistance(this.Position);
                         traf = p.findIntersection(R);
-                        kolorObiektu=p.color;
+                        kolorObiektu = new Intensity((((float)p.Texturize(p.findIntersection(R)).R)/255.0f),
+                            (((float)p.Texturize(p.findIntersection(R)).G)/255.0f),
+                            (((float)p.Texturize(p.findIntersection(R)).B)/255.0f))
+                            ;
                     }
                 }
                 //w traf jest najbliższa intersekcja promienia z obiektem

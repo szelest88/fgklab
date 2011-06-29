@@ -18,6 +18,7 @@ namespace FotorealistycznaGK
         //każdy foton ma od 0 do 1 i średnia?
         Photon[] map;
         int effectivePhotonCount = 0;
+        float[,] depthBuffer; //NOWE
         public void createMap(int photonCount, Light light, List<Primitive> scene, int bounces) 
                                                 //po utworzeniu obiektu, wywoła się
                                                 //to - funkcja zapełni tablicę
@@ -73,10 +74,20 @@ namespace FotorealistycznaGK
             float w, float h, int pixelsPerUnit, Vector position, Vector target, Vector up, float alpha, List<Primitive> scene, Light light,Photon[] map, Uri renderTarget
             ):base(w,h,pixelsPerUnit,position,target,up,alpha,scene,light,renderTarget) //wywołanie konstruktora klasy bazowej
         {
-            
+            this.w = w;
+            this.h = h;
+            this.wPix = (int)w * pixelsPerUnit;
+            this.hPix = (int)h * pixelsPerUnit;
+            widthOfPix = 1.0f / pixelsPerUnit;
+            this.alpha = alpha;
+            heightOfPix = 1.0f / pixelsPerUnit;
          //   this.photonCount = photonCount;
             this.radius = radius;
             this.map = map;
+            this.depthBuffer = new float[400, 400];
+            for (int i = 0; i < 400; i++)
+                for (int j = 0; j < 400; j++)
+                    depthBuffer[i, j] = float.PositiveInfinity;
          }
         public override void renderScene()
         {
@@ -89,7 +100,7 @@ namespace FotorealistycznaGK
             //(bo kod będzie się powtarzał), ale detale będą inne, a nie chce mi się
             //dzielić tamtego renderScene'a na funkcje
             //zaraz zrobię z tego jakiś region // !!!!!!!!!!!!!!!!!
-            Image img = new Image(200, 200);
+            Image img = new Image(400, 400);
             
             Vector observer = this.Position;
             Vector srodek = this.Position + (this.Target - this.Position).normalizeProduct() * near;
@@ -97,21 +108,21 @@ namespace FotorealistycznaGK
             Vector prostopadlyPrzes =
                ((this.Target - this.Position).cross(this.Position - this.Up)).normalizeProduct();//cross(this.Positon-this.Up)
             Vector pionPrzes = (this.Up).normalizeProduct();//; *1.5f;//(this.Up-this.Position).nor
-             float krok = s * 2.0f / 200.0f;
-            Vector poczatek = srodek - prostopadlyPrzes * s - pionPrzes * s;
-            Intensity[,] res = new Intensity[200, 200];
-            for (int i = 0; i < 200; i++)
-                for (int j = 0; j < 200; j++)
+             float krok = s * 4.0f / 400.0f;//2->4
+            Vector poczatek = srodek - prostopadlyPrzes * s*2 - pionPrzes * s*2;//nic->*2
+            Intensity[,] res = new Intensity[400, 400];
+            for (int i = 0; i < 400; i++)
+                for (int j = 0; j < 400; j++)
                 {
                     res[i, j] = new Intensity();
                     img.setPixel(i, j, new Intensity());
                 }
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 400; i++)
             {
        //         System.Console.WriteLine("dla nex fotonu");
-                System.Console.WriteLine("Rendering:" + i + "/200");
-                for (int j = 0; j < 200; j++)
+                System.Console.WriteLine("Rendering:" + i + "/400");
+                for (int j = 0; j < 400; j++)
                 {
 
                     Ray napierdalacz = new Ray(this.Position,
@@ -124,56 +135,64 @@ namespace FotorealistycznaGK
                     {
                      //   System.Console.WriteLine("nono");
                         //dodać kontrolę depthbuffera
+                        //intersection powinno uwzględniać głębokość
                         Vector intersection = p.findIntersection(napierdalacz);
 
          
                         if (intersection.X != float.PositiveInfinity)
                         {
-                            //teraz trzeba rozejrzeć się po okolicy (sfera), zliczyć
-                            //fotony w określonym promieniu i obliczyć ich średnią czy coś takiego
-                            //po czym ją zwrócić. W sumie nie wygląda na jakiś mega hardkor,
-                            //chociaż mój Atom się na mnie obrazi - O(N^4) będzie boleć.
-                            int count = 0;
-                            double sumR = 0, sumG = 0, sumB = 0;
-                       //     foreach (Photon ph in map)
-                       //     {
-                          //  for (int ą = 0; ą < map.; ą++)
-                          //  {
-                                int ju=0;
-                            // tu coś nie tak chyba
-                               // System.Console.WriteLine("Trafiło w obiekt");
-                                foreach(Photon pp in map){
+                            float odleglosc = intersection.countVectorDistance(this.Position);
+                            if (depthBuffer[i, j] >= odleglosc)
+                                depthBuffer[i, j] = odleglosc;
+                            if (depthBuffer[i, j] == odleglosc)
+                            {
+                                //teraz trzeba rozejrzeć się po okolicy (sfera), zliczyć
+                                //fotony w określonym promieniu i obliczyć ich średnią czy coś takiego
+                                //po czym ją zwrócić. W sumie nie wygląda na jakiś mega hardkor,
+                                //chociaż mój Atom się na mnie obrazi - O(N^4) będzie boleć.
+                                int count = 0;
+                                double sumR = 0, sumG = 0, sumB = 0;
+                                //     foreach (Photon ph in map)
+                                //     {
+                                //  for (int ą = 0; ą < map.; ą++)
+                                //  {
+                                int ju = 0;
+                                // tu coś nie tak chyba
+                                // System.Console.WriteLine("Trafiło w obiekt");
+                                foreach (Photon pp in map)
+                                {
                                     if (pp != null)
                                         //  System.Console.WriteLine("jeb2");
-                                        if (pp.Position.countVectorDistance(intersection) < radius*5)
+                                        if (pp.Position.countVectorDistance(intersection) < radius && p.material.isMirror==false && p.material.isRefractive==false)
                                         {
-                                            sumR =  (double)((double)p.Texturize(intersection).R/255.0);
+                                            sumR = (double)((double)p.Texturize(intersection).R / 255.0);
                                             sumG = (double)((double)p.Texturize(intersection).G / 255.0);
                                             sumB = (double)((double)p.Texturize(intersection).B / 255.0);
-//                                            sumR = 1;
+                                            //                                            sumR = 1;
 
-                                          //  System.Console.WriteLine("Trafiło w promieniu!!!!!!!!!!!!!!!");
+                                            //  System.Console.WriteLine("Trafiło w promieniu!!!!!!!!!!!!!!!");
                                             traf = true;
-                                     
-                                           // break;
+
+                                            // break;
                                             //    ju++;
                                         }
-                                   //     else
-                                   //         System.Console.WriteLine("nie trafiło ;(");
-                                ju++;
-                          //      System.Console.WriteLine("" + ju+"/"+map.Count()
-                          //          +", prim nr"+ile);
+                                    //     else
+                                    //         System.Console.WriteLine("nie trafiło ;(");
+                                    ju++;
+                                    //      System.Console.WriteLine("" + ju+"/"+map.Count()
+                                    //          +", prim nr"+ile);
                                 }
-                           // }
+                                // }
 
-                         //   }
-                              //  sumR ;// ((float)(Math.PI * radius * radius));
-                              //  sumG t; //((float)(Math.PI * radius * radius));
-                             //   sumB /= (float)count; //((float)(Math.PI * radius * radius));
-                            res[i, j] = new Intensity(sumR, sumG, sumB);
-                            //wrzucić do tablicy z rezultatem sumę podzieloną przez pi R kwadrat
-                            if (traf == true)
-                                img.setPixel(i, j, res[i, j]);
+                                //   }
+                                //  sumR ;// ((float)(Math.PI * radius * radius));
+                                //  sumG t; //((float)(Math.PI * radius * radius));
+                                //   sumB /= (float)count; //((float)(Math.PI * radius * radius));
+                                res[i, j] = new Intensity(sumR, sumG, sumB);
+                                //wrzucić do tablicy z rezultatem sumę podzieloną przez pi R kwadrat
+                                if (traf == true)
+                                    img.setPixel(i, j, res[i, j]);
+                            }//koniec ifa depthBuffer[...]==odleglosc
                            // img.setPixel(i, j, new Intensity(1,0, 0)); //dla każdego prymitywu, wziąć pod uwagę depthBuffer!
                          //   else
                          //       img.setPixel(i, j, new Intensity(0, 0, 0));
