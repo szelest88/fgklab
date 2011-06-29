@@ -62,8 +62,8 @@ namespace FotorealistycznaGK
             //EX:
             #region cornelBox Ściany
             //niebieska:
-            Triangle trn = new Triangle(new Vector(0.0f, -0.5f, -0.5f), new Vector(0.0f, 0.5f, -0.5f), new Vector(0.0f, -0.5f, 0.5f), new Intensity(0, 0, 1), material);
-            Triangle trn2 = new Triangle(new Vector(0.0f, 0.5f, 0.5f), new Vector(0.0f, -0.5f, 0.5f), new Vector(0.0f, .5f, -.5f), new Intensity(0, 0, 1), material);
+            Triangle trn = new Triangle(new Vector(0.0f, -0.5f, -0.5f), new Vector(0.0f, 0.5f, -0.5f), new Vector(0.0f, -0.5f, 0.5f), new Intensity(1, 0, 1), material);
+            Triangle trn2 = new Triangle(new Vector(0.0f, 0.5f, 0.5f), new Vector(0.0f, -0.5f, 0.5f), new Vector(0.0f, .5f, -.5f), new Intensity(1, 1, 0), material);
             //zielona:
             Triangle trn3 = new Triangle(new Vector(0.0f, -0.5f, -0.5f), new Vector(0.5f, -0.5f, -0.5f), new Vector(0.5f, 0.5f, -0.5f), new Intensity(0, 1, 0), material);
             Triangle trn4 = new Triangle(new Vector(0.0f, 0.5f, -0.5f), new Vector(0.0f, -0.5f, -0.5f), new Vector(0.5f, 0.5f, -0.5f), new Intensity(0, 1, 0), material);
@@ -88,9 +88,9 @@ namespace FotorealistycznaGK
             list.Add(S2);
            // list.Add(kulena1);
            // list.Add(zolta);
-            list.Add(trn);
+            list.Add(trn); //blue
             //EX!:
-            list.Add(trn2);
+            list.Add(trn2); //blue
             list.Add(trn3);
             list.Add(trn4); 
             list.Add(trn5);
@@ -179,7 +179,7 @@ namespace FotorealistycznaGK
             System.Console.WriteLine(v3);
             System.Console.WriteLine("...");
             //dlaczego ten cross zamiast up... bo wychodzi coś typu (-1,0,0)
-          //  PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpersplus250050.png"));
+            PerspectiveCamera pc = new PerspectiveCamera(1, 1, 400, v2, target, v3, 90, list, light, new Uri(@"C:\renderpersplus250050.png"));
           //  pc.renderScene();
 
             //  OrthographicCamera oc = new OrthographicCamera(1, 1, 400, v2, target, v3, list, new Uri(@"C:\rendermasakra.jpg"));
@@ -189,10 +189,10 @@ namespace FotorealistycznaGK
             #region majtanieFotonami
            //nasz pointlight to light
             int trafienia=0;
-            Photon[] mapa = new Photon[10000];//30.000
-            light.generujFotony(10000,ref trafienia,ref mapa, list);//30.000
+            Photon[] mapa = new Photon[30000];//30.000
+            light.generujFotony(30000,ref trafienia,ref mapa, list);//30.000
              PhotonMapPerspCamera pmpc = new PhotonMapPerspCamera(
-                 0.01f, 100f, 100f, 100, v2, target, v3, 45f, //0.001
+                 0.004f, 100f, 100f, 100, v2, target, v3, 45f, //0.001
                  list, light, mapa, new Uri(@"C:\fotony.png")); //photonMap -> mapa
              pmpc.renderScene();
              
