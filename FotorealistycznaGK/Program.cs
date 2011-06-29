@@ -1,5 +1,4 @@
-﻿//LOKALNE
-using System;
+﻿using System; //svn
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
