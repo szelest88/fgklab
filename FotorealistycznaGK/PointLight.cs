@@ -44,8 +44,8 @@ namespace FotorealistycznaGK
                         traf = p.findIntersection(R);
                         kolorObiektu = new Intensity((((float)p.Texturize(p.findIntersection(R)).R)/255.0f),
                             (((float)p.Texturize(p.findIntersection(R)).G)/255.0f),
-                            (((float)p.Texturize(p.findIntersection(R)).B)/255.0f))
-                            ;
+                            (((float)p.Texturize(p.findIntersection(R)).B)/255.0f));
+                        //dodać ruletkę: jakieś 0.2 i promień stąd w hemisferę. Jeśli trafia,
                     }
                 }
                 //w traf jest najbliższa intersekcja promienia z obiektem

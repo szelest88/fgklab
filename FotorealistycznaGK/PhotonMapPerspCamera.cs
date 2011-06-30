@@ -131,6 +131,7 @@ namespace FotorealistycznaGK
                         j * krok * prostopadlyPrzes);
                     bool traf = false;
                     //int ile=0;
+                    int ileFotonow = 0;
                     foreach (Primitive p in scene)
                     {
                      //   System.Console.WriteLine("nono");
@@ -162,33 +163,17 @@ namespace FotorealistycznaGK
                                 foreach (Photon pp in map)
                                 {
                                     if (pp != null)
-                                        //  System.Console.WriteLine("jeb2");
                                         if (pp.Position.countVectorDistance(intersection) < radius && p.material.isMirror==false && p.material.isRefractive==false)
                                         {
-                                            sumR = (double)((double)p.Texturize(intersection).R / 255.0);
-                                            sumG = (double)((double)p.Texturize(intersection).G / 255.0);
-                                            sumB = (double)((double)p.Texturize(intersection).B / 255.0);
-                                            //                                            sumR = 1;
-
-                                            //  System.Console.WriteLine("Trafiło w promieniu!!!!!!!!!!!!!!!");
+                                            sumR += (double)((double)p.Texturize(intersection).R / 255.0);
+                                            sumG += (double)((double)p.Texturize(intersection).G / 255.0);
+                                            sumB += (double)((double)p.Texturize(intersection).B / 255.0);
                                             traf = true;
-
-                                            // break;
-                                            //    ju++;
+                                            ileFotonow++;
                                         }
-                                    //     else
-                                    //         System.Console.WriteLine("nie trafiło ;(");
                                     ju++;
-                                    //      System.Console.WriteLine("" + ju+"/"+map.Count()
-                                    //          +", prim nr"+ile);
                                 }
-                                // }
-
-                                //   }
-                                //  sumR ;// ((float)(Math.PI * radius * radius));
-                                //  sumG t; //((float)(Math.PI * radius * radius));
-                                //   sumB /= (float)count; //((float)(Math.PI * radius * radius));
-                                res[i, j] = new Intensity(sumR, sumG, sumB);
+                                res[i, j] = new Intensity(sumR / (double)ileFotonow, sumG / (double)ileFotonow, sumB / (double)ileFotonow);
                                 //wrzucić do tablicy z rezultatem sumę podzieloną przez pi R kwadrat
                                 if (traf == true)
                                     img.setPixel(i, j, res[i, j]);
