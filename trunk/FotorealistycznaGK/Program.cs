@@ -189,10 +189,10 @@ namespace FotorealistycznaGK
             #region majtanieFotonami
            //nasz pointlight to light
             int trafienia=0;
-            Photon[] mapa = new Photon[30000];//30.000
-            light.generujFotony(30000,ref trafienia,ref mapa, list);//30.000
+            Photon[] mapa = new Photon[20000];//30.000
+            light.generujFotony(20000,ref trafienia,ref mapa, list);//30.000
              PhotonMapPerspCamera pmpc = new PhotonMapPerspCamera(
-                 0.004f, 100f, 100f, 100, v2, target, v3, 45f, //0.001
+                 0.005f, 100f, 100f, 100, v2, target, v3, 45f, //0.001
                  list, light, mapa, new Uri(@"C:\fotony.png")); //photonMap -> mapa
              pmpc.renderScene();
              
