@@ -23,6 +23,9 @@ namespace FotorealistycznaGK
         public void generujFotony(int ile, ref int trafione, ref Photon[] tab, List<Primitive> scene)
         {
             trafione = 0;
+            Random rbis; //do odbitych
+            Ray R2;
+            Vector dirbis;
             for (int i = 0; i < ile; i++)
             {
                 Random rand = new Random();
@@ -42,9 +45,30 @@ namespace FotorealistycznaGK
                     {
                         odlOdTrafienia = p.findIntersection(R).countVectorDistance(this.Position);
                         traf = p.findIntersection(R);
-                        kolorObiektu = new Intensity((((float)p.Texturize(p.findIntersection(R)).R)/255.0f),
-                            (((float)p.Texturize(p.findIntersection(R)).G)/255.0f),
-                            (((float)p.Texturize(p.findIntersection(R)).B)/255.0f));
+                        kolorObiektu = new Intensity((((float)p.Texturize(p.findIntersection(R)).R) / 255.0f),
+                            (((float)p.Texturize(p.findIntersection(R)).G) / 255.0f),
+                            (((float)p.Texturize(p.findIntersection(R)).B) / 255.0f));
+                        #region ruletka //?
+                        rbis = new Random();
+                        dirbis = new Vector();
+                        dirbis.X = (float)(rbis.NextDouble() * 2 - 1);
+                        dirbis.Y = (float)(rbis.NextDouble() * 2 - 1);
+                        dirbis.Z = (float)(rbis.NextDouble() * 2 - 1);
+                        dirbis += p.normal(p.findIntersection(R));
+                        R2 = new Ray(p.findIntersection(R), dirbis);
+                        foreach (Primitive p2 in scene)
+                        {
+                            if (p2.findIntersection(R2).X != float.PositiveInfinity
+                               )
+                            {
+                                System.Console.WriteLine("pac");
+                                kolorObiektu = new Intensity((((float)p2.Texturize(p2.findIntersection(R2)).R) / 255.0f),
+                            (((float)p2.Texturize(p2.findIntersection(R2)).G) / 255.0f),
+                            (((float)p2.Texturize(p2.findIntersection(R2)).B) / 255.0f));
+                            }
+
+                        }
+                        #endregion ruletka
                         //dodać ruletkę: jakieś 0.2 i promień stąd w hemisferę. Jeśli trafia,
                     }
                 }
