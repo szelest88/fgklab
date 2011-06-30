@@ -108,7 +108,7 @@ namespace FotorealistycznaGK
             Vector prostopadlyPrzes =
                ((this.Target - this.Position).cross(this.Position - this.Up)).normalizeProduct();//cross(this.Positon-this.Up)
             Vector pionPrzes = (this.Up).normalizeProduct();//; *1.5f;//(this.Up-this.Position).nor
-             float krok = s * 4.0f / 400.0f;//2->4
+            float krok = s * 4.0f / 400.0f;//2->4
             Vector poczatek = srodek - prostopadlyPrzes * s*2 - pionPrzes * s*2;//nic->*2
             Intensity[,] res = new Intensity[400, 400];
             for (int i = 0; i < 400; i++)
