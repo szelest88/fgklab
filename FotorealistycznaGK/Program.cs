@@ -1,4 +1,4 @@
-﻿using System; //svn
+﻿using System; //svn ok
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -63,7 +63,7 @@ namespace FotorealistycznaGK
             #region cornelBox Ściany
             //niebieska:
             Triangle trn = new Triangle(new Vector(0.0f, -0.5f, -0.5f), new Vector(0.0f, 0.5f, -0.5f), new Vector(0.0f, -0.5f, 0.5f), new Intensity(1, 0, 1), material);
-            Triangle trn2 = new Triangle(new Vector(0.0f, 0.5f, 0.5f), new Vector(0.0f, -0.5f, 0.5f), new Vector(0.0f, .5f, -.5f), new Intensity(1, 1, 0), material);
+            Triangle trn2 = new Triangle(new Vector(0.0f, 0.5f, 0.5f), new Vector(0.0f, -0.5f, 0.5f), new Vector(0.0f, .5f, -.5f), new Intensity(1, 0, 1), material);
             //zielona:
             Triangle trn3 = new Triangle(new Vector(0.0f, -0.5f, -0.5f), new Vector(0.5f, -0.5f, -0.5f), new Vector(0.5f, 0.5f, -0.5f), new Intensity(0, 1, 0), material);
             Triangle trn4 = new Triangle(new Vector(0.0f, 0.5f, -0.5f), new Vector(0.0f, -0.5f, -0.5f), new Vector(0.5f, 0.5f, -0.5f), new Intensity(0, 1, 0), material);
@@ -189,11 +189,11 @@ namespace FotorealistycznaGK
             #region majtanieFotonami
            //nasz pointlight to light
             int trafienia=0;
-            Photon[] mapa = new Photon[20000];//30.000
-            light.generujFotony(20000,ref trafienia,ref mapa, list);//30.000
+            Photon[] mapa = new Photon[50000];//30.000
+            light.generujFotony(50000,ref trafienia,ref mapa, list);//30.000
              PhotonMapPerspCamera pmpc = new PhotonMapPerspCamera(
-                 0.005f, 100f, 100f, 100, v2, target, v3, 45f, //0.001
-                 list, light, mapa, new Uri(@"C:\fotony.png")); //photonMap -> mapa
+                 0.003f, 100f, 100f, 100, v2, target, v3, 45f, //0.001
+                 list, light, mapa, new Uri(@"C:\fotony50000250000bis.png")); //photonMap -> mapa
              pmpc.renderScene();
              
             #endregion majtanieFotonami
