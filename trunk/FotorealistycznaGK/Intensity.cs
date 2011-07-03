@@ -104,7 +104,10 @@ namespace FotorealistycznaGK
             this.G /= p;
             this.B /= p;
         }
-
+        public override string ToString()
+        {
+            return ("res"+this.R+","+this.G+","+this.B);
+        }
         #endregion Methods
 
     }

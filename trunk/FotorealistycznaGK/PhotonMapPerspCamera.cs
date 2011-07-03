@@ -165,15 +165,23 @@ namespace FotorealistycznaGK
                                     if (pp != null)
                                         if (pp.Position.countVectorDistance(intersection) < radius && p.material.isMirror==false && p.material.isRefractive==false)
                                         {
-                                            sumR += (double)((double)p.Texturize(intersection).R / 255.0);
-                                            sumG += (double)((double)p.Texturize(intersection).G / 255.0);
-                                            sumB += (double)((double)p.Texturize(intersection).B / 255.0);
+                                            sumR += pp.Intensity.R;
+                                            sumG += pp.Intensity.G;
+                                            sumB += pp.Intensity.B;
                                             traf = true;
                                             ileFotonow++;
                                         }
                                     ju++;
                                 }
-                                res[i, j] = new Intensity(sumR / (double)ileFotonow, sumG / (double)ileFotonow, sumB / (double)ileFotonow);
+                                //!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                res[i,j]=new Intensity(sumR/(double)(250000*Math.PI*radius*radius),
+                                    sumG/(double)(250000*Math.PI*radius*radius),
+                                    sumB/(double)(250000*Math.PI*radius*radius)
+                                        );
+                                System.Console.WriteLine("HMHM" + res[i, j]);
+                                //!!!!!!!!!!!!!!!!!!!!!!!!!
+                                //TO NIŻSZE JEST OK!
+                               // res[i, j] = new Intensity(sumR / (double)ileFotonow, sumG / (double)ileFotonow, sumB / (double)ileFotonow);
                                 //wrzucić do tablicy z rezultatem sumę podzieloną przez pi R kwadrat
                                 if (traf == true)
                                     img.setPixel(i, j, res[i, j]);
