@@ -29,6 +29,7 @@ namespace FotorealistycznaGK
             bool ok = false; //?????????
             for (int i = 0; i < ile; i++)
             {
+                System.Console.WriteLine("emisja:" + i + "/" + ile);
                 ok = false;//????????
                 Random rand = new Random();
                 Vector dir = new Vector();
@@ -67,7 +68,7 @@ namespace FotorealistycznaGK
                             {
                                 traf2 = p2.findIntersection(R2);
                                 ok = true;
-                                System.Console.WriteLine("odbity");
+                                //System.Console.WriteLine("odbity");
                                 kolorObiektu = new Intensity((((float)p2.Texturize(traf2).R) / 255.0f),
                             (((float)p2.Texturize(traf2).G) / 255.0f),
                             (((float)p2.Texturize(traf2).B) / 255.0f));//sensowniej, tj. dodać też tamto?
@@ -93,14 +94,40 @@ namespace FotorealistycznaGK
                                 {
                                     traf2 = p2.findIntersection(test2a);
                                     ok = true;
-                                    System.Console.WriteLine("odbity");
-                                    kolorObiektu2 = new Intensity((((float)p2.Texturize(traf2).R) / 255.0f),
-                                (((float)p2.Texturize(traf2).G) / 255.0f),
-                                (((float)p2.Texturize(traf2).B) / 255.0f));//sensowniej, tj. dodać też tamto?
+                                //    System.Console.WriteLine("załamany trafił");
+                                    kolorObiektu2 = new Intensity(1f, 0f, 0f);//DEBUG
+                              //      kolorObiektu2 = new Intensity((((float)p2.Texturize(traf2).R) / 255.0f),
+                              //  (((float)p2.Texturize(traf2).G) / 255.0f),
+                              //  (((float)p2.Texturize(traf2).B) / 255.0f));//sensowniej, tj. dodać też tamto?
                                 }
 
                             }
                         }
+                        else //teraz napierdalamy odbicia
+                            if (p.material.isMirror == true && p.findIntersection(R).X != float.PositiveInfinity)//próba ugięcia
+                            {
+                                //wyślij ugięty promień i trafienie zapisz w traf
+                                Vector I2a = R.direction.normalizeProduct();
+                                Vector N2a = p.normal(p.findIntersection(R));
+                                Vector R2a = -N2a * (N2a.dot(I2a) * 2.0f)-I2a;//1->-2
+                                Ray test2a = new Ray(p.findIntersection(R),
+                                 R2a);//I- N *
+                                foreach (Primitive p2 in scene)
+                                {
+                                    if (p2.findIntersection(test2a).X != float.PositiveInfinity
+                                       )
+                                    {
+                                        traf2 = p2.findIntersection(test2a);
+                                        ok = true;
+                                        //    System.Console.WriteLine("załamany trafił");
+                                        kolorObiektu2 = new Intensity(1f, 0f, 0f);//DEBUG
+                                        //      kolorObiektu2 = new Intensity((((float)p2.Texturize(traf2).R) / 255.0f),
+                                        //  (((float)p2.Texturize(traf2).G) / 255.0f),
+                                        //  (((float)p2.Texturize(traf2).B) / 255.0f));//sensowniej, tj. dodać też tamto?
+                                    }
+
+                                }
+                            }
                 }
                 //w traf jest najbliższa intersekcja promienia z obiektem
                 if (traf != null && kolorObiektu != null)
@@ -111,8 +138,10 @@ namespace FotorealistycznaGK
                     {
                         tab[trafione] = new Photon(traf2, kolorObiektu2, dir);
                         trafione++;
+                        ok=false;
+                        System.Console.WriteLine("Załamany zapisano");
                     }
-                    System.Console.WriteLine("kolejny foton w tablicy!");
+                    //System.Console.WriteLine("kolejny foton w tablicy!");
                 }
 
             }
