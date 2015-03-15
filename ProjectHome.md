@@ -1,0 +1,1 @@
+Project for laboratory exercises in computer graphics, Technical University of Lodz
